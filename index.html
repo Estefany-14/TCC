@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conecta+ | Tecnologia para Inclusão Social</title>
+<meta name="description" content="Conecta+ é uma plataforma digital gratuita de inclusão social e digital: cursos de informática, serviços públicos online, empregos, acessibilidade e área em Libras.">
+<link rel="icon" href="assets/logo.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+ 
+<header class="topo">
+  <div class="container topo-inner">
+    <a class="marca" href="#inicio">
+      <img src="assets/logo.png" alt="Logotipo do Conecta+">
+    </a>
+ 
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navPrincipal">
+      <span aria-hidden="true">☰</span> Menu
+    </button>
+ 
+    <nav id="navPrincipal" class="nav" aria-label="Navegação principal">
+      <a href="#sobre">Sobre</a>
+      <a href="#cursos">Cursos</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#empregos">Empregos</a>
+      <a href="#libras">Libras</a>
+      <a href="#comunidade">Comunidade</a>
+      <a href="#acessibilidade">Acessibilidade</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+ 
+<div class="barra-acess" role="region" aria-label="Ferramentas de acessibilidade">
+  <div class="container barra-inner">
+    <span class="barra-titulo">Acessibilidade:</span>
+    <button type="button" data-acao="diminuir">A−<span class="sr">Diminuir texto</span></button>
+    <button type="button" data-acao="aumentar">A+<span class="sr">Aumentar texto</span></button>
+    <button type="button" data-acao="contraste">Alto contraste</button>
+    <button type="button" data-acao="fonte">Fonte legível</button>
+    <button type="button" data-acao="reset">Restaurar</button>
+  </div>
+</div>
+ 
+<main id="conteudo">
+ 
+  <section id="inicio" class="hero">
+    <div class="container hero-inner">
+      <div class="hero-texto">
+        <p class="tag">Tecnologia para inclusão social</p>
+        <h1>Conecta<span class="mais">+</span></h1>
+        <p class="lead">
+          Uma plataforma digital gratuita que reúne cursos, serviços públicos online,
+          oportunidades de trabalho e acessibilidade em um só lugar — simples de usar,
+          mesmo para quem está começando agora.
+        </p>
+        <p class="slogan">
+          Mais <b class="c-ciano">acesso</b>. Mais <b class="c-magenta">conhecimento</b>. Mais <b class="c-azul">oportunidades</b>.
+        </p>
+        <div class="hero-botoes">
+          <a class="btn btn-primario" href="#cursos">Começar a aprender</a>
+          <a class="btn btn-secundario" href="#libras">Área em Libras</a>
+        </div>
+      </div>
+      <div class="hero-arte">
+        <img src="assets/logo.png" alt="">
+      </div>
+    </div>
+  </section>
+ 
+  <section class="numeros">
+    <div class="container grid-4">
+      <div class="num"><strong>100%</strong><span>Gratuito</span></div>
+      <div class="num"><strong>6</strong><span>Áreas de conteúdo</span></div>
+      <div class="num"><strong>Libras</strong><span>Área exclusiva</span></div>
+      <div class="num"><strong>Todos</strong><span>Níveis de conhecimento</span></div>
+    </div>
+  </section>
+ 
+  <section id="sobre" class="secao">
+    <div class="container">
+      <h2>O Projeto Conecta<span class="mais">+</span></h2>
+      <p class="sub">
+        O projeto surgiu da identificação de um problema: muitas pessoas ainda encontram
+        dificuldades para utilizar tecnologias e acessar recursos disponíveis na internet —
+        seja por falta de conhecimento em informática, por falta de acessibilidade ou por
+        dificuldade de encontrar informações confiáveis.
+      </p>
+ 
+      <div class="grid-2">
+        <article class="card">
+          <h3>O problema</h3>
+          <p>
+            Conteúdos espalhados por vários sites, linguagem difícil e pouca acessibilidade
+            afastam quem mais precisa de informação e oportunidades.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Nossa proposta</h3>
+          <p>
+            Reunir diferentes recursos em uma única plataforma, criando um ambiente simples,
+            organizado, acessível e fácil de utilizar.
+          </p>
+        </article>
+      </div>
+ 
+      <div class="destaque">
+        <h3>Objetivo</h3>
+        <p>
+          Tornar a tecnologia mais acessível, simples e útil para todos, contribuindo para a
+          inclusão digital, social e profissional — ajudando pessoas a desenvolverem habilidades
+          digitais e terem maior autonomia para usar computadores, celulares, aplicativos,
+          sites e serviços online.
+        </p>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="funcionalidades" class="secao alt">
+    <div class="container">
+      <h2>O que você encontra na plataforma</h2>
+      <div class="grid-3">
+        <article class="card link"><span class="ico" aria-hidden="true">💻</span><h3>Cursos gratuitos</h3><p>Informática básica e capacitação digital, passo a passo.</p><a href="#cursos">Ver cursos</a></article>
+        <article class="card link"><span class="ico" aria-hidden="true">🏛️</span><h3>Serviços públicos</h3><p>Orientações para usar serviços do governo pela internet.</p><a href="#servicos">Ver orientações</a></article>
+        <article class="card link"><span class="ico" aria-hidden="true">💼</span><h3>Empregos</h3><p>Vagas, cursos e oportunidades de qualificação profissional.</p><a href="#empregos">Ver oportunidades</a></article>
+        <article class="card link"><span class="ico" aria-hidden="true">🤟</span><h3>Área em Libras</h3><p>Conteúdos em Língua Brasileira de Sinais, com intérpretes.</p><a href="#libras">Acessar</a></article>
+        <article class="card link"><span class="ico" aria-hidden="true">♿</span><h3>Acessibilidade</h3><p>Recursos para diferentes necessidades em toda a navegação.</p><a href="#acessibilidade">Saiba mais</a></article>
+        <article class="card link"><span class="ico" aria-hidden="true">🧭</span><h3>Suporte iniciante</h3><p>Explicações simples para quem nunca usou tecnologia.</p><a href="#iniciantes">Começar aqui</a></article>
+        <article class="card link"><span class="ico" aria-hidden="true">💬</span><h3>Comunidade</h3><p>Converse com outras pessoas, tire dúvidas e compartilhe dicas.</p><a href="#comunidade">Participar</a></article>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="cursos" class="secao">
+    <div class="container">
+      <h2>Cursos gratuitos de informática</h2>
+      <p class="sub">
+        Conteúdos pensados para quem está começando ou quer melhorar seus conhecimentos,
+        apresentados de forma simples e organizada para aprender gradualmente e com mais confiança.
+      </p>
+      <div class="grid-3">
+        <article class="card curso"><span class="nivel">Iniciante</span><h3>Primeiros passos no computador</h3><p>Ligar, usar mouse e teclado, arquivos e pastas.</p></article>
+        <article class="card curso"><span class="nivel">Iniciante</span><h3>Usando o celular no dia a dia</h3><p>Aplicativos, câmera, mensagens e configurações.</p></article>
+        <article class="card curso"><span class="nivel">Iniciante</span><h3>Internet sem medo</h3><p>Navegadores, buscas e como identificar informação confiável.</p></article>
+        <article class="card curso"><span class="nivel">Básico</span><h3>E-mail e documentos</h3><p>Criar conta, enviar anexos e escrever documentos.</p></article>
+        <article class="card curso"><span class="nivel">Básico</span><h3>Segurança digital</h3><p>Senhas, golpes, privacidade e compras online.</p></article>
+        <article class="card curso"><span class="nivel">Intermediário</span><h3>Ferramentas digitais</h3><p>Nuvem, videochamadas e organização de tarefas.</p></article>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="servicos" class="secao alt">
+    <div class="container">
+      <h2>Serviços públicos online</h2>
+      <p class="sub">
+        Muitas pessoas sabem que certos serviços podem ser feitos pela internet, mas não sabem
+        onde encontrá-los ou como utilizá-los. Aqui reunimos orientações para facilitar esse caminho.
+      </p>
+      <ul class="lista-checks grid-2">
+        <li>Documentos pessoais e certidões</li>
+        <li>Saúde e agendamentos</li>
+        <li>Benefícios sociais e assistência</li>
+        <li>Trabalho e previdência</li>
+        <li>Educação e matrículas</li>
+        <li>Impostos e serviços municipais</li>
+      </ul>
+      <p class="nota">Cada orientação explica, em linguagem simples, o que é o serviço, o que você precisa ter em mãos e como acessá-lo.</p>
+    </div>
+  </section>
+ 
+  <section id="empregos" class="secao">
+    <div class="container">
+      <h2>Empregos e oportunidades de qualificação</h2>
+      <p class="sub">
+        Divulgação de vagas, cursos e oportunidades que podem contribuir para a formação e para a
+        entrada ou o crescimento no mercado de trabalho.
+      </p>
+      <div class="grid-3">
+        <article class="card vaga"><h3>Vagas de emprego</h3><p>Oportunidades reunidas em um só lugar, com filtros simples.</p></article>
+        <article class="card vaga"><h3>Qualificação profissional</h3><p>Cursos técnicos, gratuitos e programas de capacitação.</p></article>
+        <article class="card vaga"><h3>Preparação</h3><p>Currículo, entrevista e uso de plataformas de recrutamento.</p></article>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="libras" class="secao libras">
+    <div class="container">
+      <p class="tag">Diferencial do projeto</p>
+      <h2>Área exclusiva em Libras <span aria-hidden="true">🤟</span></h2>
+      <p class="sub">
+        Não é apenas uma pequena opção de acessibilidade: é uma experiência completa para quem se
+        comunica principalmente em Língua Brasileira de Sinais, com conteúdos apresentados em
+        vídeos com intérpretes.
+      </p>
+ 
+      <div class="grid-2">
+        <div>
+          <h3>Conteúdos disponíveis em Libras</h3>
+          <ul class="lista-checks">
+            <li>Apresentação e explicação do Conecta+</li>
+            <li>Cursos e aulas de informática</li>
+            <li>Orientações sobre serviços públicos digitais</li>
+            <li>Informações sobre vagas de emprego</li>
+            <li>Oportunidades de qualificação</li>
+            <li>Tutoriais sobre internet e ferramentas digitais</li>
+            <li>Orientações para usuários iniciantes</li>
+            <li>Informações sobre segurança digital</li>
+            <li>Instruções para usar as funcionalidades do app</li>
+          </ul>
+        </div>
+        <div class="video-libras">
+          <div class="video-placeholder" role="img" aria-label="Espaço reservado para vídeo com intérprete de Libras">
+            <span aria-hidden="true">▶</span>
+            <p>Vídeo com intérprete de Libras</p>
+          </div>
+          <p class="nota">
+            Os conteúdos em Libras devem ser produzidos ou revisados por pessoas qualificadas,
+            garantindo comunicação correta e adequada à comunidade surda.
+          </p>
+          <div class="hero-botoes">
+            <button class="btn btn-primario" type="button" data-idioma="libras">Usar em Libras</button>
+            <button class="btn btn-secundario" type="button" data-idioma="portugues">Usar em Português</button>
+          </div>
+          <p class="nota" id="avisoIdioma" role="status"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="comunidade" class="secao comunidade">
+    <div class="container">
+      <p class="tag">Espaço de interação</p>
+      <h2>Comunidade Conecta<span class="mais">+</span></h2>
+      <p class="sub">
+        Um lugar para conversar, tirar dúvidas, compartilhar aprendizados e ajudar outras pessoas.
+        Escolha um grupo, escreva sua mensagem e participe — em português ou em Libras.
+      </p>
+ 
+      <div class="com-layout">
+        <!-- coluna esquerda: grupos -->
+        <aside class="com-lateral" aria-label="Grupos da comunidade">
+          <h3>Grupos</h3>
+          <ul class="grupos" id="listaGrupos">
+            <li><button type="button" class="grupo ativo" data-grupo="Todos"><span aria-hidden="true">🌐</span> Todos os assuntos</button></li>
+            <li><button type="button" class="grupo" data-grupo="Informática"><span aria-hidden="true">💻</span> Informática básica</button></li>
+            <li><button type="button" class="grupo" data-grupo="Serviços"><span aria-hidden="true">🏛️</span> Serviços públicos</button></li>
+            <li><button type="button" class="grupo" data-grupo="Empregos"><span aria-hidden="true">💼</span> Empregos e carreira</button></li>
+            <li><button type="button" class="grupo" data-grupo="Libras"><span aria-hidden="true">🤟</span> Libras</button></li>
+            <li><button type="button" class="grupo" data-grupo="Segurança"><span aria-hidden="true">🔒</span> Segurança digital</button></li>
+          </ul>
+ 
+          <div class="online">
+            <h3>Pessoas online</h3>
+            <ul class="lista-online">
+              <li><span class="avatar" aria-hidden="true">MJ</span> Maria Julia <span class="ponto" aria-label="online"></span></li>
+              <li><span class="avatar" aria-hidden="true">RS</span> Rafael Souza <span class="ponto" aria-label="online"></span></li>
+              <li><span class="avatar" aria-hidden="true">AL</span> Ana Lima <span class="ponto" aria-label="online"></span></li>
+              <li><span class="avatar" aria-hidden="true">CP</span> Carlos Pereira <span class="ponto" aria-label="online"></span></li>
+            </ul>
+          </div>
+ 
+          <div class="regras">
+            <h3>Regras de convivência</h3>
+            <ul class="lista-checks">
+              <li>Respeito sempre, com todas as pessoas</li>
+              <li>Sem discurso de ódio ou preconceito</li>
+              <li>Não compartilhe dados pessoais</li>
+              <li>Ajude quem está começando</li>
+            </ul>
+          </div>
+        </aside>
+ 
+        <!-- coluna direita: feed -->
+        <div class="com-feed">
+          <form class="novo-post" id="formPost">
+            <label for="textoPost">Compartilhe algo com a comunidade</label>
+            <textarea id="textoPost" name="textoPost" rows="3" placeholder="Escreva sua dúvida, dica ou experiência..." required></textarea>
+            <div class="post-acoes">
+              <div class="campo-inline">
+                <label for="grupoPost">Grupo</label>
+                <select id="grupoPost" name="grupoPost">
+                  <option>Informática</option>
+                  <option>Serviços</option>
+                  <option>Empregos</option>
+                  <option>Libras</option>
+                  <option>Segurança</option>
+                </select>
+              </div>
+              <label class="check-libras">
+                <input type="checkbox" id="videoLibras"> Anexar vídeo em Libras
+              </label>
+              <button class="btn btn-primario" type="submit">Publicar</button>
+            </div>
+            <p class="nota" id="msgPost" role="status"></p>
+          </form>
+ 
+          <div class="feed" id="feed" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="acessibilidade" class="secao alt">
+    <div class="container">
+      <h2>Acessibilidade para todas as pessoas</h2>
+      <p class="sub">
+        A acessibilidade está presente na própria experiência de navegação, tornando os conteúdos
+        mais fáceis de compreender e os recursos mais fáceis de utilizar.
+      </p>
+      <div class="grid-3">
+        <article class="card"><h3>Texto ajustável</h3><p>Aumente ou diminua o tamanho da letra a qualquer momento.</p></article>
+        <article class="card"><h3>Alto contraste</h3><p>Modo com cores de maior contraste para melhor leitura.</p></article>
+        <article class="card"><h3>Navegação por teclado</h3><p>Todo o site pode ser usado sem mouse, com foco visível.</p></article>
+        <article class="card"><h3>Linguagem simples</h3><p>Textos curtos e diretos, sem termos técnicos desnecessários.</p></article>
+        <article class="card"><h3>Leitores de tela</h3><p>Estrutura semântica e descrições para tecnologias assistivas.</p></article>
+        <article class="card"><h3>Conteúdo em Libras</h3><p>Vídeos em Libras como forma completa de acesso à informação.</p></article>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="iniciantes" class="secao">
+    <div class="container">
+      <h2>Suporte para quem está começando</h2>
+      <p class="sub">Você não precisa saber nada de tecnologia para começar. Siga os passos:</p>
+      <ol class="passos">
+        <li><strong>Escolha como quer navegar</strong> — em português, em Libras, ou os dois.</li>
+        <li><strong>Ajuste a tela</strong> — aumente o texto ou ative o alto contraste.</li>
+        <li><strong>Comece por um curso</strong> — do zero, no seu ritmo.</li>
+        <li><strong>Use os serviços</strong> — com orientações passo a passo.</li>
+        <li><strong>Busque oportunidades</strong> — vagas e cursos de qualificação.</li>
+      </ol>
+    </div>
+  </section>
+ 
+  <section id="publico" class="secao alt">
+    <div class="container">
+      <h2>Público-alvo</h2>
+      <div class="grid-3">
+        <article class="card"><h3>Quem quer aprender informática</h3><p>Pessoas com pouco conhecimento ou dificuldade com tecnologias digitais.</p></article>
+        <article class="card"><h3>Quem busca serviços e trabalho</h3><p>Usuários que precisam de serviços públicos online, emprego ou capacitação.</p></article>
+        <article class="card"><h3>Pessoas com deficiência</h3><p>Incluindo usuários surdos que utilizam Libras no dia a dia.</p></article>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="contato" class="secao cta">
+    <div class="container">
+      <h2>Faça parte do Conecta<span class="mais">+</span></h2>
+      <p class="sub">Receba novidades sobre cursos, vagas e novos conteúdos em Libras.</p>
+      <form class="form" id="formContato" novalidate>
+        <div class="campo">
+          <label for="nome">Nome</label>
+          <input id="nome" name="nome" type="text" autocomplete="name" required>
+        </div>
+        <div class="campo">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="campo">
+          <label for="interesse">Tenho mais interesse em</label>
+          <select id="interesse" name="interesse">
+            <option>Cursos de informática</option>
+            <option>Serviços públicos online</option>
+            <option>Empregos e qualificação</option>
+            <option>Conteúdos em Libras</option>
+          </select>
+        </div>
+        <button class="btn btn-primario" type="submit">Quero participar</button>
+        <p class="nota" id="msgForm" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+ 
+<footer class="rodape">
+  <div class="container rodape-inner">
+    <div>
+      <img class="rodape-logo" src="assets/logo.png" alt="Conecta+">
+      <p>Tecnologia como ferramenta de transformação e inclusão.</p>
+    </div>
+    <nav aria-label="Links do rodapé">
+      <a href="#cursos">Cursos</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#empregos">Empregos</a>
+      <a href="#libras">Libras</a>
+      <a href="#comunidade">Comunidade</a>
+      <a href="#acessibilidade">Acessibilidade</a>
+    </nav>
+  </div>
+  <p class="copy">Projeto Conecta+ — plataforma digital gratuita, acessível e inclusiva.</p>
+</footer>
+ 
+<script src="script.js"></script>
+</body>
+</html>
