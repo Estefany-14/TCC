@@ -1,539 +1,1294 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Conecta+ | Tecnologia para Inclusão Social</title>
-<meta name="description" content="Conecta+ é uma plataforma digital gratuita de inclusão social e digital: cursos de informática, serviços públicos online, empregos, acessibilidade e área em Libras.">
-<link rel="icon" href="assets/logo.png">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conecta+ | Plataforma de Inclusão e Interação Digital</title>
+  <meta name="description" content="Conecta+ é uma plataforma digital gratuita de inclusão social e digital: cursos de informática, mapa de conexões, serviços online, empregos e área em Libras.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  
+  <!-- Fontes do Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet CSS (Mapa Interativo) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
- 
-<header class="topo">
-  <div class="container topo-inner">
-    <a class="marca" href="#inicio">
-      <img src="assets/logo.png" alt="Logotipo do Conecta+">
-    </a>
- 
-    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navPrincipal">
-      <span aria-hidden="true">☰</span> Menu
-    </button>
- 
-    <nav id="navPrincipal" class="nav" aria-label="Navegação principal">
-      <a href="#sobre">Sobre</a>
-      <a href="#cursos">Cursos</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#empregos">Empregos</a>
-      <a href="#libras">Libras</a>
-      <a href="#comunidade">Comunidade</a>
-      <a href="#acessibilidade">Acessibilidade</a>
-      <a href="#contato">Contato</a>
-      <a href="#perfil" id="linkPerfil" style="display:none;">Perfil</a>
-      <button class="btn-cadastro" id="btnCadastro">Cadastrar-se</button>
-    </nav>
-  </div>
-</header>
- 
-<div class="barra-acess" role="region" aria-label="Ferramentas de acessibilidade">
-  <div class="container barra-inner">
-    <span class="barra-titulo">Acessibilidade:</span>
-    <button type="button" data-acao="diminuir">A−<span class="sr">Diminuir texto</span></button>
-    <button type="button" data-acao="aumentar">A+<span class="sr">Aumentar texto</span></button>
-    <button type="button" data-acao="contraste">Alto contraste</button>
-    <button type="button" data-acao="fonte">Fonte legível</button>
-    <button type="button" data-acao="reset">Restaurar</button>
-  </div>
-</div>
- 
-<main id="conteudo">
- 
-  <section id="inicio" class="hero">
-    <div class="container hero-inner">
-      <div class="hero-texto">
-        <p class="tag">Tecnologia para inclusão social</p>
-        <h1>Conecta<span class="mais">+</span></h1>
-        <p class="lead">
-          Uma plataforma digital gratuita que reúne cursos, serviços públicos online,
-          oportunidades de trabalho e acessibilidade em um só lugar — simples de usar,
-          mesmo para quem está começando agora.
-        </p>
-        <p class="slogan">
-          Mais <b class="c-ciano">acesso</b>. Mais <b class="c-magenta">conhecimento</b>. Mais <b class="c-azul">oportunidades</b>.
-        </p>
-        <div class="hero-botoes">
-          <a class="btn btn-primario" href="#cursos">Começar a aprender</a>
-          <a class="btn btn-secundario" href="#libras">Área em Libras</a>
-        </div>
-      </div>
-      <div class="hero-arte">
-        <img src="assets/logo.png" alt="">
-      </div>
-    </div>
-  </section>
- 
-  <section class="numeros">
-    <div class="container grid-4">
-      <div class="num"><strong>100%</strong><span>Gratuito</span></div>
-      <div class="num"><strong>6</strong><span>Áreas de conteúdo</span></div>
-      <div class="num"><strong>Libras</strong><span>Área exclusiva</span></div>
-      <div class="num"><strong>Todos</strong><span>Níveis de conhecimento</span></div>
-    </div>
-  </section>
- 
-  <section id="sobre" class="secao">
-    <div class="container">
-      <h2>O Projeto Conecta<span class="mais">+</span></h2>
-      <p class="sub">
-        O projeto surgiu da identificação de um problema: muitas pessoas ainda encontram
-        dificuldades para utilizar tecnologias e acessar recursos disponíveis na internet —
-        seja por falta de conhecimento em informática, por falta de acessibilidade ou por
-        dificuldade de encontrar informações confiáveis.
-      </p>
- 
-      <div class="grid-2">
-        <article class="card">
-          <h3>O problema</h3>
-          <p>
-            Conteúdos espalhados por vários sites, linguagem difícil e pouca acessibilidade
-            afastam quem mais precisa de informação e oportunidades.
-          </p>
-        </article>
-        <article class="card">
-          <h3>Nossa proposta</h3>
-          <p>
-            Reunir diferentes recursos em uma única plataforma, criando um ambiente simples,
-            organizado, acessível e fácil de utilizar.
-          </p>
-        </article>
-      </div>
- 
-      <div class="destaque">
-        <h3>Objetivo</h3>
-        <p>
-          Tornar a tecnologia mais acessível, simples e útil para todos, contribuindo para a
-          inclusão digital, social e profissional — ajudando pessoas a desenvolverem habilidades
-          digitais e terem maior autonomia para usar computadores, celulares, aplicativos,
-          sites e serviços online.
-        </p>
-      </div>
-    </div>
-  </section>
- 
-  <section id="funcionalidades" class="secao alt">
-    <div class="container">
-      <h2>O que você encontra na plataforma</h2>
-      <div class="grid-3">
-        <article class="card link"><span class="ico" aria-hidden="true">💻</span><h3>Cursos gratuitos</h3><p>Informática básica e capacitação digital, passo a passo.</p><a href="#cursos">Ver cursos</a></article>
-        <article class="card link"><span class="ico" aria-hidden="true">🏛️</span><h3>Serviços públicos</h3><p>Orientações para usar serviços do governo pela internet.</p><a href="#servicos">Ver orientações</a></article>
-        <article class="card link"><span class="ico" aria-hidden="true">💼</span><h3>Empregos</h3><p>Vagas, cursos e oportunidades de qualificação profissional.</p><a href="#empregos">Ver oportunidades</a></article>
-        <article class="card link"><span class="ico" aria-hidden="true">🤟</span><h3>Área em Libras</h3><p>Conteúdos em Língua Brasileira de Sinais, com intérpretes.</p><a href="#libras">Acessar</a></article>
-        <article class="card link"><span class="ico" aria-hidden="true">♿</span><h3>Acessibilidade</h3><p>Recursos para diferentes necessidades em toda a navegação.</p><a href="#acessibilidade">Saiba mais</a></article>
-        <article class="card link"><span class="ico" aria-hidden="true">🧭</span><h3>Suporte iniciante</h3><p>Explicações simples para quem nunca usou tecnologia.</p><a href="#iniciantes">Começar aqui</a></article>
-        <article class="card link"><span class="ico" aria-hidden="true">💬</span><h3>Comunidade</h3><p>Converse com outras pessoas, tire dúvidas e compartilhe dicas.</p><a href="#comunidade">Participar</a></article>
-      </div>
-    </div>
-  </section>
- 
-  <section id="cursos" class="secao">
-    <div class="container">
-      <h2>Cursos gratuitos de informática</h2>
-      <p class="sub">
-        Conteúdos pensados para quem está começando ou quer melhorar seus conhecimentos,
-        apresentados de forma simples e organizada para aprender gradualmente e com mais confiança.
-      </p>
-      <div class="grid-3">
-        <article class="card curso"><span class="nivel">Iniciante</span><h3>Primeiros passos no computador</h3><p>Ligar, usar mouse e teclado, arquivos e pastas.</p></article>
-        <article class="card curso"><span class="nivel">Iniciante</span><h3>Usando o celular no dia a dia</h3><p>Aplicativos, câmera, mensagens e configurações.</p></article>
-        <article class="card curso"><span class="nivel">Iniciante</span><h3>Internet sem medo</h3><p>Navegadores, buscas e como identificar informação confiável.</p></article>
-        <article class="card curso"><span class="nivel">Básico</span><h3>E-mail e documentos</h3><p>Criar conta, enviar anexos e escrever documentos.</p></article>
-        <article class="card curso"><span class="nivel">Básico</span><h3>Segurança digital</h3><p>Senhas, golpes, privacidade e compras online.</p></article>
-        <article class="card curso"><span class="nivel">Intermediário</span><h3>Ferramentas digitais</h3><p>Nuvem, videochamadas e organização de tarefas.</p></article>
-      </div>
-    </div>
-  </section>
- 
-  <section id="servicos" class="secao alt">
-    <div class="container">
-      <h2>Serviços públicos online</h2>
-      <p class="sub">
-        Muitas pessoas sabem que certos serviços podem ser feitos pela internet, mas não sabem
-        onde encontrá-los ou como utilizá-los. Aqui reunimos orientações para facilitar esse caminho.
-      </p>
-      <ul class="lista-checks grid-2">
-        <li>Documentos pessoais e certidões</li>
-        <li>Saúde e agendamentos</li>
-        <li>Benefícios sociais e assistência</li>
-        <li>Trabalho e previdência</li>
-        <li>Educação e matrículas</li>
-        <li>Impostos e serviços municipais</li>
-      </ul>
-      <p class="nota">Cada orientação explica, em linguagem simples, o que é o serviço, o que você precisa ter em mãos e como acessá-lo.</p>
-    </div>
-  </section>
- 
-  <section id="empregos" class="secao">
-    <div class="container">
-      <h2>Empregos e oportunidades de qualificação</h2>
-      <p class="sub">
-        Divulgação de vagas, cursos e oportunidades que podem contribuir para a formação e para a
-        entrada ou o crescimento no mercado de trabalho.
-      </p>
-      <div class="grid-3">
-        <article class="card vaga"><h3>Vagas de emprego</h3><p>Oportunidades reunidas em um só lugar, com filtros simples.</p></article>
-        <article class="card vaga"><h3>Qualificação profissional</h3><p>Cursos técnicos, gratuitos e programas de capacitação.</p></article>
-        <article class="card vaga"><h3>Preparação</h3><p>Currículo, entrevista e uso de plataformas de recrutamento.</p></article>
-      </div>
-    </div>
-  </section>
- 
-  <section id="libras" class="secao libras">
-    <div class="container">
-      <p class="tag">Diferencial do projeto</p>
-      <h2>Área exclusiva em Libras <span aria-hidden="true">🤟</span></h2>
-      <p class="sub">
-        Não é apenas uma pequena opção de acessibilidade: é uma experiência completa para quem se
-        comunica principalmente em Língua Brasileira de Sinais, com conteúdos apresentados em
-        vídeos com intérpretes.
-      </p>
- 
-      <div class="grid-2">
-        <div>
-          <h3>Conteúdos disponíveis em Libras</h3>
-          <ul class="lista-checks">
-            <li>Apresentação e explicação do Conecta+</li>
-            <li>Cursos e aulas de informática</li>
-            <li>Orientações sobre serviços públicos digitais</li>
-            <li>Informações sobre vagas de emprego</li>
-            <li>Oportunidades de qualificação</li>
-            <li>Tutoriais sobre internet e ferramentas digitais</li>
-            <li>Orientações para usuários iniciantes</li>
-            <li>Informações sobre segurança digital</li>
-            <li>Instruções para usar as funcionalidades do app</li>
-          </ul>
-        </div>
-        <div class="video-libras">
-          <div class="video-placeholder" role="img" aria-label="Espaço reservado para vídeo com intérprete de Libras">
-            <span aria-hidden="true">▶</span>
-            <p>Vídeo com intérprete de Libras</p>
-          </div>
-          <p class="nota">
-            Os conteúdos em Libras devem ser produzidos ou revisados por pessoas qualificadas,
-            garantindo comunicação correta e adequada à comunidade surda.
-          </p>
-          <div class="hero-botoes">
-            <button class="btn btn-primario" type="button" data-idioma="libras">Usar em Libras</button>
-            <button class="btn btn-secundario" type="button" data-idioma="portugues">Usar em Português</button>
-          </div>
-          <p class="nota" id="avisoIdioma" role="status"></p>
-        </div>
-      </div>
-    </div>
-  </section>
- 
-  <section id="comunidade" class="secao comunidade">
-    <div class="container">
-      <p class="tag">Espaço de interação</p>
-      <h2>Comunidade Conecta<span class="mais">+</span></h2>
-      <p class="sub">
-        Um lugar para conversar, tirar dúvidas, compartilhar aprendizados e ajudar outras pessoas.
-        Escolha um grupo, escreva sua mensagem e participe — em português ou em Libras.
-      </p>
- 
-      <div class="com-layout">
-        <!-- coluna esquerda: grupos -->
-        <aside class="com-lateral" aria-label="Grupos da comunidade">
-          <h3>Grupos</h3>
-          <ul class="grupos" id="listaGrupos">
-            <li><button type="button" class="grupo ativo" data-grupo="Todos"><span aria-hidden="true">🌐</span> Todos os assuntos</button></li>
-            <li><button type="button" class="grupo" data-grupo="Informática"><span aria-hidden="true">💻</span> Informática básica</button></li>
-            <li><button type="button" class="grupo" data-grupo="Serviços"><span aria-hidden="true">🏛️</span> Serviços públicos</button></li>
-            <li><button type="button" class="grupo" data-grupo="Empregos"><span aria-hidden="true">💼</span> Empregos e carreira</button></li>
-            <li><button type="button" class="grupo" data-grupo="Libras"><span aria-hidden="true">🤟</span> Libras</button></li>
-            <li><button type="button" class="grupo" data-grupo="Segurança"><span aria-hidden="true">🔒</span> Segurança digital</button></li>
-          </ul>
- 
-          <div class="online">
-            <h3>Pessoas online</h3>
-            <ul class="lista-online">
-              <li><span class="avatar" aria-hidden="true">MJ</span> Maria Julia <span class="ponto" aria-label="online"></span></li>
-              <li><span class="avatar" aria-hidden="true">RS</span> Rafael Souza <span class="ponto" aria-label="online"></span></li>
-              <li><span class="avatar" aria-hidden="true">AL</span> Ana Lima <span class="ponto" aria-label="online"></span></li>
-              <li><span class="avatar" aria-hidden="true">CP</span> Carlos Pereira <span class="ponto" aria-label="online"></span></li>
-            </ul>
-          </div>
- 
-          <div class="regras">
-            <h3>Regras de convivência</h3>
-            <ul class="lista-checks">
-              <li>Respeito sempre, com todas as pessoas</li>
-              <li>Sem discurso de ódio ou preconceito</li>
-              <li>Não compartilhe dados pessoais</li>
-              <li>Ajude quem está começando</li>
-            </ul>
-          </div>
-        </aside>
- 
-        <!-- coluna direita: feed -->
-        <div class="com-feed">
-          <form class="novo-post" id="formPost">
-            <label for="textoPost">Compartilhe algo com a comunidade</label>
-            <textarea id="textoPost" name="textoPost" rows="3" placeholder="Escreva sua dúvida, dica ou experiência..." required></textarea>
-            <div class="post-acoes">
-              <div class="campo-inline">
-                <label for="grupoPost">Grupo</label>
-                <select id="grupoPost" name="grupoPost">
-                  <option>Informática</option>
-                  <option>Serviços</option>
-                  <option>Empregos</option>
-                  <option>Libras</option>
-                  <option>Segurança</option>
-                </select>
-              </div>
-              <label class="check-libras">
-                <input type="checkbox" id="videoLibras"> Anexar vídeo em Libras
-              </label>
-              <button class="btn btn-primario" type="submit">Publicar</button>
-            </div>
-            <p class="nota" id="msgPost" role="status"></p>
-          </form>
- 
-          <div class="feed" id="feed" aria-live="polite"></div>
-        </div>
-      </div>
-    </div>
-  </section>
- 
-  <section id="acessibilidade" class="secao alt">
-    <div class="container">
-      <h2>Acessibilidade para todas as pessoas</h2>
-      <p class="sub">
-        A acessibilidade está presente na própria experiência de navegação, tornando os conteúdos
-        mais fáceis de compreender e os recursos mais fáceis de utilizar.
-      </p>
-      <div class="grid-3">
-        <article class="card"><h3>Texto ajustável</h3><p>Aumente ou diminua o tamanho da letra a qualquer momento.</p></article>
-        <article class="card"><h3>Alto contraste</h3><p>Modo com cores de maior contraste para melhor leitura.</p></article>
-        <article class="card"><h3>Navegação por teclado</h3><p>Todo o site pode ser usado sem mouse, com foco visível.</p></article>
-        <article class="card"><h3>Linguagem simples</h3><p>Textos curtos e diretos, sem termos técnicos desnecessários.</p></article>
-        <article class="card"><h3>Leitores de tela</h3><p>Estrutura semântica e descrições para tecnologias assistivas.</p></article>
-        <article class="card"><h3>Conteúdo em Libras</h3><p>Vídeos em Libras como forma completa de acesso à informação.</p></article>
-      </div>
-    </div>
-  </section>
- 
-  <section id="iniciantes" class="secao">
-    <div class="container">
-      <h2>Suporte para quem está começando</h2>
-      <p class="sub">Você não precisa saber nada de tecnologia para começar. Siga os passos:</p>
-      <ol class="passos">
-        <li><strong>Escolha como quer navegar</strong> — em português, em Libras, ou os dois.</li>
-        <li><strong>Ajuste a tela</strong> — aumente o texto ou ative o alto contraste.</li>
-        <li><strong>Comece por um curso</strong> — do zero, no seu ritmo.</li>
-        <li><strong>Use os serviços</strong> — com orientações passo a passo.</li>
-        <li><strong>Busque oportunidades</strong> — vagas e cursos de qualificação.</li>
-      </ol>
-    </div>
-  </section>
- 
-  <section id="publico" class="secao alt">
-    <div class="container">
-      <h2>Público-alvo</h2>
-      <div class="grid-3">
-        <article class="card"><h3>Quem quer aprender informática</h3><p>Pessoas com pouco conhecimento ou dificuldade com tecnologias digitais.</p></article>
-        <article class="card"><h3>Quem busca serviços e trabalho</h3><p>Usuários que precisam de serviços públicos online, emprego ou capacitação.</p></article>
-        <article class="card"><h3>Pessoas com deficiência</h3><p>Incluindo usuários surdos que utilizam Libras no dia a dia.</p></article>
-      </div>
-    </div>
-  </section>
- 
-  <section id="contato" class="secao cta">
-    <div class="container">
-      <h2>Faça parte do Conecta<span class="mais">+</span></h2>
-      <p class="sub">Receba novidades sobre cursos, vagas e novos conteúdos em Libras.</p>
-      <form class="form" id="formContato" novalidate>
-        <div class="campo">
-          <label for="nome">Nome</label>
-          <input id="nome" name="nome" type="text" autocomplete="name" required>
-        </div>
-        <div class="campo">
-          <label for="email">E-mail</label>
-          <input id="email" name="email" type="email" autocomplete="email" required>
-        </div>
-        <div class="campo">
-          <label for="interesse">Tenho mais interesse em</label>
-          <select id="interesse" name="interesse">
-            <option>Cursos de informática</option>
-            <option>Serviços públicos online</option>
-            <option>Empregos e qualificação</option>
-            <option>Conteúdos em Libras</option>
-          </select>
-        </div>
-        <button class="btn btn-primario" type="submit">Quero participar</button>
-        <p class="nota" id="msgForm" role="status"></p>
-      </form>
-    </div>
-  </section>
+<body class="modo-escuro">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
 
-  <section id="perfil" class="secao" style="display:none;">
-    <div class="container">
-      <h2>Meu Perfil</h2>
-      <p class="sub">Visualize e edite suas informações de cadastro.</p>
+  <!-- ================= TELA DE BOAS-VINDAS / ONBOARDING (SPLASH SCREEN) ================= -->
+  <aside id="telaBoasVindas" class="splash-screen" role="dialog" aria-modal="true" aria-label="Boas-vindas ao Conecta+">
+    <div class="splash-card">
+      <div class="splash-decor" aria-hidden="true"></div>
       
-      <div class="perfil-conteudo">
-        <div class="perfil-info">
-          <div class="perfil-avatar">
-            <span id="perfilIniciais">US</span>
-          </div>
-          <div class="perfil-dados">
-            <h3 id="perfilNome">Nome do Usuário</h3>
-            <p id="perfilEmail">email@exemplo.com</p>
-            <p class="nota">Membro desde: <span id="perfilData">--/--/----</span></p>
+      <div class="splash-logo-container">
+        <img src="assets/logo.svg" alt="Logotipo do Conecta+" class="splash-logo">
+      </div>
+
+      <div class="splash-badge">
+        <span class="pulse-dot"></span> PLATAFORMA GRATUITA &amp; ACESSÍVEL
+      </div>
+
+      <h1 class="splash-titulo">
+        Bem-vindo ao <span class="destaque-gradiente">Conecta+</span>
+      </h1>
+
+      <p class="splash-descricao">
+        Aqui você encontra formas simples de <strong>interagir com as pessoas</strong>, aprender informática do zero e <strong>superar qualquer dificuldade de conexão com a tecnologia</strong>.
+      </p>
+
+      <div class="splash-recursos-grid" aria-label="Principais recursos">
+        <div class="splash-item-recurso">
+          <div class="splash-ico-wrapper" aria-hidden="true">💬</div>
+          <div>
+            <strong>Interação &amp; Comunidade</strong>
+            <small>Converse e faça novas amizades</small>
           </div>
         </div>
+        <div class="splash-item-recurso">
+          <div class="splash-ico-wrapper" aria-hidden="true">🤟</div>
+          <div>
+            <strong>Módulo em Libras</strong>
+            <small>Vídeos e sinais para quem precisa</small>
+          </div>
+        </div>
+        <div class="splash-item-recurso">
+          <div class="splash-ico-wrapper" aria-hidden="true">🗺️</div>
+          <div>
+            <strong>Mapa na sua Região</strong>
+            <small>Ache cursos e pessoas perto de você</small>
+          </div>
+        </div>
+        <div class="splash-item-recurso">
+          <div class="splash-ico-wrapper" aria-hidden="true">⚡</div>
+          <div>
+            <strong>Atendimento no WhatsApp</strong>
+            <small>Suporte direto no (41) 99900-8019</small>
+          </div>
+        </div>
+      </div>
 
-        <div class="perfil-detalhes">
+      <div class="splash-acoes">
+        <button type="button" class="btn btn-primario btn-grande" id="btnSplashLogin">
+          <span aria-hidden="true">🔑</span> ACESSAR MINHA CONTA
+        </button>
+        <button type="button" class="btn btn-secundario btn-grande" id="btnSplashCadastro">
+          <span aria-hidden="true">✨</span> CRIAR CONTA GRATUITA
+        </button>
+      </div>
+
+      <div class="splash-rodape-acoes">
+        <button type="button" class="btn-link" id="btnSplashExplorar">
+          Continuar como visitante <span aria-hidden="true">→</span>
+        </button>
+        <span class="separador-dot">•</span>
+        <button type="button" class="btn-link btn-libras-destaque" id="btnSplashLibras">
+          <span aria-hidden="true">🤟</span> Acessar Módulo em Libras
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= BARRA DE ACESSIBILIDADE SUPERIOR ================= -->
+  <div class="barra-acess" role="region" aria-label="Ferramentas de acessibilidade">
+    <div class="container barra-inner">
+      <div class="barra-grupo-rotulo">
+        <span class="barra-icone-acess" aria-hidden="true">⚡</span>
+        <span class="barra-titulo">Acessibilidade</span>
+      </div>
+      <div class="barra-botoes">
+        <button type="button" data-acao="tema" id="btnAlternarTema" title="Alternar entre modo escuro e claro">
+          <span id="iconeTema" aria-hidden="true">☀️</span> <span id="textoTema">Modo Claro</span>
+        </button>
+        <button type="button" data-acao="diminuir" title="Diminuir tamanho do texto">A−<span class="sr">Diminuir texto</span></button>
+        <button type="button" data-acao="aumentar" title="Aumentar tamanho do texto">A+<span class="sr">Aumentar texto</span></button>
+        <button type="button" data-acao="contraste" id="btnContraste" title="Alternar modo de alto contraste">
+          <span aria-hidden="true">🌓</span> Alto contraste
+        </button>
+        <button type="button" data-acao="fonte" id="btnFonteLegivel" title="Alternar fonte para facilitar leitura">
+          <span aria-hidden="true">🔤</span> Fonte legível
+        </button>
+        <button type="button" data-acao="falar" id="btnLeitorVoz" title="Ouvir leitura da página">
+          <span aria-hidden="true">🔊</span> Ouvir tela
+        </button>
+        <button type="button" data-acao="reset" title="Restaurar configurações padrões">Reset</button>
+        <button type="button" class="btn-libras-topo" id="btnModoLibrasTopo" title="Ativar modo Libras em toda a plataforma">
+          <span aria-hidden="true">🤟</span> Modo Libras: <span id="statusModoLibras">OFF</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CABEÇALHO / HEADER ================= -->
+  <header class="topo">
+    <div class="container topo-inner">
+      <a class="marca" href="#inicio" id="linkLogo" title="Conecta+ Início">
+        <img src="assets/logo.svg" alt="Logotipo do Conecta+">
+      </a>
+
+      <!-- Botão Menu Mobile -->
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navPrincipal" aria-label="Abrir menu de navegação">
+        <span class="menu-icone" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+        <span class="menu-texto">Menu</span>
+      </button>
+
+      <!-- Navegação Principal -->
+      <nav id="navPrincipal" class="nav" aria-label="Navegação principal">
+        <a href="#inicio" class="nav-item ativo" data-tela="inicio">
+          <span class="nav-ico" aria-hidden="true">🏠</span> Início
+        </a>
+        <a href="#cursos" class="nav-item" data-tela="cursos">
+          <span class="nav-ico" aria-hidden="true">💻</span> Cursos
+        </a>
+        <a href="#mapa" class="nav-item nav-item-mapa" data-tela="mapa">
+          <span class="nav-ico" aria-hidden="true">🗺️</span> Mapa Regional
+        </a>
+        <a href="#servicos" class="nav-item" data-tela="servicos">
+          <span class="nav-ico" aria-hidden="true">🏛️</span> Serviços
+        </a>
+        <a href="#empregos" class="nav-item" data-tela="empregos">
+          <span class="nav-ico" aria-hidden="true">💼</span> Empregos
+        </a>
+        <a href="#libras" class="nav-item nav-item-libras" data-tela="libras">
+          <span class="nav-ico" aria-hidden="true">🤟</span> Libras
+        </a>
+        <a href="#comunidade" class="nav-item" data-tela="comunidade">
+          <span class="nav-ico" aria-hidden="true">💬</span> Comunidade
+        </a>
+
+        <!-- Botões de Usuário / Autenticação -->
+        <div class="nav-auth-acoes">
+          <a href="https://wa.me/5541999008019?text=Ol%C3%A1!%20Vim%20pelo%20Conecta%2B%20e%20gostaria%20de%20ajuda." target="_blank" rel="noopener noreferrer" class="btn-whatsapp-topo" title="Falar no WhatsApp (41) 99900-8019">
+            <span aria-hidden="true">💬</span> WhatsApp (41) 99900-8019
+          </a>
+          <button type="button" class="btn-auth-login" id="btnAbrirLogin">
+            <span aria-hidden="true">🔑</span> Login
+          </button>
+          <button type="button" class="btn-cadastro" id="btnCadastro">
+            Cadastrar-se
+          </button>
+          <a href="#perfil" id="linkPerfil" class="nav-item-perfil" data-tela="perfil" style="display:none;">
+            <span class="avatar-mini" id="navAvatarMini">US</span>
+            <span id="navNomeUsuario">Meu Perfil</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= CONTEÚDO PRINCIPAL / TELAS (SPA) ================= -->
+  <main id="conteudo">
+
+    <!-- ================= TELA 1: INÍCIO / DASHBOARD ================= -->
+    <section id="tela-inicio" class="tela-secao tela-ativa">
+      <!-- HERO -->
+      <div class="hero">
+        <div class="container hero-inner">
+          <div class="hero-texto">
+            <div class="tag-row">
+              <span class="tag">💡 INCLUSÃO DIGITAL PARA TODOS</span>
+              <span class="tag tag-libras">🤟 ÁREA EM LIBRAS</span>
+              <span class="tag tag-whatsapp">📱 ATENDIMENTO (41) 99900-8019</span>
+            </div>
+            <h1>Conecta<span class="mais">+</span></h1>
+            <p class="lead">
+              A plataforma feita para você <strong>interagir, aprender informática passo a passo</strong>, 
+              achar cursos perto de você no mapa e superar qualquer dificuldade de conexão com o mundo digital.
+            </p>
+            <p class="slogan">
+              Mais <b class="c-ciano">autonomia</b>. Mais <b class="c-magenta">inclusão</b>. Mais <b class="c-azul">oportunidades</b>.
+            </p>
+            <div class="hero-botoes">
+              <a class="btn btn-primario" href="#cursos" data-navegar="cursos">
+                <span aria-hidden="true">🚀</span> Começar Cursos
+              </a>
+              <a class="btn btn-mapa" href="#mapa" data-navegar="mapa">
+                <span aria-hidden="true">🗺️</span> Ver Mapa da Região
+              </a>
+              <a class="btn btn-libras" href="#libras" data-navegar="libras">
+                <span aria-hidden="true">🤟</span> Área em Libras
+              </a>
+              <a class="btn btn-whatsapp" href="https://wa.me/5541999008019?text=Ol%C3%A1!%20Vim%20pelo%20Conecta%2B%20e%20gostaria%20de%20ajuda." target="_blank" rel="noopener noreferrer">
+                <span aria-hidden="true">💬</span> WhatsApp (41) 99900-8019
+              </a>
+            </div>
+          </div>
+          <div class="hero-arte">
+            <div class="hero-card-destaque">
+              <div class="hero-logo-glow">
+                <img src="assets/logo.svg" alt="Conecta+">
+              </div>
+              <div class="hero-badge-interativo">
+                <span class="badge-icon">🌐</span>
+                <div>
+                  <strong>INTERAÇÃO &amp; SUPORTE LOCAL</strong>
+                  <span>Encontre apoio, cursos e novas conexões</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NÚMEROS E IMPACTO -->
+      <div class="numeros">
+        <div class="container grid-4">
+          <div class="num">
+            <strong>100%</strong>
+            <span>Gratuito &amp; Acessível</span>
+          </div>
+          <div class="num">
+            <strong>🗺️ Mapa</strong>
+            <span>Cursos &amp; Pessoas na Região</span>
+          </div>
+          <div class="num">
+            <strong>🤟 Libras</strong>
+            <span>Vídeos &amp; Dicionário Prático</span>
+          </div>
+          <div class="num">
+            <strong>📱 (41) 99900-8019</strong>
+            <span>Suporte no WhatsApp</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ATALHOS RÁPIDOS PARA AS TELAS -->
+      <div class="secao alt">
+        <div class="container">
+          <div class="cabecalho-secao">
+            <h2>O que você deseja fazer agora?</h2>
+            <p class="sub">Escolha uma das opções abaixo para navegar pelas ferramentas do Conecta+:</p>
+          </div>
+          <div class="grid-3 atalhos-grid">
+            <div class="card card-interativo" data-navegar="mapa">
+              <div class="card-ico-wrapper card-ico-mapa" aria-hidden="true">🗺️</div>
+              <div class="card-tag card-tag-novo">NOVO</div>
+              <h3>Mapa na sua Região</h3>
+              <p>Veja no mapa onde encontrar cursos presenciais gratuitos e encontre pessoas que estão conectadas na sua cidade.</p>
+              <button type="button" class="link-acao">Abrir Mapa <span aria-hidden="true">→</span></button>
+            </div>
+            <div class="card card-interativo" data-navegar="cursos">
+              <div class="card-ico-wrapper" aria-hidden="true">💻</div>
+              <h3>Cursos de Informática</h3>
+              <p>Aprenda a usar o computador, celular, navegar na internet, redes sociais e ferramentas do trabalho do zero.</p>
+              <button type="button" class="link-acao">Ver Cursos <span aria-hidden="true">→</span></button>
+            </div>
+            <div class="card card-interativo" data-navegar="libras">
+              <div class="card-ico-wrapper card-ico-libras" aria-hidden="true">🤟</div>
+              <div class="card-tag">Especial</div>
+              <h3>Módulo em Libras</h3>
+              <p>Dicionário de sinais digitais, videoaulas com intérprete e tradutor de palavras para o alfabeto em Libras.</p>
+              <button type="button" class="link-acao c-magenta">Acessar Libras <span aria-hidden="true">→</span></button>
+            </div>
+            <div class="card card-interativo" data-navegar="comunidade">
+              <div class="card-ico-wrapper" aria-hidden="true">💬</div>
+              <h3>Comunidade &amp; Conversas</h3>
+              <p>Converse com outras pessoas, faça perguntas, tire dúvidas e compartilhe suas conquistas na tecnologia.</p>
+              <button type="button" class="link-acao">Entrar na Comunidade <span aria-hidden="true">→</span></button>
+            </div>
+            <div class="card card-interativo" data-navegar="servicos">
+              <div class="card-ico-wrapper" aria-hidden="true">🏛️</div>
+              <h3>Serviços Públicos Online</h3>
+              <p>Guias simples para tirar CPF, Carteira de Trabalho, agendar no SUS e acessar o portal Gov.br.</p>
+              <button type="button" class="link-acao">Ver Serviços <span aria-hidden="true">→</span></button>
+            </div>
+            <div class="card card-interativo" data-navegar="empregos">
+              <div class="card-ico-wrapper" aria-hidden="true">💼</div>
+              <h3>Vagas &amp; Empregos</h3>
+              <p>Vagas inclusivas (PCD), primeiro emprego e dicas para montar um currículo profissional de sucesso.</p>
+              <button type="button" class="link-acao">Ver Vagas <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD WHATSAPP -->
+      <div class="secao cta-whatsapp">
+        <div class="container">
+          <div class="card card-whatsapp-banner">
+            <div class="whatsapp-banner-info">
+              <span class="whatsapp-badge-pulsando">🟢 Atendimento Online no WhatsApp</span>
+              <h3>Tem alguma dúvida ou dificuldade com a plataforma?</h3>
+              <p>Fale diretamente comigo pelo WhatsApp no número <strong>(41) 99900-8019</strong>. Estamos aqui para ajudar!</p>
+            </div>
+            <a href="https://wa.me/5541999008019?text=Ol%C3%A1!%20Vim%20pelo%20Conecta%2B%20e%20gostaria%20de%20ajuda." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-grande">
+              <span aria-hidden="true">💬</span> Falar no WhatsApp (41) 99900-8019
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOBRE O PROJETO -->
+      <div id="sobre" class="secao">
+        <div class="container">
+          <h2>Sobre o Projeto Conecta<span class="mais">+</span></h2>
+          <p class="sub">
+            O Conecta+ nasceu com a missão de aproximar pessoas e tecnologia de forma acolhedora, inclusiva e acessível.
+          </p>
+
+          <div class="grid-2">
+            <article class="card">
+              <h3><span aria-hidden="true">🎯</span> Nosso Propósito</h3>
+              <p>
+                Garantir que todas as pessoas tenham autonomia para usar a tecnologia, acessar serviços essenciais e se comunicar livremente sem barreiras.
+              </p>
+            </article>
+            <article class="card">
+              <h3><span aria-hidden="true">🤝</span> Apoio &amp; Interação</h3>
+              <p>
+                Estimular a ajuda mútua na comunidade, com respeito e acessibilidade para pessoas que precisam de conteúdos em Libras.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TELA: MAPA REGIONAL (LEAFLET) ================= -->
+    <section id="tela-mapa" class="tela-secao" style="display:none;">
+      <div class="secao-topo-banner banner-mapa">
+        <div class="container">
+          <button type="button" class="btn-voltar" data-navegar="inicio"><span aria-hidden="true">←</span> Voltar ao Início</button>
+          <div class="tag-row">
+            <span class="tag tag-mapa-destaque">📍 MAPA INTERATIVO</span>
+            <span class="tag">CURITIBA &amp; REGIÃO (DDD 41)</span>
+          </div>
+          <h2>Mapa da Região: Cursos &amp; Pessoas Conectadas</h2>
+          <p class="sub">
+            Encontre locais onde são oferecidos cursos presenciais gratuitos de informática e veja as pessoas conectadas na sua região.
+          </p>
+        </div>
+      </div>
+
+      <div class="container secao-conteudo">
+        <!-- Controles do Mapa -->
+        <div class="mapa-controles-card card">
+          <div class="mapa-filtros-linha">
+            <div class="mapa-filtros-botoes" role="toolbar" aria-label="Filtro de marcadores do mapa">
+              <button type="button" class="filtro-mapa-btn ativo" data-filtro-mapa="todos">
+                <span aria-hidden="true">🌐</span> Todos no Mapa
+              </button>
+              <button type="button" class="filtro-mapa-btn" data-filtro-mapa="cursos">
+                <span aria-hidden="true">🏫</span> Polos de Cursos
+              </button>
+              <button type="button" class="filtro-mapa-btn" data-filtro-mapa="pessoas">
+                <span aria-hidden="true">👥</span> Pessoas Conectadas
+              </button>
+            </div>
+
+            <button type="button" class="btn btn-primario btn-sm" id="btnGeolocalizacao">
+              <span aria-hidden="true">📍</span> Minha Localização Atual
+            </button>
+          </div>
+
+          <p class="nota" id="statusLocalizacao">📍 Mostrando região de Curitiba / PR (DDD 41). Clique no botão para detectar seu bairro pelo GPS.</p>
+        </div>
+
+        <!-- Container do Mapa -->
+        <div class="mapa-wrapper card">
+          <div id="mapaConecta" style="height: 520px; width: 100%; border-radius: var(--raio-sm);"></div>
+        </div>
+
+        <!-- Lista de Polos e Pessoas -->
+        <div class="mapa-locais-grid">
           <div class="card">
-            <h4>Informações Pessoais</h4>
-            <div class="info-item">
-              <span class="info-label">CPF:</span>
-              <span id="perfilCPF">Não informado</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Telefone:</span>
-              <span id="perfilTelefone">Não informado</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Endereço:</span>
-              <span id="perfilEndereco">Não informado</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Cidade/UF:</span>
-              <span id="perfilCidadeUF">Não informado</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Interesse:</span>
-              <span id="perfilInteresse">Não informado</span>
+            <h3><span aria-hidden="true">🏫</span> Polos de Cursos Gratuitos</h3>
+            <div class="lista-locais" id="listaPolosCursos">
+              <!-- Gerado via JS -->
             </div>
           </div>
 
-          <div class="perfil-acoes">
-            <button class="btn btn-primario" id="btnEditarPerfil">Editar perfil</button>
-            <button class="btn btn-secundario" id="btnSair">Sair</button>
+          <div class="card">
+            <h3><span aria-hidden="true">👥</span> Pessoas Conectadas na Região</h3>
+            <div class="lista-locais" id="listaPessoasRegiao">
+              <!-- Gerado via JS -->
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
 
-<!-- Modal de Cadastro -->
-<div id="modalCadastro" class="modal" role="dialog" aria-labelledby="modalTitulo" aria-hidden="true">
-  <div class="modal-conteudo">
-    <div class="modal-cabecalho">
-      <h2 id="modalTitulo">Cadastre-se no Conecta+</h2>
-      <button class="modal-fechar" id="fecharModal" aria-label="Fechar modal">×</button>
-    </div>
-    <form class="form-cadastro" id="formCadastro" novalidate>
-      <div class="campo">
-        <label for="cadNome">Nome completo *</label>
-        <input id="cadNome" name="nome" type="text" autocomplete="name" required>
-      </div>
-      <div class="campo">
-        <label for="cadEmail">E-mail *</label>
-        <input id="cadEmail" name="email" type="email" autocomplete="email" required>
-      </div>
-      <div class="campo">
-        <label for="cadCPF">CPF</label>
-        <input id="cadCPF" name="cpf" type="text" placeholder="000.000.000-00" autocomplete="off">
-      </div>
-      <div class="campo">
-        <label for="cadTelefone">Telefone</label>
-        <input id="cadTelefone" name="telefone" type="tel" placeholder="(00) 00000-0000" autocomplete="tel">
-      </div>
-      <div class="campo">
-        <label for="cadEndereco">Endereço</label>
-        <input id="cadEndereco" name="endereco" type="text" autocomplete="street-address">
-      </div>
-      <div class="campo-grid">
-        <div class="campo">
-          <label for="cadCidade">Cidade</label>
-          <input id="cadCidade" name="cidade" type="text" autocomplete="address-level2">
-        </div>
-        <div class="campo">
-          <label for="cadUF">UF</label>
-          <select id="cadUF" name="uf">
-            <option value="">Selecione</option>
-            <option value="AC">AC</option>
-            <option value="AL">AL</option>
-            <option value="AP">AP</option>
-            <option value="AM">AM</option>
-            <option value="BA">BA</option>
-            <option value="CE">CE</option>
-            <option value="DF">DF</option>
-            <option value="ES">ES</option>
-            <option value="GO">GO</option>
-            <option value="MA">MA</option>
-            <option value="MT">MT</option>
-            <option value="MS">MS</option>
-            <option value="MG">MG</option>
-            <option value="PA">PA</option>
-            <option value="PB">PB</option>
-            <option value="PR">PR</option>
-            <option value="PE">PE</option>
-            <option value="PI">PI</option>
-            <option value="RJ">RJ</option>
-            <option value="RN">RN</option>
-            <option value="RS">RS</option>
-            <option value="RO">RO</option>
-            <option value="RR">RR</option>
-            <option value="SC">SC</option>
-            <option value="SP">SP</option>
-            <option value="SE">SE</option>
-            <option value="TO">TO</option>
-          </select>
+    <!-- ================= TELA 2: CURSOS DE INFORMÁTICA ================= -->
+    <section id="tela-cursos" class="tela-secao" style="display:none;">
+      <div class="secao-topo-banner">
+        <div class="container">
+          <button type="button" class="btn-voltar" data-navegar="inicio"><span aria-hidden="true">←</span> Voltar ao Início</button>
+          <div class="tag-row">
+            <span class="tag">💻 APRENDA DO ZERO</span>
+            <span class="tag tag-libras">🤟 AULAS EM LIBRAS</span>
+          </div>
+          <h2>Cursos Gratuitos de Informática</h2>
+          <p class="sub">
+            Aulas práticas e fáceis para você aprender a mexer no computador, celular e na internet com segurança.
+          </p>
         </div>
       </div>
-      <div class="campo">
-        <label for="cadInteresse">Área de maior interesse</label>
-        <select id="cadInteresse" name="interesse">
-          <option>Cursos de informática</option>
-          <option>Serviços públicos online</option>
-          <option>Empregos e qualificação</option>
-          <option>Conteúdos em Libras</option>
-        </select>
-      </div>
-      <div class="campo">
-        <label class="check-termos">
-          <input type="checkbox" id="aceiteTermos" required>
-          Concordo com os termos de uso e política de privacidade *
-        </label>
-      </div>
-      <button class="btn btn-primario" type="submit">Concluir cadastro</button>
-      <p class="nota" id="msgCadastro" role="status"></p>
-    </form>
-  </div>
-</div>
 
-<footer class="rodape">
-  <div class="container rodape-inner">
-    <div>
-      <img class="rodape-logo" src="assets/logo.png" alt="Conecta+">
-      <p>Tecnologia como ferramenta de transformação e inclusão.</p>
+      <div class="container secao-conteudo">
+        <!-- Filtro de Cursos -->
+        <div class="filtros-barra" role="toolbar" aria-label="Filtro de cursos">
+          <span class="filtros-titulo">Nível:</span>
+          <button type="button" class="filtro-btn ativo" data-filtro="todos">Todos os Cursos</button>
+          <button type="button" class="filtro-btn" data-filtro="iniciante">Iniciante (Do Zero)</button>
+          <button type="button" class="filtro-btn" data-filtro="celular">Celular &amp; Apps</button>
+          <button type="button" class="filtro-btn" data-filtro="seguranca">Segurança &amp; Web</button>
+        </div>
+
+        <div class="grid-3" id="gradeCursos">
+          <!-- Curso 1 -->
+          <article class="card curso-card" data-categoria="iniciante">
+            <div class="curso-topo">
+              <span class="nivel nivel-iniciante">Iniciante</span>
+              <span class="curso-tempo">⏱️ 4 horas</span>
+            </div>
+            <h3>Primeiros Passos no Computador</h3>
+            <p>Como ligar, usar o mouse, teclado, abrir pastas e salvar arquivos sem medo.</p>
+            <div class="curso-progresso">
+              <div class="progresso-trilha"><div class="progresso-barra" style="width: 100%;"></div></div>
+              <span>Disponível</span>
+            </div>
+            <div class="curso-acoes">
+              <button type="button" class="btn btn-primario btn-sm btn-abrir-aula" data-curso="computador">
+                <span aria-hidden="true">▶</span> Iniciar Aula
+              </button>
+              <button type="button" class="btn-libras-aula" title="Ver aula com intérprete em Libras" data-aula-libras="computador">
+                <span aria-hidden="true">🤟</span> Libras
+              </button>
+            </div>
+          </article>
+
+          <!-- Curso 2 -->
+          <article class="card curso-card" data-categoria="celular">
+            <div class="curso-topo">
+              <span class="nivel nivel-iniciante">Iniciante</span>
+              <span class="curso-tempo">⏱️ 3 horas</span>
+            </div>
+            <h3>Usando o Celular no Dia a Dia</h3>
+            <p>Baixar aplicativos, usar o WhatsApp, tirar fotos e fazer chamadas de vídeo com a família.</p>
+            <div class="curso-progresso">
+              <div class="progresso-trilha"><div class="progresso-barra" style="width: 70%;"></div></div>
+              <span>Prático &amp; Rápido</span>
+            </div>
+            <div class="curso-acoes">
+              <button type="button" class="btn btn-primario btn-sm btn-abrir-aula" data-curso="celular">
+                <span aria-hidden="true">▶</span> Iniciar Aula
+              </button>
+              <button type="button" class="btn-libras-aula" title="Ver aula em Libras" data-aula-libras="celular">
+                <span aria-hidden="true">🤟</span> Libras
+              </button>
+            </div>
+          </article>
+
+          <!-- Curso 3 -->
+          <article class="card curso-card" data-categoria="seguranca">
+            <div class="curso-topo">
+              <span class="nivel nivel-iniciante">Iniciante</span>
+              <span class="curso-tempo">⏱️ 3 horas</span>
+            </div>
+            <h3>Internet Sem Medo</h3>
+            <p>Como navegar, fazer pesquisas no Google, identificar notícias falsas e sites confiáveis.</p>
+            <div class="curso-progresso">
+              <div class="progresso-trilha"><div class="progresso-barra" style="width: 85%;"></div></div>
+              <span>Essencial</span>
+            </div>
+            <div class="curso-acoes">
+              <button type="button" class="btn btn-primario btn-sm btn-abrir-aula" data-curso="internet">
+                <span aria-hidden="true">▶</span> Iniciar Aula
+              </button>
+              <button type="button" class="btn-libras-aula" title="Ver aula em Libras" data-aula-libras="internet">
+                <span aria-hidden="true">🤟</span> Libras
+              </button>
+            </div>
+          </article>
+
+          <!-- Curso 4 -->
+          <article class="card curso-card" data-categoria="iniciante">
+            <div class="curso-topo">
+              <span class="nivel nivel-basico">Básico</span>
+              <span class="curso-tempo">⏱️ 5 horas</span>
+            </div>
+            <h3>E-mail e Documentos Digitais</h3>
+            <p>Crie sua conta de e-mail, envie mensagens com anexos e escreva textos e currículos online.</p>
+            <div class="curso-progresso">
+              <div class="progresso-trilha"><div class="progresso-barra" style="width: 50%;"></div></div>
+              <span>Mais Procurado</span>
+            </div>
+            <div class="curso-acoes">
+              <button type="button" class="btn btn-primario btn-sm btn-abrir-aula" data-curso="email">
+                <span aria-hidden="true">▶</span> Iniciar Aula
+              </button>
+              <button type="button" class="btn-libras-aula" title="Ver aula em Libras" data-aula-libras="email">
+                <span aria-hidden="true">🤟</span> Libras
+              </button>
+            </div>
+          </article>
+
+          <!-- Curso 5 -->
+          <article class="card curso-card" data-categoria="seguranca">
+            <div class="curso-topo">
+              <span class="nivel nivel-basico">Básico</span>
+              <span class="curso-tempo">⏱️ 4 horas</span>
+            </div>
+            <h3>Segurança &amp; Prevenção de Golpes</h3>
+            <p>Como criar senhas fortes, não cair em golpes do Pix/WhatsApp e proteger seus dados.</p>
+            <div class="curso-progresso">
+              <div class="progresso-trilha"><div class="progresso-barra" style="width: 60%;"></div></div>
+              <span>Proteção</span>
+            </div>
+            <div class="curso-acoes">
+              <button type="button" class="btn btn-primario btn-sm btn-abrir-aula" data-curso="seguranca">
+                <span aria-hidden="true">▶</span> Iniciar Aula
+              </button>
+              <button type="button" class="btn-libras-aula" title="Ver aula em Libras" data-aula-libras="seguranca">
+                <span aria-hidden="true">🤟</span> Libras
+              </button>
+            </div>
+          </article>
+
+          <!-- Curso 6 -->
+          <article class="card curso-card" data-categoria="celular">
+            <div class="curso-topo">
+              <span class="nivel nivel-intermediario">Intermediário</span>
+              <span class="curso-tempo">⏱️ 6 horas</span>
+            </div>
+            <h3>Ferramentas de Trabalho e Nuvem</h3>
+            <p>Aprenda a salvar arquivos na nuvem (Google Drive), participar de reuniões online e organizar tarefas.</p>
+            <div class="curso-progresso">
+              <div class="progresso-trilha"><div class="progresso-barra" style="width: 40%;"></div></div>
+              <span>Profissional</span>
+            </div>
+            <div class="curso-acoes">
+              <button type="button" class="btn btn-primario btn-sm btn-abrir-aula" data-curso="ferramentas">
+                <span aria-hidden="true">▶</span> Iniciar Aula
+              </button>
+              <button type="button" class="btn-libras-aula" title="Ver aula em Libras" data-aula-libras="ferramentas">
+                <span aria-hidden="true">🤟</span> Libras
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TELA 3: SERVIÇOS PÚBLICOS ONLINE ================= -->
+    <section id="tela-servicos" class="tela-secao" style="display:none;">
+      <div class="secao-topo-banner">
+        <div class="container">
+          <button type="button" class="btn-voltar" data-navegar="inicio"><span aria-hidden="true">←</span> Voltar ao Início</button>
+          <div class="tag-row">
+            <span class="tag">🏛️ CIDADANIA DIGITAL</span>
+          </div>
+          <h2>Serviços Públicos Online Descomplicados</h2>
+          <p class="sub">
+            Instruções passo a passo para acessar os serviços do governo de forma simples e direta.
+          </p>
+        </div>
+      </div>
+
+      <div class="container secao-conteudo">
+        <div class="busca-servicos-container">
+          <label for="buscaServicoInput" class="sr">Pesquisar serviço público</label>
+          <div class="campo-busca">
+            <span class="busca-ico" aria-hidden="true">🔍</span>
+            <input type="text" id="buscaServicoInput" placeholder="Ex: CPF, Carteira de Trabalho, SUS, Meu INSS, Título de Eleitor...">
+          </div>
+        </div>
+
+        <div class="grid-3" id="listaServicosCards">
+          <article class="card servico-card" data-busca="cpf certidao documento identidade rg">
+            <div class="card-ico-wrapper" aria-hidden="true">🪪</div>
+            <h3>Documentos &amp; CPF</h3>
+            <p>Como emitir comprovante de CPF, 2ª via de certidões e consultar situação cadastral.</p>
+            <button type="button" class="btn btn-secundario btn-sm btn-ver-passos" data-servico="cpf">Ver Passo a Passo</button>
+          </article>
+
+          <article class="card servico-card" data-busca="gov.br conta governo acesso senha">
+            <div class="card-ico-wrapper" aria-hidden="true">🔐</div>
+            <h3>Conta Gov.br</h3>
+            <p>Criar e recuperar sua conta prata/ouro para acessar todos os sites do governo.</p>
+            <button type="button" class="btn btn-secundario btn-sm btn-ver-passos" data-servico="govbr">Ver Passo a Passo</button>
+          </article>
+
+          <article class="card servico-card" data-busca="carteira trabalho digital ctps contrato">
+            <div class="card-ico-wrapper" aria-hidden="true">💼</div>
+            <h3>Carteira de Trabalho Digital</h3>
+            <p>Baixar o app no celular, ver contratos antigos e assinar novo emprego online.</p>
+            <button type="button" class="btn btn-secundario btn-sm btn-ver-passos" data-servico="ctps">Ver Passo a Passo</button>
+          </article>
+
+          <article class="card servico-card" data-busca="sus meu sus digital vacinas agendamento consulta saude posto">
+            <div class="card-ico-wrapper" aria-hidden="true">🏥</div>
+            <h3>Meu SUS Digital &amp; Saúde</h3>
+            <p>Consultar carteira de vacinação, agendar consultas no posto e histórico de saúde.</p>
+            <button type="button" class="btn btn-secundario btn-sm btn-ver-passos" data-servico="sus">Ver Passo a Passo</button>
+          </article>
+
+          <article class="card servico-card" data-busca="inss aposentadoria extrato pericia beneficio bpc meu inss">
+            <div class="card-ico-wrapper" aria-hidden="true">👴</div>
+            <h3>Meu INSS &amp; Benefícios</h3>
+            <p>Consultar extratos, agendar perícias, dar entrada em aposentadoria e BPC/LOAS.</p>
+            <button type="button" class="btn btn-secundario btn-sm btn-ver-passos" data-servico="inss">Ver Passo a Passo</button>
+          </article>
+
+          <article class="card servico-card" data-busca="bolsa familia cadastro unico cadunico cras auxilio">
+            <div class="card-ico-wrapper" aria-hidden="true">👨‍👩‍👧</div>
+            <h3>Cadastro Único &amp; Bolsa Família</h3>
+            <p>Como verificar o cadastro, atualizar dados e saber se tem direito a benefícios sociais.</p>
+            <button type="button" class="btn btn-secundario btn-sm btn-ver-passos" data-servico="cadunico">Ver Passo a Passo</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TELA 4: EMPREGOS & QUALIFICAÇÃO ================= -->
+    <section id="tela-empregos" class="tela-secao" style="display:none;">
+      <div class="secao-topo-banner">
+        <div class="container">
+          <button type="button" class="btn-voltar" data-navegar="inicio"><span aria-hidden="true">←</span> Voltar ao Início</button>
+          <div class="tag-row">
+            <span class="tag">💼 OPORTUNIDADES INCLUSIVAS</span>
+          </div>
+          <h2>Empregos e Oportunidades</h2>
+          <p class="sub">
+            Vagas inclusivas com foco em acessibilidade (PCD), primeiro emprego e capacitação profissional.
+          </p>
+        </div>
+      </div>
+
+      <div class="container secao-conteudo">
+        <div class="grid-empregos-layout">
+          <div class="empregos-lista">
+            <div class="vagas-filtro-box">
+              <h3>Mural de Vagas Abertas</h3>
+              <p class="nota">Clique em uma vaga para ver detalhes e se candidatar gratuitamente.</p>
+            </div>
+
+            <div class="vagas-cards" id="muralVagas">
+              <article class="card vaga-item">
+                <div class="vaga-header">
+                  <div>
+                    <span class="vaga-badge vaga-badge-pcd">Inclusiva PCD / Acessível</span>
+                    <h4>Assistente de Atendimento &amp; Suporte Digital</h4>
+                    <p class="vaga-empresa">🏢 ConectaTech Soluções • Híbrido (Curitiba / Remoto)</p>
+                  </div>
+                  <span class="vaga-salario">R$ 2.100 + Benefícios</span>
+                </div>
+                <p class="vaga-resumo">
+                  Atendimento via chat e e-mail. Aceitamos pessoas sem experiência prévia com treinamento completo.
+                </p>
+                <div class="vaga-rodape">
+                  <span class="vaga-tag">Jornada 6h</span>
+                  <span class="vaga-tag">Treinamento em Libras</span>
+                  <button type="button" class="btn btn-primario btn-sm btn-candidatar" data-vaga="1">Candidatar-se</button>
+                </div>
+              </article>
+
+              <article class="card vaga-item">
+                <div class="vaga-header">
+                  <div>
+                    <span class="vaga-badge">Primeiro Emprego / Jovem</span>
+                    <h4>Auxiliar Administrativo e Cadastro</h4>
+                    <p class="vaga-empresa">🏢 Grupo Integração • Presencial</p>
+                  </div>
+                  <span class="vaga-salario">R$ 1.850 + VT + VR</span>
+                </div>
+                <p class="vaga-resumo">
+                  Organização de arquivos digitais, preenchimento de planilhas simples e apoio ao setor administrativo.
+                </p>
+                <div class="vaga-rodape">
+                  <span class="vaga-tag">CLT</span>
+                  <span class="vaga-tag">Horário Comercial</span>
+                  <button type="button" class="btn btn-primario btn-sm btn-candidatar" data-vaga="2">Candidatar-se</button>
+                </div>
+              </article>
+
+              <article class="card vaga-item">
+                <div class="vaga-header">
+                  <div>
+                    <span class="vaga-badge vaga-badge-pcd">100% Remoto</span>
+                    <h4>Digitador e Operador de Dados</h4>
+                    <p class="vaga-empresa">🏢 Rede Dados Acessíveis • Home Office</p>
+                  </div>
+                  <span class="vaga-salario">R$ 1.980 + Ajuda de Custo</span>
+                </div>
+                <p class="vaga-resumo">
+                  Digitação de formulários e documentos. Excelente oportunidade para pessoas com deficiência auditiva.
+                </p>
+                <div class="vaga-rodape">
+                  <span class="vaga-tag">Home Office</span>
+                  <span class="vaga-tag">Ambiente Acessível</span>
+                  <button type="button" class="btn btn-primario btn-sm btn-candidatar" data-vaga="3">Candidatar-se</button>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <aside class="empregos-lateral">
+            <div class="card card-dica">
+              <h3><span aria-hidden="true">💡</span> Dicas de Preparação</h3>
+              <ul class="lista-checks">
+                <li>Como criar um currículo simples e direto no celular</li>
+                <li>Dicas para a entrevista de emprego online</li>
+                <li>Como se cadastrar no SINE e no CIEE</li>
+                <li>Cursos gratuitos que contam pontos no currículo</li>
+              </ul>
+              <button type="button" class="btn btn-secundario btn-sm btn-bloco" id="btnGerarCurriculo">
+                📄 Modelo de Currículo Gratuito
+              </button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TELA 5: ÁREA EM LIBRAS ================= -->
+    <section id="tela-libras" class="tela-secao" style="display:none;">
+      <div class="secao-topo-banner banner-libras">
+        <div class="container">
+          <button type="button" class="btn-voltar" data-navegar="inicio"><span aria-hidden="true">←</span> Voltar ao Início</button>
+          <div class="tag-row">
+            <span class="tag tag-libras-brilhante">🤟 RECONHECIMENTO &amp; INCLUSÃO</span>
+            <span class="tag">ACESSIBILIDADE EM LIBRAS</span>
+          </div>
+          <h2>Módulo Acessível em Libras</h2>
+          <p class="sub">
+            Ambiente interativo em <strong>Língua Brasileira de Sinais</strong>: assista a videoaulas com avatar/intérprete, consulte o glossário digital e use o tradutor de datilologia em tempo real.
+          </p>
+        </div>
+      </div>
+
+      <div class="container secao-conteudo">
+        <div class="abas-libras" role="tablist" aria-label="Abas da Área de Libras">
+          <button type="button" class="aba-btn ativo" id="abaLibrasVideos" role="tab" aria-selected="true" aria-controls="painelVideosLibras">
+            <span aria-hidden="true">🎥</span> Videoaulas com Intérprete
+          </button>
+          <button type="button" class="aba-btn" id="abaLibrasDicionario" role="tab" aria-selected="false" aria-controls="painelDicionarioLibras">
+            <span aria-hidden="true">📖</span> Dicionário de Sinais
+          </button>
+          <button type="button" class="aba-btn" id="abaLibrasAlfabeto" role="tab" aria-selected="false" aria-controls="painelAlfabetoLibras">
+            <span aria-hidden="true">🖐️</span> Datilologia (Alfabeto Manual)
+          </button>
+        </div>
+
+        <!-- PAINEL 1: PLAYER DE VÍDEO -->
+        <div id="painelVideosLibras" class="painel-libras painel-ativo" role="tabpanel" aria-labelledby="abaLibrasVideos">
+          <div class="grid-player-libras">
+            <div class="libras-player-wrapper">
+              <div class="libras-player-box" id="playerLibrasBox">
+                <div class="interprete-canvas">
+                  <div class="interprete-avatar-figura">
+                    <div class="interprete-cabeca">
+                      <span class="interprete-olhos"></span>
+                      <span class="interprete-sorriso"></span>
+                    </div>
+                    <div class="interprete-corpo">
+                      <div class="interprete-braco braco-esq"></div>
+                      <div class="interprete-braco braco-dir"></div>
+                    </div>
+                  </div>
+                  <div class="interprete-onda-sinal" aria-hidden="true">
+                    <span>🤟</span>
+                    <span>✨</span>
+                  </div>
+                </div>
+
+                <div class="libras-legenda-box">
+                  <span class="badge-legenda">LEGENDA SINCRONIZADA</span>
+                  <p id="textoLegendaLibras">"Olá! Bem-vindo ao Conecta+. Vamos aprender juntos a usar a tecnologia e navegar sem dificuldades!"</p>
+                </div>
+              </div>
+
+              <div class="libras-player-controles">
+                <button type="button" class="btn btn-primario btn-sm" id="btnPlayLibras">
+                  <span aria-hidden="true">▶</span> Reproduzir
+                </button>
+                <button type="button" class="btn btn-secundario btn-sm" id="btnRepetirLibras">
+                  <span aria-hidden="true">🔄</span> Repetir
+                </button>
+                <div class="controle-velocidade">
+                  <label for="selVelocidadeLibras">Velocidade:</label>
+                  <select id="selVelocidadeLibras">
+                    <option value="0.75">0.75x (Lenta)</option>
+                    <option value="1" selected>1.0x (Normal)</option>
+                    <option value="1.25">1.25x (Rápida)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="libras-topicos-col">
+              <h3>Selecione o Tópico em Libras:</h3>
+              <div class="topicos-libras-lista" id="listaTopicosLibras">
+                <button type="button" class="topico-libras-item ativo" data-topico="apresentacao">
+                  <span class="topico-num">1</span>
+                  <div>
+                    <strong>Apresentação do Conecta+</strong>
+                    <small>O que é e como navegar na plataforma</small>
+                  </div>
+                  <span class="topico-sinal" aria-hidden="true">🤟</span>
+                </button>
+
+                <button type="button" class="topico-libras-item" data-topico="computador">
+                  <span class="topico-num">2</span>
+                  <div>
+                    <strong>Primeiros Passos no Computador</strong>
+                    <small>Como ligar, usar o mouse e janelas</small>
+                  </div>
+                  <span class="topico-sinal" aria-hidden="true">💻</span>
+                </button>
+
+                <button type="button" class="topico-libras-item" data-topico="internet">
+                  <span class="topico-num">3</span>
+                  <div>
+                    <strong>Como Fazer Buscas na Internet</strong>
+                    <small>Sites seguros e como pesquisar</small>
+                  </div>
+                  <span class="topico-sinal" aria-hidden="true">🌐</span>
+                </button>
+
+                <button type="button" class="topico-libras-item" data-topico="servicos">
+                  <span class="topico-num">4</span>
+                  <div>
+                    <strong>Acessando Serviços Públicos</strong>
+                    <small>Gov.br, SUS e documentos online</small>
+                  </div>
+                  <span class="topico-sinal" aria-hidden="true">🏛️</span>
+                </button>
+
+                <button type="button" class="topico-libras-item" data-topico="vagas">
+                  <span class="topico-num">5</span>
+                  <div>
+                    <strong>Como Buscar Empregos</strong>
+                    <small>Currículo e vagas para comunidade surda</small>
+                  </div>
+                  <span class="topico-sinal" aria-hidden="true">💼</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAINEL 2: DICIONÁRIO DE SINAIS -->
+        <div id="painelDicionarioLibras" class="painel-libras" role="tabpanel" aria-labelledby="abaLibrasDicionario" style="display:none;">
+          <div class="dicionario-libras-box">
+            <div class="dicionario-busca-linha">
+              <label for="buscaSinalInput" class="sr">Pesquisar sinal em Libras</label>
+              <div class="campo-busca">
+                <span class="busca-ico" aria-hidden="true">🔍</span>
+                <input type="text" id="buscaSinalInput" placeholder="Busque um termo (ex: Internet, Senha, E-mail, Celular, Conectar, Ajuda)...">
+              </div>
+            </div>
+
+            <div class="grid-3" id="gradeDicionarioSinais">
+              <!-- Sinais gerados via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- PAINEL 3: DATILOLOGIA INTERATIVA -->
+        <div id="painelAlfabetoLibras" class="painel-libras" role="tabpanel" aria-labelledby="abaLibrasAlfabeto" style="display:none;">
+          <div class="card datilologia-box">
+            <h3><span aria-hidden="true">🖐️</span> Tradutor de Datilologia (Alfabeto em Libras)</h3>
+            <p class="sub">Digite seu nome ou qualquer palavra abaixo para ver como soletramos letra por letra em Libras:</p>
+            
+            <div class="campo datilologia-input-wrapper">
+              <label for="inputDatilologia">Digite uma palavra ou frase:</label>
+              <input type="text" id="inputDatilologia" placeholder="Ex: CONECTA, SEU NOME, OLA..." maxlength="30" value="CONECTA">
+            </div>
+
+            <div class="datilologia-resultado" id="resultadoDatilologia" aria-live="polite">
+              <!-- Cards das mãos gerados dinamicamente -->
+            </div>
+
+            <div class="alfabeto-completo-grid">
+              <h4>Alfabeto Completo de A a Z:</h4>
+              <div class="letras-botoes-grid" id="gridLetrasBotoes">
+                <!-- Botões A-Z -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TELA 6: COMUNIDADE INTERATIVA ================= -->
+    <section id="tela-comunidade" class="tela-secao" style="display:none;">
+      <div class="secao-topo-banner">
+        <div class="container">
+          <button type="button" class="btn-voltar" data-navegar="inicio"><span aria-hidden="true">←</span> Voltar ao Início</button>
+          <div class="tag-row">
+            <span class="tag">💬 REDE DE COOPERAÇÃO</span>
+            <span class="tag tag-libras">🤟 POSTS EM LIBRAS &amp; PORTUGUÊS</span>
+          </div>
+          <h2>Comunidade Conecta<span class="mais">+</span></h2>
+          <p class="sub">
+            Espaço acolhedor para tirar dúvidas, compartilhar aprendizados e interagir com outras pessoas.
+          </p>
+        </div>
+      </div>
+
+      <div class="container secao-conteudo">
+        <div class="com-layout">
+          <aside class="com-lateral" aria-label="Grupos e pessoas online">
+            <h3>Grupos de Discussão</h3>
+            <ul class="grupos" id="listaGrupos">
+              <li><button type="button" class="grupo ativo" data-grupo="Todos"><span aria-hidden="true">🌐</span> Todos os assuntos</button></li>
+              <li><button type="button" class="grupo" data-grupo="Informática"><span aria-hidden="true">💻</span> Informática Básica</button></li>
+              <li><button type="button" class="grupo" data-grupo="Serviços"><span aria-hidden="true">🏛️</span> Serviços Públicos</button></li>
+              <li><button type="button" class="grupo" data-grupo="Empregos"><span aria-hidden="true">💼</span> Empregos &amp; Carreira</button></li>
+              <li><button type="button" class="grupo" data-grupo="Libras"><span aria-hidden="true">🤟</span> Libras &amp; Inclusão</button></li>
+              <li><button type="button" class="grupo" data-grupo="Segurança"><span aria-hidden="true">🔒</span> Segurança &amp; Golpes</button></li>
+            </ul>
+
+            <div class="online">
+              <h3>Pessoas Conectadas Agora</h3>
+              <ul class="lista-online">
+                <li><span class="avatar" aria-hidden="true">MJ</span> Maria Julia <span class="ponto" aria-label="online"></span></li>
+                <li><span class="avatar" aria-hidden="true">RS</span> Rafael Souza <span class="ponto" aria-label="online"></span></li>
+                <li><span class="avatar" aria-hidden="true">AL</span> Ana Lima (Intérprete) <span class="ponto" aria-label="online"></span></li>
+                <li><span class="avatar" aria-hidden="true">CP</span> Carlos Pereira <span class="ponto" aria-label="online"></span></li>
+              </ul>
+            </div>
+
+            <div class="card card-whatsapp-comunidade" style="margin-top: 1.2rem;">
+              <h4><span aria-hidden="true">📱</span> Suporte no WhatsApp</h4>
+              <p class="nota">Dúvidas rápidas com a nossa equipe?</p>
+              <a href="https://wa.me/5541999008019?text=Ol%C3%A1!%20Vim%20pela%20comunidade%20do%20Conecta%2B." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm btn-bloco">
+                Chamar no (41) 99900-8019
+              </a>
+            </div>
+          </aside>
+
+          <div class="com-feed">
+            <form class="novo-post" id="formPost">
+              <label for="textoPost"><strong>Compartilhe algo ou faça uma pergunta:</strong></label>
+              <textarea id="textoPost" name="textoPost" rows="3" placeholder="Escreva sua dúvida, dica ou experiência para a comunidade..." required></textarea>
+              <div class="post-acoes">
+                <div class="campo-inline">
+                  <label for="grupoPost">Grupo:</label>
+                  <select id="grupoPost" name="grupoPost">
+                    <option>Informática</option>
+                    <option>Serviços</option>
+                    <option>Empregos</option>
+                    <option>Libras</option>
+                    <option>Segurança</option>
+                  </select>
+                </div>
+                <label class="check-libras">
+                  <input type="checkbox" id="videoLibras"> <span aria-hidden="true">🤟</span> Anexar vídeo/resposta em Libras
+                </label>
+                <button class="btn btn-primario" type="submit">Publicar Mensagem</button>
+              </div>
+              <p class="nota" id="msgPost" role="status"></p>
+            </form>
+
+            <div class="feed" id="feed" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TELA 7: MEU PERFIL ================= -->
+    <section id="tela-perfil" class="tela-secao" style="display:none;">
+      <div class="secao-topo-banner">
+        <div class="container">
+          <button type="button" class="btn-voltar" data-navegar="inicio"><span aria-hidden="true">←</span> Voltar ao Início</button>
+          <h2>Painel do Usuário Conecta<span class="mais">+</span></h2>
+          <p class="sub">Gerencie seus dados de acesso, preferências de acessibilidade e histórico.</p>
+        </div>
+      </div>
+
+      <div class="container secao-conteudo">
+        <div class="perfil-conteudo">
+          <div class="perfil-info">
+            <div class="perfil-avatar">
+              <span id="perfilIniciais">US</span>
+            </div>
+            <div class="perfil-dados">
+              <h3 id="perfilNome">Nome do Usuário</h3>
+              <p id="perfilEmail">email@exemplo.com</p>
+              <p class="nota">Membro desde: <span id="perfilData">--/--/----</span></p>
+            </div>
+          </div>
+
+          <div class="perfil-detalhes">
+            <div class="card">
+              <h4>Informações Pessoais</h4>
+              <div class="info-item">
+                <span class="info-label">CPF:</span>
+                <span id="perfilCPF">Não informado</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Telefone:</span>
+                <span id="perfilTelefone">Não informado</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Endereço:</span>
+                <span id="perfilEndereco">Não informado</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Cidade / Estado:</span>
+                <span id="perfilCidadeUF">Não informado</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Área de Interesse:</span>
+                <span id="perfilInteresse">Não informado</span>
+              </div>
+            </div>
+
+            <div class="perfil-acoes">
+              <button class="btn btn-primario" id="btnEditarPerfil">
+                <span aria-hidden="true">✏️</span> Editar Dados
+              </button>
+              <button class="btn btn-secundario" id="btnSair">
+                <span aria-hidden="true">🚪</span> Sair da Conta
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= BOTÃO FLUTUANTE WHATSAPP (41 99900-8019) ================= -->
+  <aside class="whatsapp-flutuante-wrapper" aria-label="Suporte rápido via WhatsApp">
+    <div class="whatsapp-tooltip-card" id="whatsappTooltip">
+      <button class="whatsapp-tooltip-fechar" id="fecharTooltipWhatsapp" aria-label="Fechar dica">×</button>
+      <strong>Precisa de ajuda com o app?</strong>
+      <p>Fale conosco diretamente no WhatsApp!</p>
+      <span class="whatsapp-numero-rotulo">📱 (41) 99900-8019</span>
     </div>
-    <nav aria-label="Links do rodapé">
-      <a href="#cursos">Cursos</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#empregos">Empregos</a>
-      <a href="#libras">Libras</a>
-      <a href="#comunidade">Comunidade</a>
-      <a href="#acessibilidade">Acessibilidade</a>
-    </nav>
-  </div>
-  <p class="copy">Projeto Conecta+ — plataforma digital gratuita, acessível e inclusiva.</p>
-</footer>
 
-<script src="script.js"></script>
+    <a href="https://wa.me/5541999008019?text=Ol%C3%A1!%20Vim%20pelo%20Conecta%2B%20e%20gostaria%20de%20ajuda." target="_blank" rel="noopener noreferrer" class="btn-whatsapp-flutuante" id="btnWhatsAppFlutuante" title="Falar no WhatsApp (41) 99900-8019">
+      <span class="whatsapp-icone-svg" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.771.82 2.79.82 3.181 0 5.768-2.587 5.768-5.766.001-3.181-2.585-5.806-5.767-5.806zm3.376 8.21c-.141.396-.713.727-1.031.772-.32.045-.71.077-2.179-.533-1.639-.681-2.709-2.344-2.791-2.454-.082-.111-.664-.884-.664-1.686 0-.802.42-1.197.57-1.357.151-.16.33-.2.44-.2.111 0 .221 0 .32.005.105.006.245-.04.385.296.141.336.48 1.171.52 1.256.041.085.069.185.014.296-.055.111-.083.18-.166.276-.082.096-.173.214-.247.288-.083.082-.17.172-.073.338.097.166.432.713.928 1.155.637.568 1.174.743 1.34.825.166.083.264.07.362-.042.098-.112.42-.489.532-.656.111-.166.223-.139.376-.083.153.056.974.459 1.141.543.167.083.278.125.32.195.042.07.042.404-.099.8z"/>
+        </svg>
+      </span>
+      <span class="whatsapp-badge-status">1</span>
+    </a>
+  </aside>
+
+  <!-- ================= MODAL DE LOGIN ================= -->
+  <div id="modalLogin" class="modal" role="dialog" aria-labelledby="modalLoginTitulo" aria-hidden="true">
+    <div class="modal-conteudo modal-autenticacao">
+      <div class="modal-cabecalho">
+        <div class="modal-marca-topo">
+          <img src="assets/logo.svg" alt="Conecta+ Logo" class="modal-logo">
+        </div>
+        <button class="modal-fechar" id="fecharModalLogin" aria-label="Fechar janela de login">×</button>
+      </div>
+
+      <div class="modal-corpo">
+        <h2 id="modalLoginTitulo">Entrar no Conecta+</h2>
+        <p class="nota">Acesse seus cursos, comunidade e vagas salvas.</p>
+
+        <form id="formLogin" class="form-auth" novalidate>
+          <div class="campo">
+            <label for="loginEmail">E-mail ou CPF *</label>
+            <input type="text" id="loginEmail" name="loginEmail" placeholder="seuemail@exemplo.com ou 000.000.000-00" autocomplete="username" required>
+          </div>
+
+          <div class="campo">
+            <div class="campo-label-row">
+              <label for="loginSenha">Senha *</label>
+              <button type="button" class="btn-link btn-esqueci" id="btnEsqueciSenha">Esqueci a senha</button>
+            </div>
+            <div class="campo-senha-wrapper">
+              <input type="password" id="loginSenha" name="loginSenha" placeholder="Digite sua senha" autocomplete="current-password" required>
+              <button type="button" class="btn-mostrar-senha" id="btnMostrarSenhaLogin" aria-label="Mostrar ou ocultar senha">👁️</button>
+            </div>
+          </div>
+
+          <div class="campo-lembrar">
+            <label class="check-container">
+              <input type="checkbox" id="lembrarMe" checked>
+              <span>Lembrar de mim neste dispositivo</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primario btn-grande btn-bloco">
+            Entrar na Conta
+          </button>
+
+          <p class="nota" id="msgLogin" role="status"></p>
+        </form>
+
+        <div class="modal-divisor">
+          <span>ou</span>
+        </div>
+
+        <div class="modal-alternar-auth">
+          <p>Ainda não tem uma conta?</p>
+          <button type="button" class="btn btn-secundario btn-bloco" id="btnIrParaCadastro">
+            Criar conta gratuita
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL DE CADASTRO ================= -->
+  <div id="modalCadastro" class="modal" role="dialog" aria-labelledby="modalCadTitulo" aria-hidden="true">
+    <div class="modal-conteudo modal-autenticacao">
+      <div class="modal-cabecalho">
+        <div class="modal-marca-topo">
+          <img src="assets/logo.svg" alt="Conecta+ Logo" class="modal-logo">
+        </div>
+        <button class="modal-fechar" id="fecharModalCadastro" aria-label="Fechar modal de cadastro">×</button>
+      </div>
+
+      <div class="modal-corpo">
+        <h2 id="modalCadTitulo">Criar Conta Conecta+</h2>
+        <p class="nota">Acesso 100% gratuito a todos os cursos e ferramentas.</p>
+
+        <form class="form-cadastro" id="formCadastro" novalidate>
+          <div class="campo">
+            <label for="cadNome">Nome completo *</label>
+            <input id="cadNome" name="nome" type="text" autocomplete="name" placeholder="Como você quer ser chamado" required>
+          </div>
+
+          <div class="campo">
+            <label for="cadEmail">E-mail *</label>
+            <input id="cadEmail" name="email" type="email" autocomplete="email" placeholder="seuemail@exemplo.com" required>
+          </div>
+
+          <div class="campo-grid">
+            <div class="campo">
+              <label for="cadSenha">Senha *</label>
+              <div class="campo-senha-wrapper">
+                <input id="cadSenha" name="senha" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" required>
+                <button type="button" class="btn-mostrar-senha" id="btnMostrarSenhaCad" aria-label="Mostrar ou ocultar senha">👁️</button>
+              </div>
+            </div>
+            <div class="campo">
+              <label for="cadCPF">CPF (Opcional)</label>
+              <input id="cadCPF" name="cpf" type="text" placeholder="000.000.000-00" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="campo-grid">
+            <div class="campo">
+              <label for="cadTelefone">Telefone / WhatsApp</label>
+              <input id="cadTelefone" name="telefone" type="tel" placeholder="(00) 00000-0000" autocomplete="tel">
+            </div>
+            <div class="campo">
+              <label for="cadInteresse">Área de interesse</label>
+              <select id="cadInteresse" name="interesse">
+                <option value="Cursos de informática">Cursos de informática</option>
+                <option value="Conteúdos em Libras">Conteúdos em Libras</option>
+                <option value="Serviços públicos online">Serviços públicos online</option>
+                <option value="Empregos e qualificação">Empregos e qualificação</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="campo-grid">
+            <div class="campo">
+              <label for="cadCidade">Cidade</label>
+              <input id="cadCidade" name="cidade" type="text" autocomplete="address-level2" placeholder="Sua cidade" value="Curitiba">
+            </div>
+            <div class="campo">
+              <label for="cadUF">Estado (UF)</label>
+              <select id="cadUF" name="uf">
+                <option value="PR" selected>PR</option>
+                <option value="SP">SP</option><option value="RJ">RJ</option><option value="SC">SC</option><option value="RS">RS</option><option value="MG">MG</option><option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="PA">PA</option><option value="PB">PB</option><option value="PE">PE</option><option value="PI">PI</option><option value="RN">RN</option><option value="RO">RO</option><option value="RR">RR</option><option value="SE">SE</option><option value="TO">TO</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="campo">
+            <label class="check-termos">
+              <input type="checkbox" id="aceiteTermos" required>
+              <span>Concordo com os termos de uso e política de privacidade *</span>
+            </label>
+          </div>
+
+          <button class="btn btn-primario btn-grande btn-bloco" type="submit">Concluir Cadastro</button>
+          <p class="nota" id="msgCadastro" role="status"></p>
+        </form>
+
+        <div class="modal-alternar-auth">
+          <p>Já possui uma conta?</p>
+          <button type="button" class="btn-link" id="btnIrParaLogin">Fazer login agora <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL DETALHE DE SERVIÇO PÚBLICO ================= -->
+  <div id="modalServicoDetalhe" class="modal" role="dialog" aria-labelledby="servicoDetalheTitulo" aria-hidden="true">
+    <div class="modal-conteudo">
+      <div class="modal-cabecalho">
+        <h2 id="servicoDetalheTitulo">Passo a Passo do Serviço</h2>
+        <button class="modal-fechar" id="fecharModalServico" aria-label="Fechar detalhes do serviço">×</button>
+      </div>
+      <div class="modal-corpo" id="servicoDetalheCorpo">
+        <!-- Preenchido dinamicamente via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= BARRA INFERIOR MOBILE ================= -->
+  <nav class="barra-mobile-app" aria-label="Navegação rápida do aplicativo">
+    <button type="button" class="btn-app-tab ativo" data-tela="inicio">
+      <span class="app-tab-ico" aria-hidden="true">🏠</span>
+      <span>Início</span>
+    </button>
+    <button type="button" class="btn-app-tab" data-tela="mapa">
+      <span class="app-tab-ico" aria-hidden="true">🗺️</span>
+      <span>Mapa</span>
+    </button>
+    <button type="button" class="btn-app-tab" data-tela="cursos">
+      <span class="app-tab-ico" aria-hidden="true">💻</span>
+      <span>Cursos</span>
+    </button>
+    <button type="button" class="btn-app-tab btn-app-tab-libras" data-tela="libras">
+      <span class="app-tab-ico" aria-hidden="true">🤟</span>
+      <span>Libras</span>
+    </button>
+    <button type="button" class="btn-app-tab" data-tela="comunidade">
+      <span class="app-tab-ico" aria-hidden="true">💬</span>
+      <span>Social</span>
+    </button>
+  </nav>
+
+  <!-- ================= RODAPÉ ================= -->
+  <footer class="rodape">
+    <div class="container rodape-inner">
+      <div class="rodape-marca-bloco">
+        <img class="rodape-logo" src="assets/logo.svg" alt="Conecta+">
+        <p>Inclusão digital, cursos gratuitos, acessibilidade em Libras e conexão comunitária.</p>
+        <p class="rodape-zap-destaque">
+          <strong>Suporte Direto no WhatsApp:</strong> <a href="https://wa.me/5541999008019" target="_blank" rel="noopener noreferrer">📱 (41) 99900-8019</a>
+        </p>
+      </div>
+      <nav class="rodape-links" aria-label="Links do rodapé">
+        <a href="#inicio" data-navegar="inicio">Início</a>
+        <a href="#mapa" data-navegar="mapa">Mapa Regional</a>
+        <a href="#cursos" data-navegar="cursos">Cursos</a>
+        <a href="#servicos" data-navegar="servicos">Serviços</a>
+        <a href="#empregos" data-navegar="empregos">Empregos</a>
+        <a href="#libras" data-navegar="libras">Libras</a>
+        <a href="#comunidade" data-navegar="comunidade">Comunidade</a>
+      </nav>
+    </div>
+    <div class="container">
+      <p class="copy">
+        Projeto Conecta+ — Inclusão Digital para Todos. Suporte WhatsApp: (41) 99900-8019.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Leaflet JS (Mapa Interativo) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="script.js"></script>
 </body>
 </html>

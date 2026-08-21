@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 110" width="100%" height="100%">
+  <defs>
+    <linearGradient id="gradBrand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22e0ff" />
+      <stop offset="45%" stop-color="#1e6bff" />
+      <stop offset="85%" stop-color="#7b3cff" />
+      <stop offset="100%" stop-color="#e93cff" />
+    </linearGradient>
+    <linearGradient id="gradPlus" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e93cff" />
+      <stop offset="100%" stop-color="#ff66cc" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Icone da Logo: Nós de Conexão + Mão/Inclusão -->
+  <g transform="translate(10, 15)">
+    <!-- Circulos de Conexão -->
+    <circle cx="40" cy="40" r="34" fill="none" stroke="url(#gradBrand)" stroke-width="5" opacity="0.4" />
+    <circle cx="40" cy="40" r="26" fill="#0a1024" stroke="url(#gradBrand)" stroke-width="3.5" filter="url(#glow)" />
+    
+    <!-- Linhas e nós conectados -->
+    <path d="M 22 40 C 22 28, 30 20, 40 20 C 50 20, 58 28, 58 40 C 58 52, 50 60, 40 60" fill="none" stroke="#22e0ff" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="22" cy="40" r="4.5" fill="#22e0ff" />
+    <circle cx="40" cy="20" r="4.5" fill="#1e6bff" />
+    <circle cx="58" cy="40" r="4.5" fill="#e93cff" />
+    <circle cx="40" cy="60" r="4.5" fill="#22e0ff" />
+
+    <!-- Ponto central de pulso -->
+    <circle cx="40" cy="40" r="6" fill="url(#gradBrand)" filter="url(#glow)" />
+    
+    <!-- Pequeno símbolo de mão/sinal em Libras estilizado no centro -->
+    <path d="M37 34 L37 43 M40 31 L40 43 M43 33 L43 43" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" />
+  </g>
+
+  <!-- Tipografia Conecta+ -->
+  <g transform="translate(95, 68)">
+    <text font-family="'Segoe UI', 'Outfit', sans-serif" font-weight="900" font-size="44" fill="#ffffff" letter-spacing="-1.5">
+      Conecta
+    </text>
+    <!-- Simbolo + em gradiente magenta brilhante -->
+    <text x="178" y="-2" font-family="'Segoe UI', 'Outfit', sans-serif" font-weight="900" font-size="52" fill="url(#gradPlus)" filter="url(#glow)">
+      +
+    </text>
+    <!-- Subtitulo Tecnologia & Inclusão -->
+    <text x="2" y="18" font-family="'Segoe UI', 'Inter', sans-serif" font-weight="700" font-size="11.5" fill="#22e0ff" letter-spacing="3.2" text-transform="uppercase">
+      INCLUSÃO &amp; ACESSIBILIDADE
+    </text>
+  </g>
+</svg>
