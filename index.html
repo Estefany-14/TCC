@@ -30,6 +30,8 @@
       <a href="#comunidade">Comunidade</a>
       <a href="#acessibilidade">Acessibilidade</a>
       <a href="#contato">Contato</a>
+      <a href="#perfil" id="linkPerfil" style="display:none;">Perfil</a>
+      <button class="btn-cadastro" id="btnCadastro">Cadastrar-se</button>
     </nav>
   </div>
 </header>
@@ -373,8 +375,147 @@
       </form>
     </div>
   </section>
+
+  <section id="perfil" class="secao" style="display:none;">
+    <div class="container">
+      <h2>Meu Perfil</h2>
+      <p class="sub">Visualize e edite suas informações de cadastro.</p>
+      
+      <div class="perfil-conteudo">
+        <div class="perfil-info">
+          <div class="perfil-avatar">
+            <span id="perfilIniciais">US</span>
+          </div>
+          <div class="perfil-dados">
+            <h3 id="perfilNome">Nome do Usuário</h3>
+            <p id="perfilEmail">email@exemplo.com</p>
+            <p class="nota">Membro desde: <span id="perfilData">--/--/----</span></p>
+          </div>
+        </div>
+
+        <div class="perfil-detalhes">
+          <div class="card">
+            <h4>Informações Pessoais</h4>
+            <div class="info-item">
+              <span class="info-label">CPF:</span>
+              <span id="perfilCPF">Não informado</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Telefone:</span>
+              <span id="perfilTelefone">Não informado</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Endereço:</span>
+              <span id="perfilEndereco">Não informado</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Cidade/UF:</span>
+              <span id="perfilCidadeUF">Não informado</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Interesse:</span>
+              <span id="perfilInteresse">Não informado</span>
+            </div>
+          </div>
+
+          <div class="perfil-acoes">
+            <button class="btn btn-primario" id="btnEditarPerfil">Editar perfil</button>
+            <button class="btn btn-secundario" id="btnSair">Sair</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
- 
+
+<!-- Modal de Cadastro -->
+<div id="modalCadastro" class="modal" role="dialog" aria-labelledby="modalTitulo" aria-hidden="true">
+  <div class="modal-conteudo">
+    <div class="modal-cabecalho">
+      <h2 id="modalTitulo">Cadastre-se no Conecta+</h2>
+      <button class="modal-fechar" id="fecharModal" aria-label="Fechar modal">×</button>
+    </div>
+    <form class="form-cadastro" id="formCadastro" novalidate>
+      <div class="campo">
+        <label for="cadNome">Nome completo *</label>
+        <input id="cadNome" name="nome" type="text" autocomplete="name" required>
+      </div>
+      <div class="campo">
+        <label for="cadEmail">E-mail *</label>
+        <input id="cadEmail" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="campo">
+        <label for="cadCPF">CPF</label>
+        <input id="cadCPF" name="cpf" type="text" placeholder="000.000.000-00" autocomplete="off">
+      </div>
+      <div class="campo">
+        <label for="cadTelefone">Telefone</label>
+        <input id="cadTelefone" name="telefone" type="tel" placeholder="(00) 00000-0000" autocomplete="tel">
+      </div>
+      <div class="campo">
+        <label for="cadEndereco">Endereço</label>
+        <input id="cadEndereco" name="endereco" type="text" autocomplete="street-address">
+      </div>
+      <div class="campo-grid">
+        <div class="campo">
+          <label for="cadCidade">Cidade</label>
+          <input id="cadCidade" name="cidade" type="text" autocomplete="address-level2">
+        </div>
+        <div class="campo">
+          <label for="cadUF">UF</label>
+          <select id="cadUF" name="uf">
+            <option value="">Selecione</option>
+            <option value="AC">AC</option>
+            <option value="AL">AL</option>
+            <option value="AP">AP</option>
+            <option value="AM">AM</option>
+            <option value="BA">BA</option>
+            <option value="CE">CE</option>
+            <option value="DF">DF</option>
+            <option value="ES">ES</option>
+            <option value="GO">GO</option>
+            <option value="MA">MA</option>
+            <option value="MT">MT</option>
+            <option value="MS">MS</option>
+            <option value="MG">MG</option>
+            <option value="PA">PA</option>
+            <option value="PB">PB</option>
+            <option value="PR">PR</option>
+            <option value="PE">PE</option>
+            <option value="PI">PI</option>
+            <option value="RJ">RJ</option>
+            <option value="RN">RN</option>
+            <option value="RS">RS</option>
+            <option value="RO">RO</option>
+            <option value="RR">RR</option>
+            <option value="SC">SC</option>
+            <option value="SP">SP</option>
+            <option value="SE">SE</option>
+            <option value="TO">TO</option>
+          </select>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="cadInteresse">Área de maior interesse</label>
+        <select id="cadInteresse" name="interesse">
+          <option>Cursos de informática</option>
+          <option>Serviços públicos online</option>
+          <option>Empregos e qualificação</option>
+          <option>Conteúdos em Libras</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label class="check-termos">
+          <input type="checkbox" id="aceiteTermos" required>
+          Concordo com os termos de uso e política de privacidade *
+        </label>
+      </div>
+      <button class="btn btn-primario" type="submit">Concluir cadastro</button>
+      <p class="nota" id="msgCadastro" role="status"></p>
+    </form>
+  </div>
+</div>
+
 <footer class="rodape">
   <div class="container rodape-inner">
     <div>
@@ -392,7 +533,7 @@
   </div>
   <p class="copy">Projeto Conecta+ — plataforma digital gratuita, acessível e inclusiva.</p>
 </footer>
- 
+
 <script src="script.js"></script>
 </body>
 </html>
