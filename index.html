@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Conecta+ | Tecnologia para Inclusão Social</title>
 <meta name="description" content="Conecta+ é uma plataforma digital gratuita de inclusão social e digital: cursos de informática, serviços públicos online, empregos, acessibilidade e área em Libras.">
-<link rel="icon" href="assets/logo.png">
-<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="assets/logo.svg">
+<link rel="stylesheet" href="styles.css?v=1.0.7">
 </head>
 <body>
 <a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
@@ -14,7 +14,7 @@
 <header class="topo">
   <div class="container topo-inner">
     <a class="marca" href="#inicio">
-      <img src="assets/logo.png" alt="Logotipo do Conecta+">
+      <img src="assets/logo.svg" alt="Logotipo do Conecta+">
     </a>
  
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navPrincipal">
@@ -22,17 +22,22 @@
     </button>
  
     <nav id="navPrincipal" class="nav" aria-label="Navegação principal">
-      <a href="#sobre">Sobre</a>
-      <a href="#cursos">Cursos</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#empregos">Empregos</a>
-      <a href="#libras">Libras</a>
-      <a href="#comunidade">Comunidade</a>
-      <a href="#acessibilidade">Acessibilidade</a>
-      <a href="#contato">Contato</a>
+      <a href="#sobre" class="nav-item">Sobre</a>
+      <a href="#cursos" class="nav-item">Cursos</a>
+      <a href="#servicos" class="nav-item">Serviços</a>
+      <a href="#empregos" class="nav-item">Empregos</a>
+      <a href="#libras" class="nav-item nav-item-libras">Libras</a>
+      <a href="#comunidade" class="nav-item">Comunidade</a>
+      <a href="#cadastre-se" class="nav-item nav-item-mapa">Cadastre-se</a>
+      <a href="#acessibilidade" class="nav-item">Acessibilidade</a>
+      <a href="#contato" class="nav-item">Contato</a>
       <div class="nav-auth">
-        <button class="btn-login" id="btnLogin">Entrar</button>
-        <button class="btn-cadastro" id="btnCadastro">Cadastrar-se</button>
+        <button class="btn-login" id="btnLogin" onclick="abrirModalLogin(event)">Entrar</button>
+        <button class="btn-cadastro" id="btnCadastro" onclick="abrirModal(event)">Cadastrar-se</button>
+        <button class="btn nav-item-perfil" id="linkPerfil" style="display:none;" onclick="mostrarPerfil()">
+          <span class="avatar-mini" id="navAvatarIniciais">US</span>
+          <span>Meu Perfil</span>
+        </button>
       </div>
     </nav>
   </div>
@@ -40,12 +45,17 @@
  
 <div class="barra-acess" role="region" aria-label="Ferramentas de acessibilidade">
   <div class="container barra-inner">
-    <span class="barra-titulo">Acessibilidade:</span>
-    <button type="button" data-acao="diminuir">A−<span class="sr">Diminuir texto</span></button>
-    <button type="button" data-acao="aumentar">A+<span class="sr">Aumentar texto</span></button>
-    <button type="button" data-acao="contraste">Alto contraste</button>
-    <button type="button" data-acao="fonte">Fonte legível</button>
-    <button type="button" data-acao="reset">Restaurar</button>
+    <div class="barra-grupo-rotulo">
+      <span class="barra-icone-acess" aria-hidden="true">♿</span>
+      <span class="barra-titulo">Acessibilidade:</span>
+    </div>
+    <div class="barra-botoes">
+      <button type="button" data-acao="diminuir">A−<span class="sr">Diminuir texto</span></button>
+      <button type="button" data-acao="aumentar">A+<span class="sr">Aumentar texto</span></button>
+      <button type="button" data-acao="contraste">⚡ Alto contraste</button>
+      <button type="button" data-acao="fonte">🔤 Fonte legível</button>
+      <button type="button" data-acao="reset">↺ Restaurar</button>
+    </div>
   </div>
 </div>
  
@@ -70,7 +80,7 @@
         </div>
       </div>
       <div class="hero-arte">
-        <img src="assets/logo.png" alt="">
+        <img src="assets/logo.svg" alt="Logotipo do Conecta+">
       </div>
     </div>
   </section>
@@ -192,43 +202,112 @@
  
   <section id="libras" class="secao libras">
     <div class="container">
-      <p class="tag">Diferencial do projeto</p>
+      <p class="tag tag-libras">Diferencial do projeto</p>
       <h2>Área exclusiva em Libras <span aria-hidden="true">🤟</span></h2>
       <p class="sub">
         Não é apenas uma pequena opção de acessibilidade: é uma experiência completa para quem se
-        comunica principalmente em Língua Brasileira de Sinais, com conteúdos apresentados em
-        vídeos com intérpretes.
+        comunica principalmente em Língua Brasileira de Sinais, com vídeos interativos e intérprete dedicado.
       </p>
- 
-      <div class="grid-2">
+
+      <div class="grid-2" style="margin-bottom: 2rem;">
         <div>
-          <h3>Conteúdos disponíveis em Libras</h3>
-          <ul class="lista-checks">
-            <li>Apresentação e explicação do Conecta+</li>
-            <li>Cursos e aulas de informática</li>
-            <li>Orientações sobre serviços públicos digitais</li>
-            <li>Informações sobre vagas de emprego</li>
-            <li>Oportunidades de qualificação</li>
-            <li>Tutoriais sobre internet e ferramentas digitais</li>
-            <li>Orientações para usuários iniciantes</li>
-            <li>Informações sobre segurança digital</li>
-            <li>Instruções para usar as funcionalidades do app</li>
-          </ul>
+          <h3>Aulas e Orientações em Libras</h3>
+          <div class="topicos-libras-lista" id="listaAulasLibras">
+            <button class="topico-libras-item ativo" type="button" data-aula="1" data-titulo="Apresentação do Conecta+ em Libras" data-legenda="Olá! O Conecta+ é uma plataforma 100% gratuita para ensinar informática e serviços digitais em Libras.">
+              <span class="topico-num">1</span>
+              <div>
+                <strong>Apresentação do Conecta+</strong>
+                <small>Conheça a plataforma e seus recursos</small>
+              </div>
+            </button>
+            <button class="topico-libras-item" type="button" data-aula="2" data-titulo="Como Usar a Internet em Libras" data-legenda="Aprenda a abrir o navegador, pesquisar no Google e navegar com total segurança e privacidade.">
+              <span class="topico-num">2</span>
+              <div>
+                <strong>Como Usar a Internet</strong>
+                <small>Navegação, buscas e segurança digital</small>
+              </div>
+            </button>
+            <button class="topico-libras-item" type="button" data-aula="3" data-titulo="Serviços Públicos Digitais" data-legenda="Passo a passo em Libras para agendar atendimentos de saúde, documentos e benefícios.">
+              <span class="topico-num">3</span>
+              <div>
+                <strong>Serviços Públicos Online</strong>
+                <small>Documentos, agendamentos e benefícios</small>
+              </div>
+            </button>
+            <button class="topico-libras-item" type="button" data-aula="4" data-titulo="Dicas para Entrevistas de Emprego" data-legenda="Orientações e qualificações profissionais apresentadas em vídeos com intérprete de Libras.">
+              <span class="topico-num">4</span>
+              <div>
+                <strong>Qualificação e Empregos</strong>
+                <small>Preparação para o mercado de trabalho</small>
+              </div>
+            </button>
+          </div>
         </div>
+
         <div class="video-libras">
-          <div class="video-placeholder" role="img" aria-label="Espaço reservado para vídeo com intérprete de Libras">
-            <span aria-hidden="true">▶</span>
-            <p>Vídeo com intérprete de Libras</p>
+          <div class="robo-ia-container">
+            <div class="robo-stage">
+              <div class="robo-head">
+                <div class="robo-antena"></div>
+                <div class="robo-visor">
+                  <div class="robo-eye"></div>
+                  <div class="robo-eye robo-eye-mag"></div>
+                </div>
+                <div class="robo-mouth"></div>
+              </div>
+              <div class="robo-body">
+                <div class="robo-arm robo-arm-esq"><span class="robo-hand" id="handEsq">🤟</span></div>
+                <div class="robo-core"></div>
+                <div class="robo-arm robo-arm-dir"><span class="robo-hand" id="handDir">✋</span></div>
+              </div>
+            </div>
+            
+            <strong id="tituloAulaLibras" style="display: block; font-size: 1.1rem; color: #fff; margin: 0.6rem 0 0.2rem;">Robô de IA Intérprete Conecta+ 🤖</strong>
+            <span class="badge-libras-tag" style="background: rgba(34, 224, 255, 0.15); border: 1px solid var(--borda-brilho); color: var(--ciano); padding: 0.2rem 0.8rem; border-radius: 999px; font-size: 0.75rem; font-weight: 800;">SINALIZANDO EM TEMPO REAL</span>
+
+            <!-- Botões de Gestos Rápido da IA -->
+            <div class="robo-sinais-grid" id="gridSinaisIA">
+              <button class="btn-sinal-ia ativo" type="button" data-sinal="ola" data-legenda="Olá! Seja bem-vindo ao Conecta+. É um prazer ter você aqui!" data-handesq="👋" data-handdir="🤟">👋 Olá</button>
+              <button class="btn-sinal-ia" type="button" data-sinal="obrigado" data-legenda="Obrigado! Agradecemos sua participação em nossa plataforma." data-handesq="🫲" data-handdir="🙏">🙏 Obrigado</button>
+              <button class="btn-sinal-ia" type="button" data-sinal="internet" data-legenda="Sinal de Internet e Conexão em Libras." data-handesq="💻" data-handdir="📶">📶 Internet</button>
+              <button class="btn-sinal-ia" type="button" data-sinal="cursos" data-legenda="Sinal de Aprendizado, Cursos e Estudo em Libras." data-handesq="📚" data-handdir="✏️">📚 Cursos</button>
+            </div>
           </div>
-          <p class="nota">
-            Os conteúdos em Libras devem ser produzidos ou revisados por pessoas qualificadas,
-            garantindo comunicação correta e adequada à comunidade surda.
-          </p>
-          <div class="hero-botoes">
-            <button class="btn btn-primario" type="button" data-idioma="libras">Usar em Libras</button>
-            <button class="btn btn-secundario" type="button" data-idioma="portugues">Usar em Português</button>
+
+          <div class="libras-legenda-box" style="margin-top: 1rem;">
+            <span class="badge-legenda">Tradução / Legenda em Português:</span>
+            <p id="textoLegendaLibras">Olá! Seja bem-vindo ao Conecta+. É um prazer ter você aqui!</p>
           </div>
-          <p class="nota" id="avisoIdioma" role="status"></p>
+
+          <div class="hero-botoes" style="margin-top: 1.2rem;">
+            <button class="btn btn-libras" type="button" data-idioma="libras">🤟 Ativar Modo Libras</button>
+            <button class="btn btn-secundario" type="button" data-idioma="portugues">🌐 Modo Português</button>
+          </div>
+          <p class="nota" id="avisoIdioma" role="status" style="margin-top: 0.6rem; font-weight: 700;"></p>
+        </div>
+      </div>
+
+      <!-- Tradutor de Alfabeto em Libras (Datilologia) -->
+      <div class="card" style="border-color: var(--borda-magenta);">
+        <h3 style="color: var(--magenta);">🔤 Guia Prático & Tradutor de Alfabeto em Libras (Datilologia)</h3>
+        <p style="color: var(--texto-suave); font-size: 0.95rem; margin-bottom: 1.2rem;">
+          Clique em qualquer letra do alfabeto abaixo para visualizar os sinais em Libras ou digite sua palavra:
+        </p>
+
+        <!-- Grid Visual do Alfabeto em Libras (A-Z) -->
+        <div class="alfabeto-libras-grid" id="gridAlfabetoLibras"></div>
+
+        <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.2rem;">
+          <div class="campo" style="flex: 1; min-width: 240px;">
+            <label for="inputDatilologia" class="sr">Digite uma palavra</label>
+            <input id="inputDatilologia" type="text" placeholder="Digite aqui... ex: CONECTA" maxlength="20" style="text-transform: uppercase; width: 100%;">
+          </div>
+          <button class="btn btn-sm btn-secundario" id="btnExemploConecta" type="button">✨ Exemplo "CONECTA"</button>
+          <button class="btn btn-sm btn-secundario" id="btnLimparDatilologia" type="button">🧹 Limpar</button>
+        </div>
+
+        <div class="datilologia-resultado" id="resultadoDatilologia">
+          <p style="color: var(--texto-mutado); margin: 0;">Clique nas letras acima ou digite no campo para ver a tradução em Libras...</p>
         </div>
       </div>
     </div>
@@ -378,6 +457,96 @@
     </div>
   </section>
 
+  <!-- Seção Dedicada de Cadastro de Clientes e Alunos -->
+  <section id="cadastre-se" class="secao alt">
+    <div class="container">
+      <p class="tag">Inclusão Digital & Gratuita</p>
+      <h2>Cadastro de Clientes e Alunos Conecta<span class="mais">+</span></h2>
+      <p class="sub">
+        Crie sua conta em poucos segundos para acessar todos os cursos, vagas de emprego, serviços públicos e a área exclusiva em Libras.
+      </p>
+
+      <div class="grid-2">
+        <div>
+          <div class="card" style="border-color: var(--borda-brilho); height: 100%;">
+            <h3>Benefícios da sua Conta</h3>
+            <ul class="lista-checks" style="margin-top: 1.2rem;">
+              <li>Acesso 100% gratuito a todos os cursos de informática</li>
+              <li>Salvar progresso em aulas e certificados</li>
+              <li>Acesso prioritário a vagas de emprego e qualificações</li>
+              <li>Publicar e tirar dúvidas na Comunidade</li>
+              <li>Suporte dedicado com intérprete de Libras</li>
+              <li>Personalização do nível de acessibilidade da tela</li>
+            </ul>
+
+            <div class="num" style="margin-top: 2rem; background: rgba(34, 224, 255, 0.1);">
+              <strong id="contadorClientesTotal">128+</strong>
+              <span>Clientes & Alunos Cadastrados</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <form class="card form-cadastro-pagina" id="formCadastroPagina" novalidate style="display: grid; gap: 1.1rem;">
+            <h3 style="margin-bottom: 0.5rem; color: var(--ciano);">Preencha seus dados</h3>
+            
+            <div class="campo">
+              <label for="pagCadNome">Nome completo *</label>
+              <input id="pagCadNome" name="nome" type="text" autocomplete="name" placeholder="Ex: Maria Julia Silva" required>
+            </div>
+
+            <div class="campo">
+              <label for="pagCadEmail">E-mail *</label>
+              <input id="pagCadEmail" name="email" type="email" autocomplete="email" placeholder="seu@email.com" required>
+            </div>
+
+            <div class="campo-grid">
+              <div class="campo">
+                <label for="pagCadSenha">Senha *</label>
+                <div class="campo-senha-wrapper">
+                  <input id="pagCadSenha" name="senha" type="password" autocomplete="new-password" placeholder="Mínimo 6 dígitos" required minlength="6">
+                  <button type="button" class="btn-mostrar-senha" aria-label="Mostrar ou ocultar senha" data-target="pagCadSenha">👁️</button>
+                </div>
+              </div>
+              <div class="campo">
+                <label for="pagCadCPF">CPF</label>
+                <input id="pagCadCPF" name="cpf" type="text" placeholder="000.000.000-00" autocomplete="off">
+              </div>
+            </div>
+
+            <div class="campo-grid">
+              <div class="campo">
+                <label for="pagCadTelefone">Telefone / WhatsApp</label>
+                <input id="pagCadTelefone" name="telefone" type="tel" placeholder="(00) 00000-0000" autocomplete="tel">
+              </div>
+              <div class="campo">
+                <label for="pagCadInteresse">Área de Interesse</label>
+                <select id="pagCadInteresse" name="interesse">
+                  <option>Cursos de informática</option>
+                  <option>Serviços públicos online</option>
+                  <option>Empregos e qualificação</option>
+                  <option>Conteúdos em Libras</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="campo">
+              <label class="check-termos">
+                <input type="checkbox" id="pagAceiteTermos" required>
+                Concordo com os termos de uso e política de privacidade do Conecta+
+              </label>
+            </div>
+
+            <button class="btn btn-primario btn-grande" type="submit" style="width: 100%;">
+              🚀 Criar Minha Conta Grátis
+            </button>
+            <p class="nota" id="msgCadastroPagina" role="status" style="font-weight: 800; font-size: 0.95rem;"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="perfil" class="secao" style="display:none;">
     <div class="container">
       <h2>Meu Perfil</h2>
@@ -436,7 +605,7 @@
     <button class="modal-fechar" id="fecharModal" aria-label="Fechar modal">×</button>
     
     <div class="cadastro-header">
-      <img src="assets/logo.png" alt="Logo Conecta+" class="cadastro-logo">
+      <img src="assets/logo.svg" alt="Logo Conecta+" class="cadastro-logo">
       <h2 id="modalTitulo">Crie sua conta</h2>
       <p class="cadastro-subtitulo">Junte-se ao Conecta+ e comece sua jornada</p>
     </div>
@@ -452,7 +621,10 @@
       </div>
       <div class="campo">
         <label for="cadSenha">Senha</label>
-        <input id="cadSenha" name="senha" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres" required minlength="6">
+        <div class="campo-senha-wrapper">
+          <input id="cadSenha" name="senha" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres" required minlength="6">
+          <button type="button" class="btn-mostrar-senha" aria-label="Mostrar ou ocultar senha" data-target="cadSenha">👁️</button>
+        </div>
         <small class="ajuda">Mínimo 6 caracteres</small>
       </div>
       <div class="campo">
@@ -538,7 +710,7 @@
     <button class="modal-fechar" id="fecharModalLogin" aria-label="Fechar modal">×</button>
     
     <div class="login-header">
-      <img src="assets/logo.png" alt="Logo Conecta+" class="login-logo">
+      <img src="assets/logo.svg" alt="Logo Conecta+" class="login-logo">
       <h2 id="modalLoginTitulo">Bem-vindo de volta!</h2>
       <p class="login-subtitulo">Entre na sua conta para continuar</p>
     </div>
@@ -550,8 +722,17 @@
       </div>
       <div class="campo">
         <label for="loginSenha">Senha</label>
-        <input id="loginSenha" name="senha" type="password" autocomplete="current-password" placeholder="••••••" required>
+        <div class="campo-senha-wrapper">
+          <input id="loginSenha" name="senha" type="password" autocomplete="current-password" placeholder="••••••" required>
+          <button type="button" class="btn-mostrar-senha" aria-label="Mostrar ou ocultar senha" data-target="loginSenha">👁️</button>
+        </div>
       </div>
+      
+      <div style="background: rgba(34, 224, 255, 0.08); border: 1px dashed var(--borda-brilho); border-radius: var(--raio-sm); padding: 0.6rem 0.85rem; margin-bottom: 1rem; font-size: 0.82rem; color: var(--texto-suave); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+        <span>💡 <b>Conta teste:</b> aluno@conecta.com (123456)</span>
+        <button type="button" id="btnPreencherTeste" class="btn btn-sm btn-secundario" style="padding: 0.2rem 0.6rem; font-size: 0.76rem;">Preencher</button>
+      </div>
+
       <button class="btn btn-login-submit" type="submit">Entrar</button>
       <p class="nota" id="msgLogin" role="status"></p>
       
@@ -566,7 +747,7 @@
 <footer class="rodape">
   <div class="container rodape-inner">
     <div>
-      <img class="rodape-logo" src="assets/logo.png" alt="Conecta+">
+      <img class="rodape-logo" src="assets/logo.svg" alt="Conecta+">
       <p>Tecnologia como ferramenta de transformação e inclusão.</p>
     </div>
     <nav aria-label="Links do rodapé">
@@ -581,6 +762,6 @@
   <p class="copy">Projeto Conecta+ — plataforma digital gratuita, acessível e inclusiva.</p>
 </footer>
 
-<script src="script.js"></script>
+<script src="script.js?v=1.0.7"></script>
 </body>
 </html>

@@ -5,6 +5,29 @@
   const PADRAO = { escala: 1, contraste: false, fonte: false };
   let prefs = { ...PADRAO };
 
+  /* Container de Toasts */
+  let toastContainer = document.querySelector('.toast-container');
+  if (!toastContainer) {
+    toastContainer = document.createElement('div');
+    toastContainer.className = 'toast-container';
+    document.body.appendChild(toastContainer);
+  }
+
+  function mostrarToast(mensagem, tipo = 'info') {
+    const toast = document.createElement('div');
+    toast.className = 'toast' + (tipo ? ' toast-' + tipo : '');
+    const icone = tipo === 'sucesso' ? '✨' : tipo === 'libras' ? '🤟' : 'ℹ️';
+    toast.innerHTML = '<span style="font-size: 1.2rem;">' + icone + '</span> <span>' + mensagem + '</span>';
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(10px)';
+      toast.style.transition = 'all 0.3s ease';
+      setTimeout(() => toast.remove(), 300);
+    }, 3200);
+  }
+
   function carregar() {
     try {
       const salvo = JSON.parse(localStorage.getItem('conecta-prefs') || 'null');
@@ -18,17 +41,38 @@
     document.documentElement.style.fontSize = (prefs.escala * 100) + '%';
     body.classList.toggle('contraste', prefs.contraste);
     body.classList.toggle('fonte-legivel', prefs.fonte);
+
+    const btnContraste = document.querySelector('[data-acao="contraste"]');
+    const btnFonte = document.querySelector('[data-acao="fonte"]');
+    if (btnContraste) btnContraste.classList.toggle('ativo', prefs.contraste);
+    if (btnFonte) btnFonte.classList.toggle('ativo', prefs.fonte);
+
     localStorage.setItem('conecta-prefs', JSON.stringify(prefs));
   }
 
-  document.querySelectorAll('.barra-acess button').forEach((btn) => {
+  document.querySelectorAll('.barra-inner button, .barra-botoes button').forEach((btn) => {
     btn.addEventListener('click', () => {
       const acao = btn.dataset.acao;
-      if (acao === 'aumentar') prefs.escala = Math.min(ESCALA_MAX, prefs.escala + 0.1);
-      if (acao === 'diminuir') prefs.escala = Math.max(ESCALA_MIN, prefs.escala - 0.1);
-      if (acao === 'contraste') prefs.contraste = !prefs.contraste;
-      if (acao === 'fonte') prefs.fonte = !prefs.fonte;
-      if (acao === 'reset') prefs = { ...PADRAO };
+      if (acao === 'aumentar') {
+        prefs.escala = Math.min(ESCALA_MAX, prefs.escala + 0.1);
+        mostrarToast('Tamanho do texto aumentado', 'sucesso');
+      }
+      if (acao === 'diminuir') {
+        prefs.escala = Math.max(ESCALA_MIN, prefs.escala - 0.1);
+        mostrarToast('Tamanho do texto diminuído', 'sucesso');
+      }
+      if (acao === 'contraste') {
+        prefs.contraste = !prefs.contraste;
+        mostrarToast(prefs.contraste ? 'Alto contraste ativado' : 'Alto contraste desativado', 'sucesso');
+      }
+      if (acao === 'fonte') {
+        prefs.fonte = !prefs.fonte;
+        mostrarToast(prefs.fonte ? 'Fonte legível ativada' : 'Fonte padrão ativada', 'sucesso');
+      }
+      if (acao === 'reset') {
+        prefs = { ...PADRAO };
+        mostrarToast('Configurações de acessibilidade restauradas', 'info');
+      }
       aplicar();
     });
   });
@@ -50,11 +94,157 @@
   document.querySelectorAll('[data-idioma]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const modo = btn.dataset.idioma;
-      avisoIdioma.textContent = modo === 'libras'
-        ? 'Modo Libras selecionado: os conteúdos serão exibidos com vídeos em Língua Brasileira de Sinais.'
-        : 'Modo Português selecionado: os conteúdos serão exibidos em texto.';
+      const ehLibras = modo === 'libras';
+      body.classList.toggle('modo-libras-ativo', ehLibras);
+      if (avisoIdioma) {
+        avisoIdioma.textContent = ehLibras
+          ? '🤟 Modo Libras ativado! Os conteúdos priorizam vídeos e intérpretes em Língua Brasileira de Sinais.'
+          : '🌐 Modo Português ativado! Conteúdo exibido em texto padrão.';
+        avisoIdioma.style.color = ehLibras ? 'var(--magenta)' : 'var(--ciano)';
+      }
+      mostrarToast(ehLibras ? 'Modo Libras ativado!' : 'Modo Português ativado!', ehLibras ? 'libras' : 'sucesso');
     });
   });
+
+  /* ---------------- robô de IA intérprete ---------------- */
+  const gridSinaisIA = document.getElementById('gridSinaisIA');
+  const handEsq = document.getElementById('handEsq');
+  const handDir = document.getElementById('handDir');
+
+  if (gridSinaisIA) {
+    gridSinaisIA.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-sinal-ia');
+      if (!btn) return;
+      gridSinaisIA.querySelectorAll('.btn-sinal-ia').forEach((b) => b.classList.remove('ativo'));
+      btn.classList.add('ativo');
+
+      if (handEsq) handEsq.textContent = btn.dataset.handesq || '🤟';
+      if (handDir) handDir.textContent = btn.dataset.handdir || '✋';
+
+      const legenda = btn.dataset.legenda || '';
+      if (textoLegendaLibras) textoLegendaLibras.textContent = legenda;
+
+      mostrarToast('IA Robô sinalizando em Libras: ' + btn.textContent.trim(), 'libras');
+    });
+  }
+
+  /* ---------------- aulas em Libras ---------------- */
+  const listaAulasLibras = document.getElementById('listaAulasLibras');
+  const tituloAulaLibras = document.getElementById('tituloAulaLibras');
+  const textoLegendaLibras = document.getElementById('textoLegendaLibras');
+
+  if (listaAulasLibras) {
+    listaAulasLibras.addEventListener('click', (e) => {
+      const btn = e.target.closest('.topico-libras-item');
+      if (!btn) return;
+      listaAulasLibras.querySelectorAll('.topico-libras-item').forEach((b) => b.classList.remove('ativo'));
+      btn.classList.add('ativo');
+      if (tituloAulaLibras) tituloAulaLibras.textContent = btn.dataset.titulo || '';
+      if (textoLegendaLibras) textoLegendaLibras.textContent = btn.dataset.legenda || '';
+    });
+  }
+
+  /* ---------------- datilologia (alfabeto em Libras) ---------------- */
+  const EMOJIS_LIBRAS = {
+    'A': '✊', 'B': '🖐️', 'C': '🫲', 'D': '☝️', 'E': '✊', 'F': '🤟',
+    'G': '👆', 'H': '✌️', 'I': '🤙', 'J': '🤙', 'K': '✌️', 'L': '👆',
+    'M': '🤘', 'N': '🤘', 'O': '👌', 'P': '🫳', 'Q': '🫲', 'R': '🤞',
+    'S': '✊', 'T': '👊', 'U': '✌️', 'V': '✌️', 'W': '🤟', 'X': '🤞',
+    'Y': '🤙', 'Z': '☝️'
+  };
+
+  function renderizarDatilologia(texto) {
+    const resultadoDatilologia = document.getElementById('resultadoDatilologia');
+    if (!resultadoDatilologia) return;
+    resultadoDatilologia.innerHTML = '';
+
+    if (!texto.trim()) {
+      resultadoDatilologia.innerHTML = '<p style="color: var(--texto-mutado); margin: 0;">Clique nas letras acima ou digite no campo para ver a tradução em Libras...</p>';
+      return;
+    }
+
+    for (const char of texto) {
+      if (char === ' ') {
+        const espaco = document.createElement('div');
+        espaco.style.width = '20px';
+        resultadoDatilologia.appendChild(espaco);
+        continue;
+      }
+
+      const card = document.createElement('div');
+      card.className = 'letra-card';
+      const emoji = EMOJIS_LIBRAS[char] || '🤟';
+      card.innerHTML =
+        '<span style="font-size: 1.8rem;">' + emoji + '</span>' +
+        '<strong style="color: var(--magenta); font-size: 1.1rem; margin-top: 0.2rem;">' + char + '</strong>';
+      resultadoDatilologia.appendChild(card);
+    }
+  }
+
+  function inicializarDatilologia() {
+    const gridEl = document.getElementById('gridAlfabetoLibras');
+    const inputEl = document.getElementById('inputDatilologia');
+    const btnEx = document.getElementById('btnExemploConecta');
+    const btnLimp = document.getElementById('btnLimparDatilologia');
+
+    if (gridEl && gridEl.children.length === 0) {
+      Object.keys(EMOJIS_LIBRAS).forEach((letra) => {
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'alfabeto-card-item';
+        item.title = 'Letra ' + letra + ' em Libras';
+        item.innerHTML =
+          '<span class="alfabeto-card-emoji">' + EMOJIS_LIBRAS[letra] + '</span>' +
+          '<span class="alfabeto-card-letra">' + letra + '</span>';
+
+        item.addEventListener('click', () => {
+          if (inputEl) {
+            inputEl.value = (inputEl.value + letra).slice(0, 20);
+            renderizarDatilologia(inputEl.value);
+            mostrarToast('Letra ' + letra + ' adicionada', 'libras');
+          }
+        });
+        gridEl.appendChild(item);
+      });
+    }
+
+    if (inputEl && !inputEl.dataset.bound) {
+      inputEl.dataset.bound = 'true';
+      const atualizar = () => {
+        const texto = inputEl.value.toUpperCase().replace(/[^A-Z\s]/g, '');
+        inputEl.value = texto;
+        renderizarDatilologia(texto);
+      };
+      ['input', 'keyup', 'change'].forEach((ev) => inputEl.addEventListener(ev, atualizar));
+      if (inputEl.value) atualizar();
+    }
+
+    if (btnEx && !btnEx.dataset.bound) {
+      btnEx.dataset.bound = 'true';
+      btnEx.addEventListener('click', () => {
+        if (inputEl) {
+          inputEl.value = 'CONECTA';
+          renderizarDatilologia('CONECTA');
+          mostrarToast('Exemplo "CONECTA" carregado!', 'libras');
+        }
+      });
+    }
+
+    if (btnLimp && !btnLimp.dataset.bound) {
+      btnLimp.dataset.bound = 'true';
+      btnLimp.addEventListener('click', () => {
+        if (inputEl) {
+          inputEl.value = '';
+          renderizarDatilologia('');
+          inputEl.focus();
+        }
+      });
+    }
+  }
+
+  inicializarDatilologia();
+  document.addEventListener('DOMContentLoaded', inicializarDatilologia);
+  window.addEventListener('load', inicializarDatilologia);
 
   const form = document.getElementById('formContato');
   const msgForm = document.getElementById('msgForm');
@@ -86,58 +276,89 @@
   const linkParaCadastro = document.getElementById('linkParaCadastro');
   const linkParaLogin = document.getElementById('linkParaLogin');
 
-  function abrirModal() {
-    modalCadastro.classList.add('aberto');
-    modalCadastro.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    document.getElementById('cadNome').focus();
+  function abrirModal(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const modal = document.getElementById('modalCadastro');
+    if (modal) {
+      modal.classList.add('aberto');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      const input = document.getElementById('cadNome');
+      if (input) setTimeout(() => input.focus(), 100);
+    }
   }
 
   function fecharModalCadastro() {
-    modalCadastro.classList.remove('aberto');
-    modalCadastro.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    msgCadastro.textContent = '';
+    const modal = document.getElementById('modalCadastro');
+    const msg = document.getElementById('msgCadastro');
+    if (modal) {
+      modal.classList.remove('aberto');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (msg) msg.textContent = '';
+    }
   }
 
-  function abrirModalLogin() {
-    modalLogin.classList.add('aberto');
-    modalLogin.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    document.getElementById('loginEmail').focus();
+  function abrirModalLogin(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const modal = document.getElementById('modalLogin');
+    if (modal) {
+      modal.classList.add('aberto');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      const input = document.getElementById('loginEmail');
+      if (input) setTimeout(() => input.focus(), 100);
+    }
   }
 
   function fecharModalLogin() {
-    modalLogin.classList.remove('aberto');
-    modalLogin.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    msgLogin.textContent = '';
+    const modal = document.getElementById('modalLogin');
+    const msg = document.getElementById('msgLogin');
+    if (modal) {
+      modal.classList.remove('aberto');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (msg) msg.textContent = '';
+    }
   }
 
-  btnCadastro.addEventListener('click', abrirModal);
-  btnLogin.addEventListener('click', abrirModalLogin);
-  fecharModal.addEventListener('click', fecharModalCadastro);
-  fecharModalLogin.addEventListener('click', fecharModalLogin);
+  window.abrirModal = abrirModal;
+  window.abrirModalLogin = abrirModalLogin;
+  window.fecharModalCadastro = fecharModalCadastro;
+  window.fecharModalLogin = fecharModalLogin;
 
-  linkParaCadastro.addEventListener('click', (e) => {
-    e.preventDefault();
-    fecharModalLogin();
-    setTimeout(abrirModal, 200);
-  });
+  if (btnCadastro) btnCadastro.addEventListener('click', abrirModal);
+  if (btnLogin) btnLogin.addEventListener('click', abrirModalLogin);
+  if (fecharModal) fecharModal.addEventListener('click', fecharModalCadastro);
+  if (fecharModalLogin) fecharModalLogin.addEventListener('click', fecharModalLogin);
 
-  linkParaLogin.addEventListener('click', (e) => {
-    e.preventDefault();
-    fecharModalCadastro();
-    setTimeout(abrirModalLogin, 200);
-  });
+  if (linkParaCadastro) {
+    linkParaCadastro.addEventListener('click', (e) => {
+      e.preventDefault();
+      fecharModalLogin();
+      setTimeout(abrirModal, 150);
+    });
+  }
 
-  modalCadastro.addEventListener('click', (e) => {
-    if (e.target === modalCadastro) fecharModalCadastro();
-  });
+  if (linkParaLogin) {
+    linkParaLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      fecharModalCadastro();
+      setTimeout(abrirModalLogin, 150);
+    });
+  }
 
-  modalLogin.addEventListener('click', (e) => {
-    if (e.target === modalLogin) fecharModalLogin();
-  });
+  if (modalCadastro) {
+    modalCadastro.addEventListener('click', (e) => {
+      if (e.target === modalCadastro) fecharModalCadastro();
+    });
+  }
+
+  if (modalLogin) {
+    modalLogin.addEventListener('click', (e) => {
+      if (e.target === modalLogin) fecharModalLogin();
+    });
+  }
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -159,50 +380,115 @@
   const cadCPF = document.getElementById('cadCPF');
   const cadTelefone = document.getElementById('cadTelefone');
 
-  cadCPF.addEventListener('input', (e) => {
-    e.target.value = formatarCPF(e.target.value);
-  });
+  if (cadCPF) {
+    cadCPF.addEventListener('input', (e) => {
+      e.target.value = formatarCPF(e.target.value);
+    });
+  }
 
-  cadTelefone.addEventListener('input', (e) => {
-    e.target.value = formatarTelefone(e.target.value);
-  });
+  if (cadTelefone) {
+    cadTelefone.addEventListener('input', (e) => {
+      e.target.value = formatarTelefone(e.target.value);
+    });
+  }
 
-  /* ---------------- lógica de login ---------------- */
-  formLogin.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const email = formLogin.loginEmail.value.trim();
-    const senha = formLogin.loginSenha.value.trim();
-
-    if (!email || !senha) {
-      msgLogin.textContent = 'Por favor, preencha todos os campos.';
-      return;
+  /* ---------------- contas padrão e lógica de login ---------------- */
+  const CONTAS_PADRAO = [
+    {
+      id: 1,
+      nome: 'Estefany Aluna',
+      email: 'aluno@conecta.com',
+      senha: '123456',
+      cpf: '123.456.789-00',
+      telefone: '(11) 98765-4321',
+      endereco: 'Rua Principal, 100',
+      cidade: 'São Paulo',
+      uf: 'SP',
+      interesse: 'Cursos de informática',
+      dataCadastro: new Date().toISOString()
+    },
+    {
+      id: 2,
+      nome: 'Maria Julia Silva',
+      email: 'maria@email.com',
+      senha: '123456',
+      cpf: '987.654.321-99',
+      telefone: '(11) 91234-5678',
+      endereco: 'Av. Brasil, 500',
+      cidade: 'São Paulo',
+      uf: 'SP',
+      interesse: 'Conteúdos em Libras',
+      dataCadastro: new Date().toISOString()
     }
+  ];
 
+  function getUsuariosRegistrados() {
     try {
-      const usuarios = JSON.parse(localStorage.getItem('conecta-usuarios') || '[]');
-      const usuario = usuarios.find(u => u.email === email && u.senha === senha);
+      const stored = JSON.parse(localStorage.getItem('conecta-usuarios') || 'null');
+      if (Array.isArray(stored) && stored.length > 0) return stored;
+      localStorage.setItem('conecta-usuarios', JSON.stringify(CONTAS_PADRAO));
+      return CONTAS_PADRAO;
+    } catch (e) {
+      return CONTAS_PADRAO;
+    }
+  }
 
-      if (usuario) {
-        salvarUsuarioLogado(usuario);
-        msgLogin.textContent = 'Login realizado com sucesso!';
-        msgLogin.style.color = '#2bff9b';
-        
-        setTimeout(() => {
-          fecharModalLogin();
-          formLogin.reset();
-          msgLogin.textContent = '';
-          msgLogin.style.color = '';
-          verificarUsuarioLogado();
-        }, 1000);
-      } else {
-        msgLogin.textContent = 'E-mail ou senha incorretos.';
+  const btnPreencherTeste = document.getElementById('btnPreencherTeste');
+  if (btnPreencherTeste) {
+    btnPreencherTeste.addEventListener('click', () => {
+      const loginEmail = document.getElementById('loginEmail');
+      const loginSenha = document.getElementById('loginSenha');
+      if (loginEmail) loginEmail.value = 'aluno@conecta.com';
+      if (loginSenha) loginSenha.value = '123456';
+      mostrarToast('Credenciais de teste preenchidas!', 'sucesso');
+    });
+  }
+
+  if (formLogin) {
+    formLogin.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const emailInput = document.getElementById('loginEmail');
+      const senhaInput = document.getElementById('loginSenha');
+      const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+      const senha = senhaInput ? senhaInput.value.trim() : '';
+
+      if (!email || !senha) {
+        msgLogin.textContent = 'Por favor, preencha todos os campos.';
+        msgLogin.style.color = '#ff4d4d';
+        return;
+      }
+
+      try {
+        const usuarios = getUsuariosRegistrados();
+        const usuario = usuarios.find(
+          (u) => (u.email && u.email.toLowerCase() === email) && u.senha === senha
+        );
+
+        if (usuario) {
+          salvarUsuarioLogado(usuario);
+          msgLogin.textContent = 'Login realizado com sucesso! Entrando...';
+          msgLogin.style.color = '#2bff9b';
+          mostrarToast('Bem-vindo(a) de volta, ' + usuario.nome + '!', 'sucesso');
+
+          setTimeout(() => {
+            fecharModalLogin();
+            if (formLogin) formLogin.reset();
+            msgLogin.textContent = '';
+            msgLogin.style.color = '';
+            verificarUsuarioLogado();
+            mostrarPerfil();
+          }, 700);
+        } else {
+          msgLogin.textContent = 'E-mail ou senha incorretos. (Dica de teste: aluno@conecta.com / 123456)';
+          msgLogin.style.color = '#ff4d4d';
+        }
+      } catch (error) {
+        msgLogin.textContent = 'Erro ao fazer login. Tente novamente.';
         msgLogin.style.color = '#ff4d4d';
       }
-    } catch (error) {
-      msgLogin.textContent = 'Erro ao fazer login. Tente novamente.';
-    }
-  });
+    });
+  }
 
   function validarCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
@@ -298,6 +584,116 @@
     }
   });
 
+  /* ---------------- cadastro de clientes na página ---------------- */
+  const formCadastroPagina = document.getElementById('formCadastroPagina');
+  const msgCadastroPagina = document.getElementById('msgCadastroPagina');
+  const pagCadCPF = document.getElementById('pagCadCPF');
+  const pagCadTelefone = document.getElementById('pagCadTelefone');
+  const contadorClientesTotal = document.getElementById('contadorClientesTotal');
+
+  function atualizarContadorClientes() {
+    if (!contadorClientesTotal) return;
+    try {
+      const usuarios = JSON.parse(localStorage.getItem('conecta-usuarios') || '[]');
+      const total = 128 + usuarios.length;
+      contadorClientesTotal.textContent = total + '+';
+    } catch (e) {
+      contadorClientesTotal.textContent = '128+';
+    }
+  }
+
+  atualizarContadorClientes();
+
+  if (pagCadCPF) {
+    pagCadCPF.addEventListener('input', (e) => {
+      e.target.value = formatarCPF(e.target.value);
+    });
+  }
+
+  if (pagCadTelefone) {
+    pagCadTelefone.addEventListener('input', (e) => {
+      e.target.value = formatarTelefone(e.target.value);
+    });
+  }
+
+  if (formCadastroPagina) {
+    formCadastroPagina.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = formCadastroPagina.pagCadNome.value.trim();
+      const email = formCadastroPagina.pagCadEmail.value.trim();
+      const senha = formCadastroPagina.pagCadSenha.value.trim();
+      const cpf = formCadastroPagina.pagCadCPF.value.trim();
+      const telefone = formCadastroPagina.pagCadTelefone.value.trim();
+      const interesse = formCadastroPagina.pagCadInteresse.value;
+      const aceiteTermos = document.getElementById('pagAceiteTermos').checked;
+
+      if (!nome || !email || !senha) {
+        msgCadastroPagina.textContent = 'Por favor, preencha os campos obrigatórios (*).';
+        msgCadastroPagina.style.color = '#ff4d4d';
+        return;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        msgCadastroPagina.textContent = 'Por favor, insira um e-mail válido.';
+        msgCadastroPagina.style.color = '#ff4d4d';
+        return;
+      }
+
+      if (senha.length < 6) {
+        msgCadastroPagina.textContent = 'A senha deve ter no mínimo 6 caracteres.';
+        msgCadastroPagina.style.color = '#ff4d4d';
+        return;
+      }
+
+      if (cpf && !validarCPF(cpf)) {
+        msgCadastroPagina.textContent = 'Por favor, insira um CPF válido.';
+        msgCadastroPagina.style.color = '#ff4d4d';
+        return;
+      }
+
+      if (!aceiteTermos) {
+        msgCadastroPagina.textContent = 'Você precisa aceitar os termos de uso para continuar.';
+        msgCadastroPagina.style.color = '#ff4d4d';
+        return;
+      }
+
+      const usuario = {
+        id: Date.now(),
+        nome,
+        email,
+        senha,
+        cpf,
+        telefone,
+        interesse,
+        dataCadastro: new Date().toISOString()
+      };
+
+      try {
+        const usuarios = JSON.parse(localStorage.getItem('conecta-usuarios') || '[]');
+        usuarios.push(usuario);
+        localStorage.setItem('conecta-usuarios', JSON.stringify(usuarios));
+
+        msgCadastroPagina.textContent = '🎉 Conta criada com sucesso, ' + nome + '! Bem-vindo(a) ao Conecta+.';
+        msgCadastroPagina.style.color = '#2bff9b';
+        mostrarToast('Conta criada com sucesso! Bem-vindo(a), ' + nome, 'sucesso');
+
+        salvarUsuarioLogado(usuario);
+        verificarUsuarioLogado();
+        atualizarContadorClientes();
+
+        setTimeout(() => {
+          formCadastroPagina.reset();
+          msgCadastroPagina.textContent = '';
+          mostrarPerfil();
+        }, 1800);
+
+      } catch (error) {
+        msgCadastroPagina.textContent = 'Erro ao salvar cadastro. Tente novamente.';
+        msgCadastroPagina.style.color = '#ff4d4d';
+      }
+    });
+  }
+
   function salvarUsuarioLogado(usuario) {
     localStorage.setItem('conecta-usuario-logado', JSON.stringify(usuario));
   }
@@ -369,18 +765,59 @@
   function verificarUsuarioLogado() {
     const usuario = getUsuarioLogado();
     const linkPerfil = document.getElementById('linkPerfil');
+    const navAvatarIniciais = document.getElementById('navAvatarIniciais');
 
     if (usuario) {
-      btnLogin.style.display = 'none';
-      btnCadastro.style.display = 'none';
-      linkPerfil.style.display = 'inline-block';
-      linkPerfil.onclick = mostrarPerfil;
+      if (btnLogin) btnLogin.style.display = 'none';
+      if (btnCadastro) btnCadastro.style.display = 'none';
+      if (linkPerfil) {
+        linkPerfil.style.display = 'inline-flex';
+        linkPerfil.onclick = mostrarPerfil;
+        if (navAvatarIniciais) navAvatarIniciais.textContent = iniciais(usuario.nome);
+      }
     } else {
-      btnLogin.style.display = 'inline-block';
-      btnCadastro.style.display = 'inline-block';
-      linkPerfil.style.display = 'none';
+      if (btnLogin) btnLogin.style.display = 'inline-block';
+      if (btnCadastro) btnCadastro.style.display = 'inline-block';
+      if (linkPerfil) linkPerfil.style.display = 'none';
     }
   }
+
+  /* Botão mostrar/ocultar senha */
+  document.querySelectorAll('.btn-mostrar-senha').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.target;
+      const input = document.getElementById(targetId);
+      if (input) {
+        const ehSenha = input.type === 'password';
+        input.type = ehSenha ? 'text' : 'password';
+        btn.textContent = ehSenha ? '🔒' : '👁️';
+      }
+    });
+  });
+
+  /* Clique nos cards com links */
+  document.querySelectorAll('.card.link').forEach((card) => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', (e) => {
+      if (e.target.tagName !== 'A') {
+        const link = card.querySelector('a');
+        if (link) link.click();
+      }
+    });
+  });
+
+  /* Clique nos cards de curso */
+  document.querySelectorAll('.card.curso').forEach((card) => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      const titulo = card.querySelector('h3')?.textContent || 'Curso';
+      if (!getUsuarioLogado()) {
+        abrirModal();
+      } else {
+        mostrarPerfil();
+      }
+    });
+  });
 
   verificarUsuarioLogado();
 

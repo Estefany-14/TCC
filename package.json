@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Aplicativo Conecta+ para inclusão digital",
   "scripts": {
-    "start": "http-server -p 8000 -o"
+    "start": "http-server -p 8080 -c-1 -o"
   },
   "devDependencies": {
     "http-server": "^14.1.1"
