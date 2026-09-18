@@ -268,9 +268,12 @@
   const formCadastro = document.getElementById('formCadastro');
   const msgCadastro = document.getElementById('msgCadastro');
 
+  console.log('🔍 Formulário de cadastro encontrado:', formCadastro);
+  console.log('🔍 Mensagem de cadastro encontrada:', msgCadastro);
+
   /* ---------------- modal de login ---------------- */
   const modalLogin = document.getElementById('modalLogin');
-  const fecharModalLogin = document.getElementById('fecharModalLogin');
+  const btnFecharModalLogin = document.getElementById('fecharModalLogin');
   const formLogin = document.getElementById('formLogin');
   const msgLogin = document.getElementById('msgLogin');
   const linkParaCadastro = document.getElementById('linkParaCadastro');
@@ -330,7 +333,7 @@
   if (btnCadastro) btnCadastro.addEventListener('click', abrirModal);
   if (btnLogin) btnLogin.addEventListener('click', abrirModalLogin);
   if (fecharModal) fecharModal.addEventListener('click', fecharModalCadastro);
-  if (fecharModalLogin) fecharModalLogin.addEventListener('click', fecharModalLogin);
+  if (btnFecharModalLogin) btnFecharModalLogin.addEventListener('click', fecharModalLogin);
 
   if (linkParaCadastro) {
     linkParaCadastro.addEventListener('click', (e) => {
@@ -508,81 +511,101 @@
     return cpf[9] == digito1 && cpf[10] == digito2;
   }
 
-  formCadastro.addEventListener('submit', (e) => {
-    e.preventDefault();
+  if (formCadastro) {
+    console.log('✅ Event listener do formCadastro adicionado');
+    formCadastro.addEventListener('submit', async (e) => {
+      console.log('📝 Formulário de cadastro submetido!');
+      e.preventDefault();
 
-    const nome = formCadastro.cadNome.value.trim();
-    const email = formCadastro.cadEmail.value.trim();
-    const senha = formCadastro.cadSenha.value.trim();
-    const cpf = formCadastro.cadCPF.value.trim();
-    const telefone = formCadastro.cadTelefone.value.trim();
-    const endereco = formCadastro.cadEndereco.value.trim();
-    const cidade = formCadastro.cadCidade.value.trim();
-    const uf = formCadastro.cadUF.value;
-    const interesse = formCadastro.cadInteresse.value;
-    const aceiteTermos = document.getElementById('aceiteTermos').checked;
+      const dados = {
+        nome: formCadastro.cadNome.value.trim(),
+        email: formCadastro.cadEmail.value.trim(),
+        senha: formCadastro.cadSenha.value.trim(),
+        cpf: formCadastro.cadCPF.value.trim(),
+        telefone: formCadastro.cadTelefone.value.trim(),
+        endereco: formCadastro.cadEndereco.value.trim(),
+        cidade: formCadastro.cadCidade.value.trim(),
+        uf: formCadastro.cadUF.value,
+        interesse: formCadastro.cadInteresse.value,
+      };
 
-    if (!nome || !email || !senha) {
-      msgCadastro.textContent = 'Por favor, preencha os campos obrigatórios (*).';
-      return;
-    }
+      const aceiteTermos = document.getElementById('aceiteTermos').checked;
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      msgCadastro.textContent = 'Por favor, insira um e-mail válido.';
-      return;
-    }
+      console.log('📋 Dados do formulário:', dados);
 
-    if (senha.length < 6) {
-      msgCadastro.textContent = 'A senha deve ter no mínimo 6 caracteres.';
-      return;
-    }
+      if (!dados.nome || !dados.email || !dados.senha) {
+        msgCadastro.textContent = 'Por favor, preencha os campos obrigatórios (*).';
+        return;
+      }
 
-    if (cpf && !validarCPF(cpf)) {
-      msgCadastro.textContent = 'Por favor, insira um CPF válido.';
-      return;
-    }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(dados.email)) {
+        msgCadastro.textContent = 'Por favor, insira um e-mail válido.';
+        return;
+      }
 
-    if (!aceiteTermos) {
-      msgCadastro.textContent = 'Você precisa aceitar os termos de uso para continuar.';
-      return;
-    }
+      if (dados.senha.length < 6) {
+        msgCadastro.textContent = 'A senha deve ter no mínimo 6 caracteres.';
+        return;
+      }
 
-    const usuario = {
-      id: Date.now(),
-      nome,
-      email,
-      senha,
-      cpf,
-      telefone,
-      endereco,
-      cidade,
-      uf,
-      interesse,
-      dataCadastro: new Date().toISOString()
-    };
+      if (dados.cpf && !validarCPF(dados.cpf)) {
+        msgCadastro.textContent = 'Por favor, insira um CPF válido.';
+        return;
+      }
 
-    try {
-      const usuarios = JSON.parse(localStorage.getItem('conecta-usuarios') || '[]');
-      usuarios.push(usuario);
-      localStorage.setItem('conecta-usuarios', JSON.stringify(usuarios));
+      if (!aceiteTermos) {
+        msgCadastro.textContent = 'Você precisa aceitar os termos de uso para continuar.';
+        return;
+      }
 
-      msgCadastro.textContent = 'Cadastro realizado com sucesso, ' + nome + '! Bem-vindo ao Conecta+.';
-      msgCadastro.style.color = '#2bff9b';
+      const usuario = {
+        id: Date.now(),
+        ...dados,
+        dataCadastro: new Date().toISOString()
+      };
 
-      setTimeout(() => {
-        fecharModalCadastro();
-        formCadastro.reset();
-        msgCadastro.style.color = '';
-      }, 2000);
+      try {
+        console.log('🌐 Enviando dados para o backend...');
+        const response = await fetch('http://localhost:3000/api/cadastro', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(dados)
+        });
 
-      salvarUsuarioLogado(usuario);
-      btnCadastro.textContent = 'Perfil';
-      btnCadastro.onclick = mostrarPerfil;
+        console.log('📦 Resposta do servidor:', response.status);
+        const data = await response.json();
+        console.log('📄 Dados da resposta:', data);
 
-    } catch (error) {
-      msgCadastro.textContent = 'Erro ao salvar cadastro. Tente novamente.';
-    }
-  });
+        if (data.sucesso) {
+          msgCadastro.textContent = 'Cadastro realizado com sucesso, ' + dados.nome + '! Bem-vindo ao Conecta+.';
+          msgCadastro.style.color = '#2bff9b';
+
+          const usuarioComId = {
+            ...usuario,
+            id: data.usuarioId
+          };
+          salvarUsuarioLogado(usuarioComId);
+
+          setTimeout(() => {
+            fecharModalCadastro();
+            formCadastro.reset();
+            msgCadastro.style.color = '';
+            verificarUsuarioLogado();
+            mostrarPerfil();
+          }, 2000);
+        } else {
+          msgCadastro.textContent = data.mensagem || 'Erro ao realizar cadastro.';
+          msgCadastro.style.color = '#ff4d4d';
+        }
+      } catch (error) {
+        console.error('❌ Erro ao conectar com servidor:', error);
+        msgCadastro.textContent = 'Erro ao conectar com o servidor. Verifique se o backend está rodando.';
+        msgCadastro.style.color = '#ff4d4d';
+      }
+    });
+  }
 
   /* ---------------- cadastro de clientes na página ---------------- */
   const formCadastroPagina = document.getElementById('formCadastroPagina');
@@ -617,7 +640,7 @@
   }
 
   if (formCadastroPagina) {
-    formCadastroPagina.addEventListener('submit', (e) => {
+    formCadastroPagina.addEventListener('submit', async (e) => {
       e.preventDefault();
       const nome = formCadastroPagina.pagCadNome.value.trim();
       const email = formCadastroPagina.pagCadEmail.value.trim();
@@ -669,26 +692,51 @@
       };
 
       try {
-        const usuarios = JSON.parse(localStorage.getItem('conecta-usuarios') || '[]');
-        usuarios.push(usuario);
-        localStorage.setItem('conecta-usuarios', JSON.stringify(usuarios));
+        // Enviar dados para o backend MySQL
+        const response = await fetch('http://localhost:3000/api/cadastro', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            nome,
+            email,
+            senha,
+            cpf,
+            telefone,
+            interesse
+          })
+        });
 
-        msgCadastroPagina.textContent = '🎉 Conta criada com sucesso, ' + nome + '! Bem-vindo(a) ao Conecta+.';
-        msgCadastroPagina.style.color = '#2bff9b';
-        mostrarToast('Conta criada com sucesso! Bem-vindo(a), ' + nome, 'sucesso');
+        const data = await response.json();
 
-        salvarUsuarioLogado(usuario);
-        verificarUsuarioLogado();
-        atualizarContadorClientes();
+        if (data.sucesso) {
+          msgCadastroPagina.textContent = '🎉 Conta criada com sucesso, ' + nome + '! Bem-vindo(a) ao Conecta+.';
+          msgCadastroPagina.style.color = '#2bff9b';
+          mostrarToast('Conta criada com sucesso! Bem-vindo(a), ' + nome, 'sucesso');
 
-        setTimeout(() => {
-          formCadastroPagina.reset();
-          msgCadastroPagina.textContent = '';
-          mostrarPerfil();
-        }, 1800);
+          // Salvar usuário logado com ID do banco
+          const usuarioComId = {
+            ...usuario,
+            id: data.usuarioId
+          };
+          salvarUsuarioLogado(usuarioComId);
+          verificarUsuarioLogado();
+          atualizarContadorClientes();
+
+          setTimeout(() => {
+            formCadastroPagina.reset();
+            msgCadastroPagina.textContent = '';
+            mostrarPerfil();
+          }, 1800);
+        } else {
+          msgCadastroPagina.textContent = data.mensagem || 'Erro ao realizar cadastro.';
+          msgCadastroPagina.style.color = '#ff4d4d';
+        }
 
       } catch (error) {
-        msgCadastroPagina.textContent = 'Erro ao salvar cadastro. Tente novamente.';
+        console.error('Erro ao conectar com servidor:', error);
+        msgCadastroPagina.textContent = 'Erro ao conectar com o servidor. Verifique se o backend está rodando.';
         msgCadastroPagina.style.color = '#ff4d4d';
       }
     });

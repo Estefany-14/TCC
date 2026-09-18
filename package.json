@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "Aplicativo Conecta+ para inclusão digital",
   "scripts": {
-    "start": "http-server -p 8080 -c-1 -o"
+    "start": "http-server -p 8080 -c-1 -o",
+    "server": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
   },
   "devDependencies": {
     "http-server": "^14.1.1"
