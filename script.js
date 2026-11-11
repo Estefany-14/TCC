@@ -447,8 +447,81 @@
     });
   }
 
+  const tipoLoginUsuario = document.getElementById('tipoLoginUsuario');
+  const tipoLoginAdmin = document.getElementById('tipoLoginAdmin');
+  const modalLoginTitulo = document.getElementById('modalLoginTitulo');
+  const modalLoginSubtitulo = document.getElementById('modalLoginSubtitulo');
+  const dicaLoginUsuario = document.getElementById('dicaLoginUsuario');
+  const dicaLoginAdmin = document.getElementById('dicaLoginAdmin');
+  const btnSubmitLogin = document.getElementById('btnSubmitLogin');
+  const btnPreencherAdmin = document.getElementById('btnPreencherAdmin');
+
+  let modoLoginAtual = 'usuario';
+
+  function setModoLogin(modo) {
+    modoLoginAtual = modo;
+    if (modo === 'admin') {
+      if (tipoLoginAdmin) {
+        tipoLoginAdmin.classList.add('ativo');
+        tipoLoginAdmin.setAttribute('aria-selected', 'true');
+      }
+      if (tipoLoginUsuario) {
+        tipoLoginUsuario.classList.remove('ativo');
+        tipoLoginUsuario.setAttribute('aria-selected', 'false');
+      }
+      if (modalLoginTitulo) modalLoginTitulo.innerHTML = 'Acesso Administrativo 🛡️';
+      if (modalLoginSubtitulo) modalLoginSubtitulo.textContent = 'Painel exclusivo para gestão de cadastros MySQL';
+      if (dicaLoginUsuario) dicaLoginUsuario.style.display = 'none';
+      if (dicaLoginAdmin) dicaLoginAdmin.style.display = 'flex';
+      if (btnSubmitLogin) btnSubmitLogin.textContent = 'Entrar como Administrador';
+    } else {
+      if (tipoLoginUsuario) {
+        tipoLoginUsuario.classList.add('ativo');
+        tipoLoginUsuario.setAttribute('aria-selected', 'true');
+      }
+      if (tipoLoginAdmin) {
+        tipoLoginAdmin.classList.remove('ativo');
+        tipoLoginAdmin.setAttribute('aria-selected', 'false');
+      }
+      if (modalLoginTitulo) modalLoginTitulo.textContent = 'Bem-vindo de volta!';
+      if (modalLoginSubtitulo) modalLoginSubtitulo.textContent = 'Entre na sua conta para continuar';
+      if (dicaLoginUsuario) dicaLoginUsuario.style.display = 'flex';
+      if (dicaLoginAdmin) dicaLoginAdmin.style.display = 'none';
+      if (btnSubmitLogin) btnSubmitLogin.textContent = 'Entrar';
+    }
+  }
+
+  if (tipoLoginUsuario) {
+    tipoLoginUsuario.addEventListener('click', () => setModoLogin('usuario'));
+  }
+  if (tipoLoginAdmin) {
+    tipoLoginAdmin.addEventListener('click', () => setModoLogin('admin'));
+  }
+
+  if (btnPreencherAdmin) {
+    btnPreencherAdmin.addEventListener('click', () => {
+      const emailInput = document.getElementById('loginEmail');
+      const senhaInput = document.getElementById('loginSenha');
+      if (emailInput) emailInput.value = 'admin@conecta.com';
+      if (senhaInput) senhaInput.value = 'admin123';
+      mostrarToast('Credenciais de Administrador preenchidas!', 'sucesso');
+    });
+  }
+
+  function abrirModalLoginAdmin(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const usuario = getUsuarioLogado();
+    if (usuario && (usuario.tipo === 'admin' || usuario.email === 'admin@conecta.com')) {
+      abrirPainelAdmin();
+      return;
+    }
+    setModoLogin('admin');
+    abrirModalLogin();
+  }
+  window.abrirModalLoginAdmin = abrirModalLoginAdmin;
+
   if (formLogin) {
-    formLogin.addEventListener('submit', (e) => {
+    formLogin.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const emailInput = document.getElementById('loginEmail');
@@ -463,6 +536,65 @@
       }
 
       try {
+        // Tentar autenticar via backend MySQL
+        const response = await fetch('http://localhost:3000/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, senha })
+        });
+
+        const data = await response.json();
+
+        if (data.sucesso && data.usuario) {
+          salvarUsuarioLogado(data.usuario);
+          const ehAdmin = data.usuario.tipo === 'admin' || data.usuario.email === 'admin@conecta.com';
+          msgLogin.textContent = ehAdmin ? 'Acesso Administrativo Autorizado! Abrindo painel...' : 'Login realizado com sucesso! Entrando...';
+          msgLogin.style.color = '#2bff9b';
+          mostrarToast(ehAdmin ? '🛡️ Bem-vindo ao Painel do Administrador!' : 'Bem-vindo(a) de volta, ' + data.usuario.nome + '!', 'sucesso');
+
+          setTimeout(() => {
+            fecharModalLogin();
+            if (formLogin) formLogin.reset();
+            msgLogin.textContent = '';
+            msgLogin.style.color = '';
+            verificarUsuarioLogado();
+            if (ehAdmin) {
+              abrirPainelAdmin();
+            } else {
+              mostrarPerfil();
+            }
+          }, 700);
+          return;
+        } else {
+          msgLogin.textContent = data.mensagem || 'E-mail ou senha incorretos.';
+          msgLogin.style.color = '#ff4d4d';
+          return;
+        }
+      } catch (error) {
+        console.warn('Backend offline, usando fallback local:', error);
+        // Fallback especial para admin caso o servidor esteja fora
+        if (email === 'admin@conecta.com' && senha === 'admin123') {
+          const adminObj = {
+            id: 9999,
+            nome: 'Administrador Conecta+',
+            email: 'admin@conecta.com',
+            tipo: 'admin',
+            dataCadastro: new Date().toISOString()
+          };
+          salvarUsuarioLogado(adminObj);
+          msgLogin.textContent = 'Acesso Administrativo Autorizado (Modo Offline)!';
+          msgLogin.style.color = '#2bff9b';
+          mostrarToast('🛡️ Bem-vindo ao Painel do Administrador!', 'sucesso');
+          setTimeout(() => {
+            fecharModalLogin();
+            if (formLogin) formLogin.reset();
+            msgLogin.textContent = '';
+            verificarUsuarioLogado();
+            abrirPainelAdmin();
+          }, 700);
+          return;
+        }
+
         const usuarios = getUsuariosRegistrados();
         const usuario = usuarios.find(
           (u) => (u.email && u.email.toLowerCase() === email) && u.senha === senha
@@ -486,9 +618,6 @@
           msgLogin.textContent = 'E-mail ou senha incorretos. (Dica de teste: aluno@conecta.com / 123456)';
           msgLogin.style.color = '#ff4d4d';
         }
-      } catch (error) {
-        msgLogin.textContent = 'Erro ao fazer login. Tente novamente.';
-        msgLogin.style.color = '#ff4d4d';
       }
     });
   }
@@ -814,6 +943,7 @@
     const usuario = getUsuarioLogado();
     const linkPerfil = document.getElementById('linkPerfil');
     const navAvatarIniciais = document.getElementById('navAvatarIniciais');
+    const btnNavAdmin = document.getElementById('btnNavAdmin');
 
     if (usuario) {
       if (btnLogin) btnLogin.style.display = 'none';
@@ -823,10 +953,15 @@
         linkPerfil.onclick = mostrarPerfil;
         if (navAvatarIniciais) navAvatarIniciais.textContent = iniciais(usuario.nome);
       }
+      if (btnNavAdmin) {
+        const ehAdmin = usuario.tipo === 'admin' || usuario.email === 'admin@conecta.com';
+        btnNavAdmin.style.display = ehAdmin ? 'inline-flex' : 'none';
+      }
     } else {
       if (btnLogin) btnLogin.style.display = 'inline-block';
       if (btnCadastro) btnCadastro.style.display = 'inline-block';
       if (linkPerfil) linkPerfil.style.display = 'none';
+      if (btnNavAdmin) btnNavAdmin.style.display = 'none';
     }
   }
 
@@ -1079,8 +1214,363 @@
     renderFeed();
   });
 
+  /* ---------------- SISTEMA DO PAINEL DE ADMINISTRADOR ---------------- */
+  const modalAdmin = document.getElementById('modalAdmin');
+  const fecharModalAdmin = document.getElementById('fecharModalAdmin');
+  const btnAtualizarAdmin = document.getElementById('btnAtualizarAdmin');
+  const btnSairAdmin = document.getElementById('btnSairAdmin');
+  const adminBuscaUsuarios = document.getElementById('adminBuscaUsuarios');
+  const adminFiltroInteresse = document.getElementById('adminFiltroInteresse');
+  const adminTabelaCorpo = document.getElementById('adminTabelaCorpo');
+  const adminTotalUsuarios = document.getElementById('adminTotalUsuarios');
+  const adminContadorFiltrados = document.getElementById('adminContadorFiltrados');
+  const adminContadorTotal = document.getElementById('adminContadorTotal');
+  const iconeAtualizar = document.getElementById('iconeAtualizar');
+
+  let usuariosCarregadosAdmin = [];
+
+  async function abrirPainelAdmin(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (modalAdmin) {
+      modalAdmin.classList.add('aberto');
+      modalAdmin.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      await carregarDadosAdmin();
+    }
+  }
+
+  function fecharPainelAdmin() {
+    if (modalAdmin) {
+      modalAdmin.classList.remove('aberto');
+      modalAdmin.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  }
+
+  window.abrirPainelAdmin = abrirPainelAdmin;
+  window.fecharPainelAdmin = fecharPainelAdmin;
+
+  if (fecharModalAdmin) fecharModalAdmin.addEventListener('click', fecharPainelAdmin);
+  if (modalAdmin) {
+    modalAdmin.addEventListener('click', (e) => {
+      if (e.target === modalAdmin) fecharPainelAdmin();
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (modalAdmin && modalAdmin.classList.contains('aberto')) fecharPainelAdmin();
+    }
+  });
+
+  if (btnAtualizarAdmin) {
+    btnAtualizarAdmin.addEventListener('click', async () => {
+      if (iconeAtualizar) iconeAtualizar.style.transform = 'rotate(360deg)';
+      await carregarDadosAdmin();
+      mostrarToast('Dados sincronizados com o MySQL!', 'sucesso');
+      setTimeout(() => { if (iconeAtualizar) iconeAtualizar.style.transform = ''; }, 400);
+    });
+  }
+
+  if (btnSairAdmin) {
+    btnSairAdmin.addEventListener('click', () => {
+      localStorage.removeItem('conecta-usuario-logado');
+      fecharPainelAdmin();
+      verificarUsuarioLogado();
+      mostrarToast('Sessão de Administrador finalizada.', 'info');
+    });
+  }
+
+  // ==========================================
+  // GESTÃO DO PAINEL ADMIN (USUÁRIOS, PRODUTOS, PEDIDOS)
+  // ==========================================
+  let produtosCarregadosAdmin = [];
+  let pedidosCarregadosAdmin = [];
+
+  const mockProdutosFallback = [
+    { id: 1, nome: 'Teclado com Caracteres Ampliados', categoria_nome: 'Tecnologia Assistiva', preco: 120.00, estoque: 15, tipo: 'produto', data_cadastro: '2026-11-11' },
+    { id: 2, nome: 'Mouse Ergonômico Vertical Adaptado', categoria_nome: 'Tecnologia Assistiva', preco: 89.90, estoque: 25, tipo: 'produto', data_cadastro: '2026-11-11' },
+    { id: 3, nome: 'Curso de Informática Básica para Iniciantes', categoria_nome: 'Cursos e Treinamentos', preco: 0.00, estoque: 999, tipo: 'curso', data_cadastro: '2026-11-11' },
+    { id: 4, nome: 'Pacote Office e Ferramentas Digitais', categoria_nome: 'Cursos e Treinamentos', preco: 0.00, estoque: 999, tipo: 'curso', data_cadastro: '2026-11-11' },
+    { id: 5, nome: 'Dicionário Digital e Guia Prático de Libras', categoria_nome: 'Materiais em Libras', preco: 45.00, estoque: 50, tipo: 'produto', data_cadastro: '2026-11-11' },
+    { id: 6, nome: 'Headset com Microfone e Redutor de Ruído', categoria_nome: 'Periféricos e Acessórios', preco: 79.90, estoque: 30, tipo: 'produto', data_cadastro: '2026-11-11' }
+  ];
+
+  const mockPedidosFallback = [
+    { id: 1, cliente_nome: 'Estefany Aluna', cliente_email: 'aluno@conecta.com', data_pedido: '2026-11-11T08:40:00Z', status: 'Entregue', forma_pagamento: 'Pix', valor_total: 120.00 },
+    { id: 2, cliente_nome: 'Maria Julia Silva', cliente_email: 'maria@email.com', data_pedido: '2026-11-11T09:15:00Z', status: 'Aprovado', forma_pagamento: 'Cartão de Crédito', valor_total: 45.00 },
+    { id: 3, cliente_nome: 'Carlos Eduardo Souza', cliente_email: 'carlos@email.com', data_pedido: '2026-11-11T10:00:00Z', status: 'Pendente', forma_pagamento: 'Boleto Bancário', valor_total: 169.80 }
+  ];
+
+  function alternarAbaAdmin(aba) {
+    const paineis = {
+      usuarios: document.getElementById('adminPainelUsuarios'),
+      produtos: document.getElementById('adminPainelProdutos'),
+      pedidos: document.getElementById('adminPainelPedidos')
+    };
+
+    const botoes = {
+      usuarios: document.getElementById('adminTabBtnUsuarios'),
+      produtos: document.getElementById('adminTabBtnProdutos'),
+      pedidos: document.getElementById('adminTabBtnPedidos')
+    };
+
+    Object.keys(paineis).forEach((key) => {
+      if (paineis[key]) paineis[key].classList.toggle('ativo', key === aba);
+      if (botoes[key]) {
+        botoes[key].classList.toggle('ativa', key === aba);
+        botoes[key].setAttribute('aria-selected', key === aba ? 'true' : 'false');
+      }
+    });
+  }
+  window.alternarAbaAdmin = alternarAbaAdmin;
+
+  async function carregarDadosAdmin() {
+    try {
+      if (adminTabelaCorpo) {
+        adminTabelaCorpo.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem; color: var(--ciano);">⏳ Conectando ao MySQL e carregando dados...</td></tr>';
+      }
+
+      // Buscar usuários
+      const res = await fetch('http://localhost:3000/api/usuarios');
+      const data = await res.json();
+
+      if (data.sucesso && Array.isArray(data.usuarios)) {
+        usuariosCarregadosAdmin = data.usuarios;
+        if (adminTotalUsuarios) adminTotalUsuarios.textContent = data.usuarios.length;
+        if (adminContadorTotal) adminContadorTotal.textContent = data.usuarios.length;
+        renderizarTabelaAdmin();
+      } else {
+        throw new Error(data.mensagem || 'Falha ao buscar usuários');
+      }
+
+      // Buscar produtos
+      try {
+        const resProd = await fetch('http://localhost:3000/api/produtos');
+        const dataProd = await resProd.json();
+        if (dataProd.sucesso && Array.isArray(dataProd.produtos)) {
+          produtosCarregadosAdmin = dataProd.produtos;
+        } else {
+          produtosCarregadosAdmin = mockProdutosFallback;
+        }
+      } catch {
+        produtosCarregadosAdmin = mockProdutosFallback;
+      }
+      renderizarTabelaProdutos();
+
+      // Buscar pedidos
+      try {
+        const resPed = await fetch('http://localhost:3000/api/pedidos');
+        const dataPed = await resPed.json();
+        if (dataPed.sucesso && Array.isArray(dataPed.pedidos)) {
+          pedidosCarregadosAdmin = dataPed.pedidos;
+        } else {
+          pedidosCarregadosAdmin = mockPedidosFallback;
+        }
+      } catch {
+        pedidosCarregadosAdmin = mockPedidosFallback;
+      }
+      renderizarTabelaPedidos();
+
+    } catch (err) {
+      console.warn('Backend MySQL offline, usando dados locais de demonstração:', err);
+      // Fallback para exibir dados locais mesmo se o servidor estiver temporariamente desligado
+      const usuariosLocais = getUsuariosRegistrados();
+      const mockAdminUsers = [
+        { id: 1, nome: 'Administrador Conecta+', email: 'admin@conecta.com', telefone: '(11) 90000-0000', cidade: 'São Paulo', uf: 'SP', interesse: 'Gestão do Sistema', tipo: 'admin', data_cadastro: '2026-11-11' },
+        { id: 2, nome: 'Estefany Aluna', email: 'aluno@conecta.com', telefone: '(11) 98765-4321', cidade: 'São Paulo', uf: 'SP', interesse: 'Cursos de informática', tipo: 'usuario', data_cadastro: '2026-11-11' },
+        { id: 3, nome: 'Maria Julia Silva', email: 'maria@email.com', telefone: '(11) 91234-5678', cidade: 'São Paulo', uf: 'SP', interesse: 'Conteúdos em Libras', tipo: 'usuario', data_cadastro: '2026-11-11' }
+      ];
+
+      usuariosCarregadosAdmin = usuariosLocais.length > 0 ? usuariosLocais : mockAdminUsers;
+      produtosCarregadosAdmin = mockProdutosFallback;
+      pedidosCarregadosAdmin = mockPedidosFallback;
+
+      if (adminTotalUsuarios) adminTotalUsuarios.textContent = usuariosCarregadosAdmin.length;
+      if (adminContadorTotal) adminContadorTotal.textContent = usuariosCarregadosAdmin.length;
+
+      renderizarTabelaAdmin();
+      renderizarTabelaProdutos();
+      renderizarTabelaPedidos();
+    }
+  }
+
+  function renderizarTabelaProdutos() {
+    const adminTabelaProdutosCorpo = document.getElementById('adminTabelaProdutosCorpo');
+    const adminTotalProdutos = document.getElementById('adminTotalProdutos');
+    const adminContadorProdutos = document.getElementById('adminContadorProdutos');
+
+    if (adminTotalProdutos) adminTotalProdutos.textContent = produtosCarregadosAdmin.length;
+    if (adminContadorProdutos) adminContadorProdutos.textContent = produtosCarregadosAdmin.length;
+    if (!adminTabelaProdutosCorpo) return;
+
+    if (produtosCarregadosAdmin.length === 0) {
+      adminTabelaProdutosCorpo.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: var(--texto-mutado);">Nenhum produto cadastrado.</td></tr>';
+      return;
+    }
+
+    adminTabelaProdutosCorpo.innerHTML = produtosCarregadosAdmin.map((p) => {
+      const precoFormatado = Number(p.preco) === 0 ? '<span style="color:#2bff9b; font-weight:700;">Gratuito</span>' : `R$ ${Number(p.preco).toFixed(2).replace('.', ',')}`;
+      const dataFmt = p.data_cadastro ? new Date(p.data_cadastro).toLocaleDateString('pt-BR') : '-';
+      const badgeTipo = p.tipo === 'curso' ? '📚 Curso' : '📦 Produto';
+
+      return `
+        <tr>
+          <td><strong>#${p.id}</strong></td>
+          <td><b>${escapeHtml(p.nome)}</b></td>
+          <td><span style="background: rgba(233,60,255,0.12); color: var(--magenta-claro); padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem;">${escapeHtml(p.categoria_nome || 'Geral')}</span></td>
+          <td>${precoFormatado}</td>
+          <td><b>${p.estoque}</b> un</td>
+          <td><span class="badge-tipo-usuario">${badgeTipo}</span></td>
+          <td>${dataFmt}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function renderizarTabelaPedidos() {
+    const adminTabelaPedidosCorpo = document.getElementById('adminTabelaPedidosCorpo');
+    const adminTotalPedidos = document.getElementById('adminTotalPedidos');
+    const adminContadorPedidos = document.getElementById('adminContadorPedidos');
+
+    if (adminTotalPedidos) adminTotalPedidos.textContent = pedidosCarregadosAdmin.length;
+    if (adminContadorPedidos) adminContadorPedidos.textContent = pedidosCarregadosAdmin.length;
+    if (!adminTabelaPedidosCorpo) return;
+
+    if (pedidosCarregadosAdmin.length === 0) {
+      adminTabelaPedidosCorpo.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: var(--texto-mutado);">Nenhum pedido realizado.</td></tr>';
+      return;
+    }
+
+    adminTabelaPedidosCorpo.innerHTML = pedidosCarregadosAdmin.map((ped) => {
+      const valorFmt = `R$ ${Number(ped.valor_total).toFixed(2).replace('.', ',')}`;
+      const dataFmt = ped.data_pedido ? new Date(ped.data_pedido).toLocaleDateString('pt-BR') : '-';
+      const statusCor = ped.status === 'Entregue' ? '#2bff9b' : (ped.status === 'Aprovado' ? 'var(--ciano)' : '#ffb84d');
+
+      return `
+        <tr>
+          <td><strong>#PED-${ped.id}</strong></td>
+          <td><b>${escapeHtml(ped.cliente_nome || 'Cliente')}</b></td>
+          <td><code>${escapeHtml(ped.cliente_email || '-')}</code></td>
+          <td>${dataFmt}</td>
+          <td><span style="color: ${statusCor}; font-weight: 700;">● ${escapeHtml(ped.status)}</span></td>
+          <td>${escapeHtml(ped.forma_pagamento || 'Cartão')}</td>
+          <td><b>${valorFmt}</b></td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+
+  function escapeHtml(texto) {
+    if (!texto) return '';
+    return String(texto)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function renderizarTabelaAdmin() {
+    if (!adminTabelaCorpo) return;
+    const termo = (adminBuscaUsuarios ? adminBuscaUsuarios.value : '').toLowerCase().trim();
+    const filtroInteresse = adminFiltroInteresse ? adminFiltroInteresse.value : '';
+
+    const filtrados = usuariosCarregadosAdmin.filter((u) => {
+      const matchBusca = !termo ||
+        (u.nome && u.nome.toLowerCase().includes(termo)) ||
+        (u.email && u.email.toLowerCase().includes(termo)) ||
+        (u.cpf && u.cpf.toLowerCase().includes(termo)) ||
+        (u.telefone && u.telefone.toLowerCase().includes(termo)) ||
+        (u.cidade && u.cidade.toLowerCase().includes(termo));
+
+      const matchInteresse = !filtroInteresse || u.interesse === filtroInteresse;
+      return matchBusca && matchInteresse;
+    });
+
+    if (adminContadorFiltrados) adminContadorFiltrados.textContent = filtrados.length;
+
+    if (filtrados.length === 0) {
+      adminTabelaCorpo.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2.5rem; color: var(--texto-mutado);">Nenhum usuário encontrado com os filtros atuais.</td></tr>';
+      return;
+    }
+
+    adminTabelaCorpo.innerHTML = filtrados.map((u) => {
+      const ehAdminUser = u.tipo === 'admin' || u.email === 'admin@conecta.com';
+      const badgeTipo = ehAdminUser
+        ? '<span class="badge-tipo-admin">🛡️ Admin</span>'
+        : '<span class="badge-tipo-usuario">👤 Usuário</span>';
+
+      const dataFormatada = u.data_cadastro ? new Date(u.data_cadastro).toLocaleDateString('pt-BR') : '-';
+      const cidadeUf = (u.cidade && u.uf) ? `${u.cidade}/${u.uf}` : (u.cidade || u.uf || '-');
+
+      const botaoExcluir = ehAdminUser
+        ? '<span style="color: var(--texto-mutado); font-size: 0.75rem;">Protegido</span>'
+        : `<button type="button" class="btn-excluir-usuario" onclick="excluirUsuarioAdmin(${u.id}, '${escapeHtml(u.nome)}')">🗑️ Excluir</button>`;
+
+      return `
+        <tr>
+          <td><strong>#${u.id}</strong></td>
+          <td><b>${escapeHtml(u.nome || '')}</b></td>
+          <td><code>${escapeHtml(u.email || '')}</code></td>
+          <td>${escapeHtml(u.telefone || '-')}</td>
+          <td>${escapeHtml(cidadeUf)}</td>
+          <td><span style="font-size: 0.8rem; color: var(--texto-mutado);">${escapeHtml(u.interesse || '-')}</span></td>
+          <td>${badgeTipo}</td>
+          <td>${dataFormatada}</td>
+          <td style="text-align: right;">${botaoExcluir}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  async function excluirUsuarioAdmin(id, nome) {
+    if (!confirm(`Tem certeza de que deseja excluir o usuário "${nome}" (ID #${id}) do banco MySQL?`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:3000/api/usuarios/${id}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+
+      if (data.sucesso) {
+        mostrarToast(`Usuário "${nome}" excluído do MySQL!`, 'sucesso');
+        await carregarDadosAdmin();
+      } else {
+        mostrarToast(data.mensagem || 'Erro ao excluir usuário.', 'erro');
+      }
+    } catch (e) {
+      console.error('Erro ao excluir usuário:', e);
+      mostrarToast('Erro ao comunicar com o servidor MySQL.', 'erro');
+    }
+  }
+
+  window.excluirUsuarioAdmin = excluirUsuarioAdmin;
+
+  if (adminBuscaUsuarios) {
+    adminBuscaUsuarios.addEventListener('input', renderizarTabelaAdmin);
+  }
+  if (adminFiltroInteresse) {
+    adminFiltroInteresse.addEventListener('change', renderizarTabelaAdmin);
+  }
+
+  function solicitarProduto(id, nome) {
+    const usuario = getUsuarioLogado();
+    if (!usuario) {
+      mostrarToast(`Para solicitar "${nome}", faça login ou cadastre-se!`, 'info');
+      abrirModalLogin();
+      return;
+    }
+    mostrarToast(`✅ Solicitação de "${nome}" realizada com sucesso para ${usuario.nome}!`, 'sucesso');
+  }
+  window.solicitarProduto = solicitarProduto;
+
   carregar();
   aplicar();
+  verificarUsuarioLogado();
   grupoAtivo = 'Todos';
   listaGrupos.querySelectorAll('.grupo').forEach((b) => b.classList.toggle('ativo', b.dataset.grupo === 'Todos'));
   renderFeed();

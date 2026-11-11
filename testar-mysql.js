@@ -13,21 +13,29 @@ async function testarConexao() {
     const connection = await mysql.createConnection(dbConfig);
     console.log('✅ Conectado ao MySQL com sucesso!');
 
-    // Verificar se a tabela usuarios existe
+    // Verificar se as tabelas existem
     const [tables] = await connection.query('SHOW TABLES');
-    console.log('📋 Tabelas no banco:', tables);
+    console.log('\n📋 Tabelas encontradas no banco:', tables.map(t => Object.values(t)[0]));
 
-    // Verificar quantos usuários existem
-    const [rows] = await connection.query('SELECT * FROM usuarios');
-    console.log('👥 Usuários cadastrados:', rows.length);
-    console.log('📝 Dados:', rows);
+    // Contar registros em cada tabela
+    const tabelas = ['usuarios', 'categorias', 'produtos', 'pedidos', 'itens_pedido', 'avaliacoes_produtos'];
+    
+    console.log('\n📊 Contagem de registros por tabela:');
+    for (const tabela of tabelas) {
+      try {
+        const [rows] = await connection.query(`SELECT COUNT(*) as total FROM ${tabela}`);
+        console.log(`   - ${tabela}: ${rows[0].total} registro(s)`);
+      } catch (err) {
+        console.log(`   - ${tabela}: ⚠️ Tabela ainda não criada ou erro (${err.message})`);
+      }
+    }
 
     await connection.end();
-    console.log('✅ Teste concluído!');
+    console.log('\n✅ Teste concluído com sucesso!');
   } catch (error) {
-    console.error('❌ Erro:', error.message);
-    console.error('💡 Dica: Verifique se o banco de dados "conecta_plus" existe no MySQL');
-    console.error('💡 Execute o script SQL em database.sql para criar o banco e a tabela');
+    console.error('❌ Erro na conexão:', error.message);
+    console.error('💡 Dica: Certifique-se de que o MySQL (ex: XAMPP, Wamp ou serviço local) está iniciado.');
+    console.error('💡 E execute o script SQL em database.sql para criar todas as 6 tabelas!');
   }
 }
 

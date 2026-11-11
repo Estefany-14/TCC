@@ -26,6 +26,7 @@
       <a href="#cursos" class="nav-item">Cursos</a>
       <a href="#servicos" class="nav-item">Serviços</a>
       <a href="#empregos" class="nav-item">Empregos</a>
+      <a href="#produtos" class="nav-item">Produtos</a>
       <a href="#libras" class="nav-item nav-item-libras">Libras</a>
       <a href="#comunidade" class="nav-item">Comunidade</a>
       <a href="#cadastre-se" class="nav-item nav-item-mapa">Cadastre-se</a>
@@ -37,6 +38,10 @@
         <button class="btn nav-item-perfil" id="linkPerfil" style="display:none;" onclick="mostrarPerfil()">
           <span class="avatar-mini" id="navAvatarIniciais">US</span>
           <span>Meu Perfil</span>
+        </button>
+        <button class="btn btn-admin-nav" id="btnNavAdmin" style="display:none;" onclick="abrirPainelAdmin(event)">
+          <span class="admin-nav-pulse"></span>
+          <span>🛡️ Painel Admin</span>
         </button>
       </div>
     </nav>
@@ -196,6 +201,84 @@
         <article class="card vaga"><h3>Vagas de emprego</h3><p>Oportunidades reunidas em um só lugar, com filtros simples.</p></article>
         <article class="card vaga"><h3>Qualificação profissional</h3><p>Cursos técnicos, gratuitos e programas de capacitação.</p></article>
         <article class="card vaga"><h3>Preparação</h3><p>Currículo, entrevista e uso de plataformas de recrutamento.</p></article>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="produtos" class="secao alt">
+    <div class="container">
+      <p class="tag">Inclusão & Acessibilidade</p>
+      <h2>Tecnologias Assistivas e Recursos Acessíveis <span aria-hidden="true">📦</span></h2>
+      <p class="sub">
+        Catálogo integrado ao banco de dados com equipamentos adaptados, apostilas e cursos inclusivos para maior autonomia e facilidade no uso da tecnologia.
+      </p>
+
+      <div class="grid-3" id="catalogoProdutosGrid">
+        <article class="card">
+          <span class="badge-tipo-usuario" style="margin-bottom: 0.5rem; display: inline-block;">♿ Tecnologia Assistiva</span>
+          <div style="font-size: 2.2rem; margin: 0.5rem 0;">⌨️</div>
+          <h3>Teclado com Caracteres Ampliados</h3>
+          <p>Teclado de alto contraste com teclas grandes para pessoas com baixa visão ou iniciantes.</p>
+          <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--ciano); font-size: 1.2rem;">R$ 120,00</strong>
+            <button type="button" class="btn btn-sm btn-secundario" onclick="solicitarProduto(1, 'Teclado com Caracteres Ampliados')">Solicitar Recurso</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <span class="badge-tipo-usuario" style="margin-bottom: 0.5rem; display: inline-block;">♿ Tecnologia Assistiva</span>
+          <div style="font-size: 2.2rem; margin: 0.5rem 0;">🖱️</div>
+          <h3>Mouse Ergonômico Adaptado</h3>
+          <p>Mouse vertical ergonômico que reduz o esforço nos punhos e facilita a navegação contínua.</p>
+          <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--ciano); font-size: 1.2rem;">R$ 89,90</strong>
+            <button type="button" class="btn btn-sm btn-secundario" onclick="solicitarProduto(2, 'Mouse Ergonômico Adaptado')">Solicitar Recurso</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <span class="badge-tipo-usuario" style="margin-bottom: 0.5rem; display: inline-block;">💻 Cursos e Treinamentos</span>
+          <div style="font-size: 2.2rem; margin: 0.5rem 0;">💻</div>
+          <h3>Curso de Informática Básica</h3>
+          <p>Passo a passo prático para iniciantes: navegação, digitação, pastas e segurança online.</p>
+          <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: #2bff9b; font-size: 1.2rem;">Gratuito (100%)</strong>
+            <button type="button" class="btn btn-sm btn-primario" onclick="solicitarProduto(3, 'Curso de Informática Básica')">Começar Agora</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <span class="badge-tipo-usuario" style="margin-bottom: 0.5rem; display: inline-block;">💻 Cursos e Treinamentos</span>
+          <div style="font-size: 2.2rem; margin: 0.5rem 0;">📊</div>
+          <h3>Pacote Office & Ferramentas</h3>
+          <p>Aprenda a criar documentos no Word, planilhas no Excel e usar o e-mail para o mercado de trabalho.</p>
+          <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: #2bff9b; font-size: 1.2rem;">Gratuito (100%)</strong>
+            <button type="button" class="btn btn-sm btn-primario" onclick="solicitarProduto(4, 'Pacote Office & Ferramentas')">Começar Agora</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <span class="badge-tipo-usuario" style="margin-bottom: 0.5rem; display: inline-block;">🤟 Materiais em Libras</span>
+          <div style="font-size: 2.2rem; margin: 0.5rem 0;">📖</div>
+          <h3>Guia Prático e Dicionário de Libras</h3>
+          <p>Material ilustrado com mais de 1.000 sinais cotidianos com orientações de intérpretes.</p>
+          <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--ciano); font-size: 1.2rem;">R$ 45,00</strong>
+            <button type="button" class="btn btn-sm btn-secundario" onclick="solicitarProduto(5, 'Guia Prático e Dicionário de Libras')">Solicitar Recurso</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <span class="badge-tipo-usuario" style="margin-bottom: 0.5rem; display: inline-block;">⌨️ Periféricos e Acessórios</span>
+          <div style="font-size: 2.2rem; margin: 0.5rem 0;">🎧</div>
+          <h3>Headset com Microfone com Redutor</h3>
+          <p>Fones acolchoados com áudio nítido para videochamadas, aulas online e atendimento acessível.</p>
+          <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--ciano); font-size: 1.2rem;">R$ 79,90</strong>
+            <button type="button" class="btn btn-sm btn-secundario" onclick="solicitarProduto(6, 'Headset com Microfone com Redutor')">Solicitar Recurso</button>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -712,12 +795,22 @@
     <div class="login-header">
       <img src="assets/logo.svg" alt="Logo Conecta+" class="login-logo">
       <h2 id="modalLoginTitulo">Bem-vindo de volta!</h2>
-      <p class="login-subtitulo">Entre na sua conta para continuar</p>
+      <p class="login-subtitulo" id="modalLoginSubtitulo">Entre na sua conta para continuar</p>
+      
+      <!-- Seletor de Tipo de Login -->
+      <div class="login-tipo-seletor" role="tablist" aria-label="Tipo de Acesso">
+        <button type="button" class="login-tipo-btn ativo" id="tipoLoginUsuario" role="tab" aria-selected="true">
+          <span>👤 Usuário</span>
+        </button>
+        <button type="button" class="login-tipo-btn" id="tipoLoginAdmin" role="tab" aria-selected="false">
+          <span>🛡️ Administrador</span>
+        </button>
+      </div>
     </div>
     
     <form class="form-login" id="formLogin" novalidate>
       <div class="campo">
-        <label for="loginEmail">E-mail</label>
+        <label for="loginEmail" id="lblLoginEmail">E-mail</label>
         <input id="loginEmail" name="email" type="email" autocomplete="email" placeholder="seu@email.com" required>
       </div>
       <div class="campo">
@@ -728,19 +821,201 @@
         </div>
       </div>
       
-      <div style="background: rgba(34, 224, 255, 0.08); border: 1px dashed var(--borda-brilho); border-radius: var(--raio-sm); padding: 0.6rem 0.85rem; margin-bottom: 1rem; font-size: 0.82rem; color: var(--texto-suave); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+      <!-- Dica de Acesso Rápido Usuário -->
+      <div id="dicaLoginUsuario" class="login-dica-box">
         <span>💡 <b>Conta teste:</b> aluno@conecta.com (123456)</span>
         <button type="button" id="btnPreencherTeste" class="btn btn-sm btn-secundario" style="padding: 0.2rem 0.6rem; font-size: 0.76rem;">Preencher</button>
       </div>
 
-      <button class="btn btn-login-submit" type="submit">Entrar</button>
+      <!-- Dica de Acesso Rápido Admin -->
+      <div id="dicaLoginAdmin" class="login-dica-box admin-dica-box" style="display: none;">
+        <span>🛡️ <b>Admin MySQL:</b> admin@conecta.com (admin123)</span>
+        <button type="button" id="btnPreencherAdmin" class="btn btn-sm btn-admin-acao" style="padding: 0.2rem 0.6rem; font-size: 0.76rem;">Preencher Admin</button>
+      </div>
+
+      <button class="btn btn-login-submit" id="btnSubmitLogin" type="submit">Entrar</button>
       <p class="nota" id="msgLogin" role="status"></p>
       
-      <div class="login-footer">
+      <div class="login-footer" id="loginFooterLinks">
         <p class="login-cadastro-texto">Não tem uma conta?</p>
         <a href="#" class="btn btn-cadastro-link" id="linkParaCadastro">Criar conta grátis</a>
       </div>
     </form>
+  </div>
+</div>
+
+<!-- Modal do Painel do Administrador -->
+<div id="modalAdmin" class="modal modal-admin-overlay" role="dialog" aria-labelledby="modalAdminTitulo" aria-hidden="true">
+  <div class="modal-conteudo modal-admin">
+    <button class="modal-fechar" id="fecharModalAdmin" aria-label="Fechar painel do administrador">×</button>
+    
+    <div class="admin-header">
+      <div class="admin-header-marca">
+        <span class="admin-badge">🛡️ Painel de Controle Master</span>
+        <h2 id="modalAdminTitulo">Gestão de Usuários & MySQL</h2>
+        <p class="admin-subtitulo">Gerenciamento em tempo real dos cadastros armazenados no banco <code>conecta_plus</code></p>
+      </div>
+      <div class="admin-header-acoes">
+        <button type="button" class="btn btn-sm btn-secundario" id="btnAtualizarAdmin" title="Recarregar dados do banco">
+          <span class="icone-girar" id="iconeAtualizar">🔄</span> Atualizar
+        </button>
+        <button type="button" class="btn btn-sm btn-admin-logout" id="btnSairAdmin" title="Encerrar sessão de administrador">
+          🚪 Sair do Admin
+        </button>
+      </div>
+    </div>
+
+    <!-- Cards de Métricas -->
+    <div class="admin-metricas-grid">
+      <div class="admin-card-metrica">
+        <div class="admin-metrica-icone">👥</div>
+        <div class="admin-metrica-info">
+          <span class="admin-metrica-rotulo">Total de Usuários</span>
+          <span class="admin-metrica-valor" id="adminTotalUsuarios">--</span>
+        </div>
+      </div>
+      <div class="admin-card-metrica">
+        <div class="admin-metrica-icone">📦</div>
+        <div class="admin-metrica-info">
+          <span class="admin-metrica-rotulo">Produtos e Cursos</span>
+          <span class="admin-metrica-valor" id="adminTotalProdutos">--</span>
+        </div>
+      </div>
+      <div class="admin-card-metrica">
+        <div class="admin-metrica-icone">🛒</div>
+        <div class="admin-metrica-info">
+          <span class="admin-metrica-rotulo">Total de Pedidos</span>
+          <span class="admin-metrica-valor" id="adminTotalPedidos">--</span>
+        </div>
+      </div>
+      <div class="admin-card-metrica">
+        <div class="admin-metrica-icone">🗄️</div>
+        <div class="admin-metrica-info">
+          <span class="admin-metrica-rotulo">Banco MySQL</span>
+          <span class="admin-metrica-valor" style="color: var(--verde-online); font-size: 1.15rem;">6 Tabelas Online</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Abas de Navegação do Painel Admin -->
+    <div class="admin-tabs" role="tablist">
+      <button type="button" class="admin-tab-btn ativa" id="adminTabBtnUsuarios" role="tab" aria-selected="true" onclick="alternarAbaAdmin('usuarios')">
+        👥 Gestão de Usuários
+      </button>
+      <button type="button" class="admin-tab-btn" id="adminTabBtnProdutos" role="tab" aria-selected="false" onclick="alternarAbaAdmin('produtos')">
+        📦 Catálogo de Produtos & Cursos
+      </button>
+      <button type="button" class="admin-tab-btn" id="adminTabBtnPedidos" role="tab" aria-selected="false" onclick="alternarAbaAdmin('pedidos')">
+        🛒 Pedidos & Solicitações (N:N)
+      </button>
+    </div>
+
+    <!-- PAINEL 1: USUÁRIOS -->
+    <div id="adminPainelUsuarios" class="admin-tab-painel ativo">
+      <!-- Barra de Ferramentas / Filtros -->
+      <div class="admin-toolbar">
+        <div class="admin-busca-wrapper">
+          <span class="admin-busca-icone">🔍</span>
+          <input type="text" id="adminBuscaUsuarios" placeholder="Buscar por nome, e-mail, telefone, CPF ou cidade..." aria-label="Buscar usuários">
+        </div>
+        <div class="admin-filtro-wrapper">
+          <select id="adminFiltroInteresse" aria-label="Filtrar por interesse">
+            <option value="">Todas as áreas de interesse</option>
+            <option value="Cursos de informática">Cursos de informática</option>
+            <option value="Serviços públicos online">Serviços públicos online</option>
+            <option value="Empregos e qualificação">Empregos e qualificação</option>
+            <option value="Conteúdos em Libras">Conteúdos em Libras</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Tabela de Usuários -->
+      <div class="admin-tabela-container">
+        <table class="admin-tabela" id="adminTabelaUsuarios">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Telefone</th>
+              <th>Cidade/UF</th>
+              <th>Área de Interesse</th>
+              <th>Tipo</th>
+              <th>Data Cadastro</th>
+              <th style="text-align: right;">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="adminTabelaCorpo">
+            <tr>
+              <td colspan="9" style="text-align: center; padding: 2.5rem; color: var(--texto-mutado);">Carregando usuários do MySQL...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="admin-footer-bar">
+        <p class="admin-footer-info">Exibindo <b id="adminContadorFiltrados">0</b> de <b id="adminContadorTotal">0</b> cadastros no banco.</p>
+        <span class="admin-footer-tag">Tabela: <code>usuarios</code></span>
+      </div>
+    </div>
+
+    <!-- PAINEL 2: PRODUTOS & CATEGORIAS -->
+    <div id="adminPainelProdutos" class="admin-tab-painel">
+      <div class="admin-tabela-container">
+        <table class="admin-tabela" id="adminTabelaProdutos">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Produto / Curso</th>
+              <th>Categoria (FK)</th>
+              <th>Preço Unitário</th>
+              <th>Estoque</th>
+              <th>Tipo</th>
+              <th>Data Cadastro</th>
+            </tr>
+          </thead>
+          <tbody id="adminTabelaProdutosCorpo">
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 2.5rem; color: var(--texto-mutado);">Carregando produtos do MySQL...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="admin-footer-bar">
+        <p class="admin-footer-info">Total de produtos/cursos: <b id="adminContadorProdutos">0</b></p>
+        <span class="admin-footer-tag">Tabelas conectadas: <code>produtos</code> ➔ <code>categorias</code></span>
+      </div>
+    </div>
+
+    <!-- PAINEL 3: PEDIDOS & ITENS -->
+    <div id="adminPainelPedidos" class="admin-tab-painel">
+      <div class="admin-tabela-container">
+        <table class="admin-tabela" id="adminTabelaPedidos">
+          <thead>
+            <tr>
+              <th>Nº Pedido</th>
+              <th>Cliente (FK)</th>
+              <th>E-mail</th>
+              <th>Data Pedido</th>
+              <th>Status</th>
+              <th>Forma Pagamento</th>
+              <th>Valor Total</th>
+            </tr>
+          </thead>
+          <tbody id="adminTabelaPedidosCorpo">
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 2.5rem; color: var(--texto-mutado);">Carregando pedidos do MySQL...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="admin-footer-bar">
+        <p class="admin-footer-info">Total de pedidos realizados: <b id="adminContadorPedidos">0</b></p>
+        <span class="admin-footer-tag">Tabelas conectadas: <code>pedidos</code> ➔ <code>usuarios</code> & <code>itens_pedido</code> (N:N)</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -757,6 +1032,7 @@
       <a href="#libras">Libras</a>
       <a href="#comunidade">Comunidade</a>
       <a href="#acessibilidade">Acessibilidade</a>
+      <a href="#" id="linkRodapeAdmin" onclick="abrirModalLoginAdmin(event)">🛡️ Área do Administrador</a>
     </nav>
   </div>
   <p class="copy">Projeto Conecta+ — plataforma digital gratuita, acessível e inclusiva.</p>

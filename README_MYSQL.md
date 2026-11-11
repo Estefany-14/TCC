@@ -1,191 +1,122 @@
-# Conecta+ - Integração com MySQL
+# Conecta+ - Banco de Dados Relacional MySQL (TCC)
 
-Este projeto agora está conectado ao MySQL para armazenar os cadastros de usuários.
+Este projeto conta com um modelo relacional completo de **6 tabelas conectadas** por Chaves Primárias (PK) e Chaves Estrangeiras (FK), modelado para atender aos requisitos de apresentação do TCC.
 
-## 📋 Pré-requisitos
+---
 
-1. **MySQL Server** instalado e rodando
-2. **Node.js** instalado
-3. Dependências do projeto instaladas (`npm install`)
+## 🗂️ Modelo de Dados (6 Tabelas Conectadas)
 
-## 🗄️ Código SQL para criar o banco de dados
+As 6 tabelas cobrem todo o ciclo de usuários, categorias, catálogo de produtos, pedidos, itens de compras e avaliações:
 
-Execute o seguinte código SQL no seu MySQL Workbench ou terminal MySQL:
+1. **`usuarios`** (Cadastro de Usuários, Alunos e Administradores)
+   - Armazena dados cadastrais, autenticação (e-mail/senha) e tipo de acesso (`usuario` ou `admin`).
 
-```sql
--- ============================================
--- BANCO DE DADOS: conecta_plus
--- TABELA: usuarios
--- ============================================
+2. **`categorias`** (Categorização do Catálogo)
+   - Categorias dos produtos, cursos e materiais (ex: Tecnologia Assistiva, Cursos, Libras).
 
--- Criar banco de dados (se não existir)
-CREATE DATABASE IF NOT EXISTS conecta_plus
-CHARACTER SET utf8mb4
-COLLATE utf8mb4_unicode_ci;
+3. **`produtos`** (Catálogo de Produtos, Cursos e Recursos)
+   - Conectada à tabela `categorias` via chave estrangeira `categoria_id` (Relação 1:N).
 
--- Usar o banco de dados
-USE conecta_plus;
+4. **`pedidos`** (Registro de Compras e Solicitações)
+   - Conectada à tabela `usuarios` via chave estrangeira `usuario_id` (Relação 1:N).
 
--- Criar tabela de usuários
-CREATE TABLE IF NOT EXISTS usuarios (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL UNIQUE,
-  senha VARCHAR(255) NOT NULL,
-  cpf VARCHAR(14),
-  telefone VARCHAR(20),
-  endereco VARCHAR(255),
-  cidade VARCHAR(100),
-  uf CHAR(2),
-  interesse VARCHAR(100),
-  data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_email (email),
-  INDEX idx_cpf (cpf)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+5. **`itens_pedido`** (Tabela Associativa N:N - Conexão Pedidos e Produtos)
+   - Conecta a tabela `pedidos` (`pedido_id`) com a tabela `produtos` (`produto_id`). Cada pedido pode conter vários produtos e um produto pode estar em vários pedidos.
 
--- Inserir usuários de teste (opcional)
-INSERT INTO usuarios (nome, email, senha, cpf, telefone, endereco, cidade, uf, interesse) VALUES
-('Estefany Aluna', 'aluno@conecta.com', '123456', '123.456.789-00', '(11) 98765-4321', 'Rua Principal, 100', 'São Paulo', 'SP', 'Cursos de informática'),
-('Maria Julia Silva', 'maria@email.com', '123456', '987.654.321-99', '(11) 91234-5678', 'Av. Brasil, 500', 'São Paulo', 'SP', 'Conteúdos em Libras')
-ON DUPLICATE KEY UPDATE email=email;
+6. **`avaliacoes_produtos`** (Feedback dos Usuários)
+   - Conecta `usuarios` (`usuario_id`) e `produtos` (`produto_id`), permitindo notas de 1 a 5 estrelas e comentários.
 
--- Consulta para verificar os usuários cadastrados
-SELECT id, nome, email, cpf, telefone, cidade, uf, interesse, data_cadastro 
-FROM usuarios 
-ORDER BY data_cadastro DESC;
+---
+
+### 📊 Diagrama Entidade-Relacionamento (DER)
+
+```mermaid
+erDiagram
+    usuarios ||--o{ pedidos : "realiza (1:N)"
+    usuarios ||--o{ avaliacoes_produtos : "avalia (1:N)"
+    categorias ||--o{ produtos : "possui (1:N)"
+    pedidos ||--|{ itens_pedido : "contem (1:N)"
+    produtos ||--o{ itens_pedido : "esta em (1:N)"
+    produtos ||--o{ avaliacoes_produtos : "recebe (1:N)"
 ```
 
-## ⚙️ Configuração do Backend
+---
 
-O arquivo `server.js` já está configurado com as seguintes configurações padrão:
+## 🚀 Como Criar o Banco e as 6 Tabelas
 
-- **Host:** localhost
-- **Usuário:** root
-- **Senha:** (vazio)
-- **Banco de dados:** conecta_plus
-- **Porta do servidor:** 3000
+1. Abra o **MySQL Workbench**, **phpMyAdmin** (XAMPP/Wamp) ou o terminal MySQL.
+2. Abra e execute o arquivo [`database.sql`](file:///c:/Users/aluno/Documents/estefany/clone/TCC/database.sql).
+3. O script cria o banco `conecta_plus`, as 6 tabelas com chaves estrangeiras e insere dados reais de teste prontos para apresentação.
 
-Se precisar alterar essas configurações, edite o arquivo `server.js`:
-
-```javascript
-const dbConfig = {
-  host: 'localhost',
-  user: 'root',
-  password: 'sua_senha_aqui',  // Altere se necessário
-  database: 'conecta_plus'
-};
-```
-
-## 🚀 Como executar
-
-### 1. Inicie o servidor MySQL
-
-Certifique-se de que o MySQL está rodando no seu computador.
-
-### 2. Execute o script SQL
-
-Execute o código SQL acima para criar o banco de dados e a tabela.
-
-### 3. Inicie o backend Node.js
-
+### Testar a Conexão no Terminal
+Você pode verificar se as 6 tabelas foram criadas com o comando:
 ```bash
-npm run server
+node testar-mysql.js
 ```
 
-O servidor iniciará em `http://localhost:3000`
+---
 
-### 4. Inicie o frontend
+## 🔍 Consultas SQL com JOIN (Ideais para apresentação do TCC)
 
-Em outro terminal:
-
-```bash
-npm start
-```
-
-O frontend estará disponível em `http://localhost:8080`
-
-## 📝 Como funciona
-
-1. Quando um usuário se cadastra no formulário (modal ou página), os dados são enviados para o backend via API
-2. O backend recebe os dados e os insere no banco de dados MySQL
-3. O usuário é salvo no `localStorage` para manter a sessão ativa
-4. Você pode verificar os usuários cadastrados no MySQL executando:
-
+### 1. Produtos com o nome da Categoria:
 ```sql
-SELECT * FROM usuarios;
+SELECT 
+  p.nome AS produto,
+  c.nome AS categoria,
+  p.preco,
+  p.estoque
+FROM produtos p
+INNER JOIN categorias c ON p.categoria_id = c.id;
 ```
 
-## 🔧 API Endpoints
-
-### POST /api/cadastro
-Cadastra um novo usuário no banco de dados.
-
-**Body:**
-```json
-{
-  "nome": "Nome do Usuário",
-  "email": "usuario@email.com",
-  "senha": "123456",
-  "cpf": "000.000.000-00",
-  "telefone": "(11) 00000-0000",
-  "endereco": "Rua, número",
-  "cidade": "Cidade",
-  "uf": "SP",
-  "interesse": "Cursos de informática"
-}
-```
-
-**Resposta de sucesso:**
-```json
-{
-  "sucesso": true,
-  "mensagem": "Cadastro realizado com sucesso!",
-  "usuarioId": 1
-}
-```
-
-### POST /api/login
-Autentica um usuário.
-
-**Body:**
-```json
-{
-  "email": "usuario@email.com",
-  "senha": "123456"
-}
-```
-
-### GET /api/usuarios
-Lista todos os usuários cadastrados (útil para debug).
-
-## 🐛 Solução de problemas
-
-### Erro: "Erro ao conectar com o servidor"
-- Verifique se o servidor Node.js está rodando (`npm run server`)
-- Verifique se o MySQL está rodando
-- Verifique se as credenciais no `server.js` estão corretas
-
-### Erro: "Banco de dados não existe"
-- Execute o script SQL fornecido acima
-- Verifique se o nome do banco de dados está correto no `server.js`
-
-### Erro: "Acesso negado"
-- Verifique se o usuário do MySQL tem permissões
-- Altere a senha no `server.js` se necessário
-
-## 📊 Verificando dados no MySQL
-
-Para ver todos os usuários cadastrados:
-
+### 2. Pedidos com Dados do Usuário Comprador:
 ```sql
-USE conecta_plus;
-SELECT id, nome, email, cpf, telefone, cidade, uf, interesse, data_cadastro 
-FROM usuarios 
-ORDER BY data_cadastro DESC;
+SELECT 
+  ped.id AS numero_pedido,
+  u.nome AS cliente,
+  u.email,
+  ped.data_pedido,
+  ped.status,
+  ped.valor_total
+FROM pedidos ped
+INNER JOIN usuarios u ON ped.usuario_id = u.id;
 ```
 
-Para contar quantos usuários estão cadastrados:
-
+### 3. Detalhes Completos dos Itens do Pedido (Conexão N:N):
 ```sql
-SELECT COUNT(*) as total_usuarios FROM usuarios;
+SELECT 
+  ped.id AS pedido_id,
+  u.nome AS cliente,
+  prod.nome AS produto_comprado,
+  item.quantidade,
+  item.preco_unitario,
+  item.subtotal
+FROM itens_pedido item
+INNER JOIN pedidos ped ON item.pedido_id = ped.id
+INNER JOIN usuarios u ON ped.usuario_id = u.id
+INNER JOIN produtos prod ON item.produto_id = prod.id;
 ```
+
+### 4. Média de Avaliações por Produto:
+```sql
+SELECT 
+  p.nome AS produto,
+  ROUND(AVG(a.nota), 1) AS media_estrelas,
+  COUNT(a.id) AS total_avaliacoes
+FROM produtos p
+LEFT JOIN avaliacoes_produtos a ON p.id = a.produto_id
+GROUP BY p.id, p.nome;
+```
+
+---
+
+## ⚙️ Rotas Disponíveis no Backend (`server.js`)
+
+- `POST /api/cadastro` - Cadastro de usuário no MySQL
+- `POST /api/login` - Autenticação com identificação de tipo (`usuario` ou `admin`)
+- `GET /api/usuarios` - Lista todos os usuários
+- `DELETE /api/usuarios/:id` - Exclui um usuário (Painel Admin)
+- `GET /api/admin/stats` - Estatísticas para o painel administrativo
+- `GET /api/produtos` - Lista todos os produtos com nome da categoria
+- `GET /api/categorias` - Lista todas as categorias ativas
+- `GET /api/pedidos` - Lista todos os pedidos com dados do cliente
